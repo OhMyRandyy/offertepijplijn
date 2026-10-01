@@ -4,282 +4,385 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<style>html,body{margin:0}</style>
 <title>Offertepijplijn VVEgemak</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: petrol kopband in VVEgemak-huisstijl; kengetallen; schakel Lijst/Bord; bord = kolommen per status met sleepbare kaarten; dossier schuift rechts in */
+/* Layout: petrol zijbalk links; rechts kop, kengetalkaarten, tabelkaart + vast dossierpaneel, onderaan drie analysekaarten. Bord vervangt de tabel. */
 :root {
-  --petrol: #005e69;
-  --petrol-ink: #00454d;
+  --side-bg: #063c42;
+  --side-fg: #e3f1f2;
+  --side-muted: #8fbfc4;
+  --side-active: #0d5a62;
+  --bg: #eef3f4;
+  --surface: #ffffff;
+  --surface-2: #f3f7f7;
+  --line: #dde7e8;
+  --fg: #0f2629;
+  --muted: #5f777b;
+  --primary: #005e69;
+  --primary-fg: #ffffff;
+  --accent: #005e69;
+  --accent-soft: #e0eff0;
   --lime: #93d400;
   --orange: #ff6c00;
-  --bg: #f2f6f6;
-  --surface: #ffffff;
-  --surface-2: #e8eff0;
-  --line: #d3dfe0;
-  --fg: #10282b;
-  --muted: #557074;
-  --head-bg: var(--petrol);
-  --head-fg: #ffffff;
-  --head-muted: #b9dadd;
-  --primary-bg: var(--petrol);
-  --primary-fg: #ffffff;
-  --accent: var(--petrol);
-  --accent-soft: #dcecee;
-  --ok: #3f7d00;    --ok-soft: #e9f6d2;
-  --warn: #b84d00;  --warn-soft: #ffe9d9;
-  --crit: #b3261e;  --crit-soft: #fbe2e0;
-  --shadow: 0 12px 32px rgba(0, 54, 60, .16);
-  --font-ui: "Urbanist", "Century Gothic", "Avant Garde", "Segoe UI", system-ui, sans-serif;
+  --ok: #3e7d00;    --ok-soft: #eaf6d6;
+  --warn: #b84d00;  --warn-soft: #ffeedf;
+  --crit: #b3261e;  --crit-soft: #fde4e2;
+  --info: #2f6db5;  --info-soft: #e5eefa;
+  --violet: #6a4fb3; --violet-soft: #eee9fa;
+  --shadow: 0 1px 2px rgba(10, 40, 44, .05), 0 6px 20px rgba(10, 40, 44, .05);
+  --font-ui: "Urbanist", "Century Gothic", "Segoe UI", system-ui, sans-serif;
   --font-num: "IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #0a1618; --surface: #102225; --surface-2: #162d31; --line: #25444a;
-  --fg: #e3eff0; --muted: #8fb0b4; --head-bg: #062f34; --head-fg: #ffffff; --head-muted: #8fc3c8;
-  --primary-bg: var(--lime); --primary-fg: #0a1f22; --accent: #6fd0da; --accent-soft: #123a40;
+  --side-bg: #041f22; --side-fg: #e3f1f2; --side-muted: #7fb0b5; --side-active: #0b3a3f;
+  --bg: #091518; --surface: #0f2124; --surface-2: #142a2e; --line: #21393d; --fg: #e4eff0; --muted: #91acb0;
+  --primary: #93d400; --primary-fg: #0a1f22; --accent: #6fd0da; --accent-soft: #123a40;
   --ok: #a6e04a; --ok-soft: #1f3510; --warn: #ff9a52; --warn-soft: #3b2412; --crit: #f08a82; --crit-soft: #3d1c1a;
-  --shadow: 0 12px 32px rgba(0, 0, 0, .55); color-scheme: dark; } }
+  --info: #8ab6f0; --info-soft: #172a44; --violet: #b9a5f0; --violet-soft: #261d40;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25); color-scheme: dark; } }
 :root[data-theme="dark"] {
-  --bg: #0a1618; --surface: #102225; --surface-2: #162d31; --line: #25444a;
-  --fg: #e3eff0; --muted: #8fb0b4; --head-bg: #062f34; --head-fg: #ffffff; --head-muted: #8fc3c8;
-  --primary-bg: var(--lime); --primary-fg: #0a1f22; --accent: #6fd0da; --accent-soft: #123a40;
+  --side-bg: #041f22; --side-fg: #e3f1f2; --side-muted: #7fb0b5; --side-active: #0b3a3f;
+  --bg: #091518; --surface: #0f2124; --surface-2: #142a2e; --line: #21393d; --fg: #e4eff0; --muted: #91acb0;
+  --primary: #93d400; --primary-fg: #0a1f22; --accent: #6fd0da; --accent-soft: #123a40;
   --ok: #a6e04a; --ok-soft: #1f3510; --warn: #ff9a52; --warn-soft: #3b2412; --crit: #f08a82; --crit-soft: #3d1c1a;
-  --shadow: 0 12px 32px rgba(0, 0, 0, .55); color-scheme: dark; }
+  --info: #8ab6f0; --info-soft: #172a44; --violet: #b9a5f0; --violet-soft: #261d40;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25); color-scheme: dark; }
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
+html, body { margin: 0; }
 body { background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 15px; line-height: 1.45; }
 .num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
-button, input, select { font: inherit; }
+button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
 :focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+svg.i { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
-/* Kopband */
-.head { background: var(--head-bg); color: var(--head-fg); }
-.head .in { max-width: 1440px; margin: 0 auto; padding-inline: 20px; padding-block: 16px 18px; display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; justify-content: space-between; }
-.brand { display: flex; align-items: baseline; gap: 12px; min-width: 0; }
-.brand .logo { font-weight: 800; font-size: 1.5rem; letter-spacing: -.01em; }
-.brand .logo b { color: var(--lime); font-weight: 800; }
-.brand .sub { color: var(--head-muted); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: .78rem; }
-.headr { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.src { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; padding: 5px 12px; font-size: .82rem; color: var(--head-fg); max-width: 100%; }
-.src::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); flex: none; }
-.src.live::before { background: var(--lime); }
-.hbtn { border: 1px solid rgba(255,255,255,.3); background: transparent; color: var(--head-fg); border-radius: 8px; padding: 6px 12px; font-weight: 600; font-size: .88rem; }
-.hbtn:hover { background: rgba(255,255,255,.1); }
-.hbtn.lime { background: var(--lime); border-color: var(--lime); color: #0a1f22; }
+.app { display: grid; grid-template-columns: 236px minmax(0, 1fr); min-height: 100vh; }
 
-.wrap { max-width: 1440px; margin: 0 auto; padding-inline: 20px; padding-block: 18px 48px; display: grid; gap: 16px; min-width: 0; }
-.btn { border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 8px; padding: 7px 13px; font-weight: 600; }
+/* Zijbalk */
+.side { background: var(--side-bg); color: var(--side-fg); display: flex; flex-direction: column; gap: 22px; padding: calc(20px + env(safe-area-inset-top, 0px)) 14px calc(16px + env(safe-area-inset-bottom, 0px)); position: sticky; top: 0; height: 100vh; }
+.logo { font-weight: 800; font-size: 1.45rem; letter-spacing: -.01em; padding: 0 8px; }
+.logo b { color: var(--lime); }
+.logo small { display: block; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--side-muted); font-weight: 700; margin-top: 2px; }
+.nav { display: grid; gap: 3px; }
+.nav button { display: flex; align-items: center; gap: 11px; border: 0; background: transparent; color: var(--side-fg); padding: 10px 12px; border-radius: 9px; font-weight: 600; text-align: left; }
+.nav button:hover { background: rgba(255,255,255,.06); }
+.nav button[aria-current="true"] { background: var(--side-active); box-shadow: inset 3px 0 0 var(--lime); }
+.nav .cnt { margin-left: auto; font-family: var(--font-num); font-size: .78rem; color: var(--side-muted); }
+.side .foot { margin-top: auto; border-top: 1px solid rgba(255,255,255,.1); padding: 14px 8px 0; display: grid; gap: 4px; font-size: .84rem; }
+.side .foot .k { color: var(--side-muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); margin-right: 7px; }
+.dot.live { background: var(--lime); }
+
+/* Hoofdvlak */
+.main { min-width: 0; padding-inline: 26px; padding-block: calc(22px + env(safe-area-inset-top, 0px)) 40px; display: grid; gap: 18px; align-content: start; }
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; align-items: center; }
+.title { display: flex; gap: 14px; align-items: center; min-width: 0; }
+.title .ico { width: 52px; height: 52px; border-radius: 14px; background: var(--side-bg); color: var(--lime); display: grid; place-items: center; flex: none; }
+.title .ico svg { width: 26px; height: 26px; }
+.title h1 { margin: 0; font-size: 1.75rem; font-weight: 800; letter-spacing: -.01em; line-height: 1.1; text-wrap: balance; }
+.title p { margin: 3px 0 0; color: var(--muted); }
+.acts { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.btn { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); background: var(--surface); border-radius: 9px; padding: 8px 14px; font-weight: 700; }
 .btn:hover { border-color: var(--accent); }
-.btn.primary { background: var(--primary-bg); border-color: var(--primary-bg); color: var(--primary-fg); }
+.btn.primary { background: var(--primary); border-color: var(--primary); color: var(--primary-fg); }
 .btn.danger { color: var(--crit); }
-.btn.sm { padding: 4px 10px; font-size: .84rem; }
+.btn.sm { padding: 5px 11px; font-size: .86rem; }
 .btn:disabled { opacity: .45; cursor: not-allowed; }
+.chip { display: inline-flex; align-items: center; border: 1px solid var(--line); background: var(--surface); border-radius: 9px; padding: 8px 12px; font-size: .88rem; color: var(--muted); }
 
-.notice { background: var(--warn-soft); color: var(--warn); border-radius: 10px; padding: 10px 14px; font-size: .9rem; }
-.notice b { font-weight: 700; }
+.notice { background: var(--warn-soft); color: var(--warn); border-radius: 12px; padding: 10px 14px; font-size: .9rem; }
 
 /* Kengetallen */
-.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
-.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 15px; display: grid; gap: 1px; min-width: 0; }
-.kpi .lbl { color: var(--muted); font-size: .76rem; text-transform: uppercase; letter-spacing: .07em; font-weight: 700; }
-.kpi .val { font-family: var(--font-num); font-size: 1.5rem; font-weight: 500; color: var(--fg); }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+.kpi { background: var(--surface); border-radius: 14px; box-shadow: var(--shadow); padding: 16px 18px; display: flex; gap: 14px; align-items: flex-start; min-width: 0; }
+.kpi .bub { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+.kpi .bub svg { width: 22px; height: 22px; }
+.b-info { background: var(--info-soft); color: var(--info); }
+.b-ok { background: var(--ok-soft); color: var(--ok); }
+.b-warn { background: var(--warn-soft); color: var(--warn); }
+.b-violet { background: var(--violet-soft); color: var(--violet); }
+.b-acc { background: var(--accent-soft); color: var(--accent); }
+.kpi .txt { display: grid; gap: 1px; min-width: 0; }
+.kpi .lbl { color: var(--muted); font-size: .86rem; font-weight: 600; }
+.kpi .val { font-size: 1.7rem; font-weight: 800; letter-spacing: -.01em; line-height: 1.15; }
 .kpi .sub { color: var(--muted); font-size: .82rem; }
-.kpi.alert { border-color: var(--orange); }
-.kpi.alert .val { color: var(--warn); }
+.kpi .sub .up { color: var(--ok); font-weight: 700; }
+.kpi .sub .dn { color: var(--warn); font-weight: 700; }
 
-/* Balk */
-.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
-.seg { display: inline-flex; background: var(--surface-2); border-radius: 10px; padding: 3px; gap: 2px; }
-.seg button { border: 0; background: transparent; color: var(--muted); padding: 7px 15px; border-radius: 8px; font-weight: 700; }
-.seg button[aria-pressed="true"], .seg button[aria-selected="true"] { background: var(--surface); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,.14); }
-.seg .c { font-family: var(--font-num); font-weight: 400; margin-left: 6px; color: var(--muted); }
-.tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-width: 0; }
-.tools input, .tools select, .field input, .field select, .field textarea { border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 8px; padding: 7px 10px; min-width: 0; }
-.tools input[type="search"] { width: 230px; max-width: 100%; }
+/* Kaarten */
+.grid { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 18px; align-items: start; }
+.card { background: var(--surface); border-radius: 14px; box-shadow: var(--shadow); min-width: 0; }
+.card > .hd { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; padding: 16px 18px 0; }
+.card > .hd h2 { margin: 0; font-size: 1.15rem; font-weight: 800; }
+.card > .hd h2 small { font-weight: 500; color: var(--muted); font-size: .9rem; margin-left: 6px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 4px; padding: 10px 18px 0; border-bottom: 1px solid var(--line); }
+.tabs button { border: 0; background: transparent; padding: 8px 10px 10px; color: var(--muted); font-weight: 700; border-bottom: 2px solid transparent; margin-bottom: -1px; display: inline-flex; gap: 7px; align-items: center; }
+.tabs button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+.tabs .n { background: var(--surface-2); border-radius: 999px; padding: 0 7px; font-size: .76rem; font-family: var(--font-num); font-weight: 500; color: var(--muted); }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.search { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 9px; padding: 0 10px; background: var(--surface); min-width: 0; }
+.search input { border: 0; background: transparent; padding: 8px 0; width: 210px; max-width: 100%; outline: none; }
+.seg { display: inline-flex; background: var(--surface-2); border-radius: 9px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: transparent; color: var(--muted); padding: 6px 12px; border-radius: 7px; font-weight: 700; font-size: .88rem; }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
 
-/* Lijst */
-.tablebox { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; min-width: 940px; }
-th { text-align: left; font-size: .75rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); font-weight: 700; padding: 11px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; user-select: none; }
+/* Tabel */
+.tablebox { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 820px; }
+th { text-align: left; font-size: .8rem; color: var(--muted); font-weight: 700; padding: 12px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; user-select: none; }
 th[data-k] { cursor: pointer; }
 th[aria-sort="ascending"]::after { content: " ▲"; font-size: .7em; }
 th[aria-sort="descending"]::after { content: " ▼"; font-size: .7em; }
 th.r, td.r { text-align: right; }
-td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+td { padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: middle; }
 tbody tr { cursor: pointer; }
 tbody tr:hover { background: var(--surface-2); }
 tbody tr.sel { background: var(--accent-soft); }
-tbody tr:last-child td { border-bottom: 0; }
+.vcell { display: flex; gap: 11px; align-items: center; min-width: 0; }
+.vcell .di { width: 32px; height: 32px; border-radius: 8px; background: var(--side-bg); color: #fff; display: grid; place-items: center; flex: none; }
+.vcell .di svg { width: 16px; height: 16px; }
 .vve { font-weight: 700; }
-.plaats { color: var(--muted); font-size: .84rem; }
-.empty { padding: 28px; text-align: center; color: var(--muted); }
+.sub2 { color: var(--muted); font-size: .84rem; }
+.empty { padding: 36px 20px; text-align: center; color: var(--muted); display: grid; gap: 6px; justify-items: center; }
+.empty strong { color: var(--fg); font-size: 1.05rem; }
+.empty code { font-family: var(--font-num); background: var(--surface-2); padding: 2px 6px; border-radius: 6px; color: var(--fg); }
+.pager { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 18px 16px; color: var(--muted); font-size: .86rem; }
+.pager .pg { display: flex; gap: 4px; }
+.pager button { border: 0; background: transparent; min-width: 32px; height: 32px; border-radius: 8px; font-weight: 700; color: var(--muted); }
+.pager button[aria-current="true"] { background: var(--surface-2); color: var(--fg); }
+.pager button:disabled { opacity: .35; cursor: default; }
 
-/* Status & signalen */
-.pill { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 3px 10px; font-size: .8rem; font-weight: 700; white-space: nowrap; background: var(--surface-2); color: var(--muted); }
-.pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-.st-nieuw, .st-gekwalificeerd { background: var(--accent-soft); color: var(--accent); }
+.pill { display: inline-flex; align-items: center; border-radius: 6px; padding: 3px 9px; font-size: .8rem; font-weight: 700; white-space: nowrap; background: var(--surface-2); color: var(--muted); }
+.st-nieuw { background: var(--info-soft); color: var(--info); }
+.st-gekwalificeerd, .st-geanalyseerd { background: var(--accent-soft); color: var(--accent); }
 .st-wacht_op_klant, .st-in_onderhandeling { background: var(--warn-soft); color: var(--warn); }
-.st-geanalyseerd, .st-offerte_uit, .st-contract_uit { background: var(--surface-2); color: var(--fg); }
+.st-offerte_uit, .st-contract_uit { background: var(--violet-soft); color: var(--violet); }
 .st-gewonnen, .st-getekend { background: var(--ok-soft); color: var(--ok); }
 .st-verloren { background: var(--crit-soft); color: var(--crit); }
-.tag { display: inline-block; border-radius: 6px; padding: 2px 7px; font-size: .76rem; font-weight: 700; margin: 1px 4px 1px 0; white-space: nowrap; }
+.tag { display: inline-block; border-radius: 6px; padding: 2px 7px; font-size: .75rem; font-weight: 700; margin: 1px 4px 1px 0; white-space: nowrap; }
 .tag.up { background: var(--ok-soft); color: var(--ok); }
-.tag.down { background: var(--accent-soft); color: var(--accent); }
+.tag.down { background: var(--info-soft); color: var(--info); }
 .tag.dl { background: var(--warn-soft); color: var(--warn); }
 .tag.crit { background: var(--crit-soft); color: var(--crit); }
 .tag.info { background: var(--surface-2); color: var(--muted); }
-.age { font-family: var(--font-num); font-size: .9rem; }
+.age { font-family: var(--font-num); font-size: .88rem; }
 .age.warn { color: var(--warn); font-weight: 600; }
 .age.crit { color: var(--crit); font-weight: 600; }
 .leeg { color: var(--muted); }
 
 /* Bord */
-.board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(250px, 1fr); gap: 12px; overflow-x: auto; padding-bottom: 8px; align-items: start; }
+.board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 1fr); gap: 12px; overflow-x: auto; padding: 16px 18px 18px; align-items: start; }
 .col { background: var(--surface-2); border-radius: 12px; padding: 10px; display: grid; gap: 8px; align-content: start; min-height: 160px; border: 2px dashed transparent; }
 .col.over { border-color: var(--accent); background: var(--accent-soft); }
 .col.lost { background: var(--crit-soft); }
-.colh { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 2px 4px 4px; }
-.colh .t { font-weight: 800; font-size: .92rem; }
-.colh .n { font-family: var(--font-num); color: var(--muted); font-size: .82rem; }
-.colh .s { color: var(--muted); font-size: .78rem; font-family: var(--font-num); }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 11px; display: grid; gap: 5px; cursor: grab; min-width: 0; }
-.card:hover { border-color: var(--accent); }
-.card.sel { outline: 2px solid var(--accent); }
-.card.dragging { opacity: .45; }
-.card .r1 { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
-.card .nm { font-weight: 700; line-height: 1.25; overflow-wrap: anywhere; }
-.card .bd { font-family: var(--font-num); font-size: .86rem; white-space: nowrap; }
-.card .mt { color: var(--muted); font-size: .82rem; display: flex; justify-content: space-between; gap: 8px; }
-.card .tg { min-height: 0; }
+.colh { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 2px 4px 4px; font-weight: 800; font-size: .92rem; }
+.colh .n { font-family: var(--font-num); color: var(--muted); font-size: .8rem; font-weight: 500; }
+.kaart { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 11px; display: grid; gap: 5px; cursor: grab; min-width: 0; }
+.kaart:hover { border-color: var(--accent); }
+.kaart.sel { outline: 2px solid var(--accent); }
+.kaart.dragging { opacity: .45; }
+.kaart .nm { font-weight: 700; line-height: 1.25; overflow-wrap: anywhere; }
+.kaart .mt { color: var(--muted); font-size: .82rem; display: flex; justify-content: space-between; gap: 8px; }
 .dropnote { color: var(--muted); font-size: .8rem; text-align: center; padding: 10px 4px; }
 
-/* Dossier */
-.scrim { position: fixed; inset: 0; background: rgba(0, 30, 34, .38); }
-aside.dossier { position: fixed; top: 0; right: 0; bottom: 0; width: min(580px, 100%); background: var(--surface); border-left: 1px solid var(--line); box-shadow: var(--shadow); overflow-y: auto; display: grid; align-content: start; }
-.dtop { background: var(--head-bg); color: var(--head-fg); padding: calc(16px + env(safe-area-inset-top, 0px)) 22px 16px; display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
-.dtop h2 { margin: 0; font-size: 1.3rem; font-weight: 800; text-wrap: balance; }
-.dtop .meta { color: var(--head-muted); font-size: .88rem; margin-top: 3px; }
-.close { border: 1px solid rgba(255,255,255,.3); background: transparent; color: var(--head-fg); border-radius: 8px; width: 34px; height: 34px; font-size: 1.05rem; flex: none; }
-.dbody { padding: 18px 22px calc(26px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 18px; }
-section.blk { display: grid; gap: 8px; }
-section.blk h3 { margin: 0; font-size: .76rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 800; }
-dl.kv { display: grid; grid-template-columns: 160px 1fr; gap: 6px 12px; margin: 0; }
-dl.kv dt { color: var(--muted); }
-dl.kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; white-space: pre-line; }
-.copy { border: 0; background: var(--surface-2); color: var(--fg); border-radius: 6px; padding: 1px 7px; font-size: .78rem; margin-left: 6px; }
+/* Dossierpaneel */
+.panel { position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; }
+.ph { display: flex; gap: 12px; align-items: flex-start; padding: 16px 18px 6px; }
+.ph .di { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; flex: none; }
+.ph h3 { margin: 0; font-size: 1.12rem; font-weight: 800; line-height: 1.2; display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; }
+.ph .meta { color: var(--muted); font-size: .86rem; margin-top: 3px; }
+.ph .x { margin-left: auto; border: 0; background: transparent; color: var(--muted); width: 30px; height: 30px; border-radius: 8px; font-size: 1rem; flex: none; }
+.ph .x:hover { background: var(--surface-2); }
+.pbody { padding: 14px 18px 18px; display: grid; gap: 14px; }
+.rows { display: grid; }
+.rw { display: grid; grid-template-columns: 24px 128px minmax(0, 1fr); gap: 10px; align-items: start; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: .92rem; }
+.rw:last-child { border-bottom: 0; }
+.rw svg { color: var(--muted); margin-top: 2px; }
+.rw .k { color: var(--muted); }
+.rw .v { min-width: 0; overflow-wrap: anywhere; white-space: pre-line; }
+.copy { border: 0; background: var(--surface-2); border-radius: 6px; padding: 1px 7px; font-size: .76rem; margin-left: 6px; }
 .prijs { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-.prijs .row { display: flex; justify-content: space-between; gap: 12px; padding: 7px 12px; border-bottom: 1px solid var(--line); }
+.prijs .row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 12px; border-bottom: 1px solid var(--line); font-size: .92rem; }
 .prijs .row:last-child { border-bottom: 0; }
-.prijs .row.tot { background: var(--surface-2); font-weight: 700; }
-.prijs .src2 { color: var(--muted); font-size: .76rem; }
-.signal { padding: 8px 11px; border-radius: 8px; background: var(--surface-2); font-size: .9rem; }
+.prijs .row.tot { background: var(--surface-2); font-weight: 800; }
+.prijs .s2 { color: var(--muted); font-size: .76rem; }
+.signal { padding: 9px 11px; border-radius: 9px; background: var(--surface-2); font-size: .9rem; }
 .signal.warn { background: var(--warn-soft); color: var(--warn); }
 .signal.crit { background: var(--crit-soft); color: var(--crit); }
 .signal.ok { background: var(--ok-soft); color: var(--ok); }
-.docs { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; }
-.doc { display: flex; gap: 7px; align-items: center; font-size: .88rem; }
-.doc .mk { width: 18px; height: 18px; border-radius: 5px; display: grid; place-items: center; font-size: .72rem; font-weight: 800; flex: none; }
+.docs { display: grid; gap: 8px; }
+.doc { display: flex; gap: 8px; align-items: center; font-size: .92rem; }
+.doc .mk { width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center; font-size: .74rem; font-weight: 800; flex: none; }
 .doc .mk.y { background: var(--ok-soft); color: var(--ok); }
 .doc .mk.n { background: var(--surface-2); color: var(--muted); }
 ol.tl { list-style: none; margin: 0; padding: 0; display: grid; }
-ol.tl li { display: grid; grid-template-columns: 100px 1fr; gap: 10px; padding: 6px 0; border-bottom: 1px dashed var(--line); font-size: .88rem; }
+ol.tl li { display: grid; grid-template-columns: 90px 1fr; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--line); font-size: .88rem; }
 ol.tl li:last-child { border-bottom: 0; }
 ol.tl .d { color: var(--muted); font-family: var(--font-num); font-size: .8rem; }
-.actions { display: grid; gap: 12px; border-top: 1px solid var(--line); padding-top: 14px; }
 .inline { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
 .field { display: grid; gap: 4px; }
 .field label { font-size: .8rem; color: var(--muted); font-weight: 700; }
+.field input, .field select { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 7px 10px; min-width: 0; }
+.chk { display: flex; gap: 8px; align-items: center; font-size: .9rem; }
 .note { color: var(--muted); font-size: .84rem; margin: 0; }
-.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 9px 16px; border-radius: 8px; font-weight: 700; box-shadow: var(--shadow); max-width: calc(100% - 32px); }
+.pempty { padding: 40px 22px; text-align: center; color: var(--muted); display: grid; gap: 8px; justify-items: center; }
+.pempty .di { width: 52px; height: 52px; border-radius: 50%; background: var(--surface-2); display: grid; place-items: center; }
+
+/* Analyse */
+.analyse { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.abody { padding: 12px 18px 18px; }
+.chart svg { width: 100%; height: auto; display: block; }
+.chart .gl { stroke: var(--line); stroke-width: 1; }
+.chart .ax { fill: var(--muted); font-size: 11px; font-family: var(--font-num); }
+.chart .ln { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linejoin: round; }
+.chart .ar { fill: var(--accent); opacity: .12; }
+.chart .pt { fill: var(--surface); stroke: var(--accent); stroke-width: 2; }
+.bigr { display: flex; justify-content: space-between; align-items: baseline; }
+.bigr .bn { font-size: 1.8rem; font-weight: 800; }
+.bars { display: grid; gap: 12px; }
+.bar { display: grid; grid-template-columns: 110px minmax(0, 1fr) 54px; gap: 10px; align-items: center; font-size: .9rem; }
+.bar .tr { height: 8px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+.bar .fl { height: 100%; background: var(--accent); border-radius: 999px; }
+.bar .pc { text-align: right; font-family: var(--font-num); font-size: .84rem; }
+.donut { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.donut svg { width: 150px; height: 150px; flex: none; }
+.donut .lg { display: grid; gap: 10px; font-size: .9rem; flex: 1; min-width: 140px; }
+.donut .lg div { display: flex; justify-content: space-between; gap: 10px; }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; }
+.badge { background: var(--ok-soft); color: var(--ok); border-radius: 10px; padding: 9px 12px; font-weight: 800; text-align: center; }
+
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 9px 16px; border-radius: 9px; font-weight: 700; box-shadow: var(--shadow); max-width: calc(100% - 32px); z-index: 10; }
 footer { color: var(--muted); font-size: .82rem; display: grid; gap: 4px; }
 
-dialog { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--fg); padding: 20px; width: min(540px, calc(100% - 32px)); box-shadow: var(--shadow); }
-dialog::backdrop { background: rgba(0, 30, 34, .45); }
-dialog h2 { margin: 0 0 4px; font-size: 1.15rem; font-weight: 800; }
+dialog { border: 0; border-radius: 14px; background: var(--surface); color: var(--fg); padding: 22px; width: min(540px, calc(100% - 32px)); box-shadow: 0 20px 50px rgba(0,0,0,.25); }
+dialog::backdrop { background: rgba(4, 31, 34, .5); }
+dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.chk { display: flex; gap: 8px; align-items: center; font-size: .9rem; }
 
-@media (max-width: 600px) {
-  .grid2 { grid-template-columns: 1fr; }
-  dl.kv { grid-template-columns: 1fr; gap: 0; }
-  dl.kv dt { margin-top: 6px; }
-  .tools input[type="search"] { width: 100%; }
-  .board { grid-auto-columns: minmax(78vw, 1fr); }
+@media (max-width: 1280px) { .grid { grid-template-columns: minmax(0, 1fr) 340px; } .analyse { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 1080px) { .grid { grid-template-columns: 1fr; } .panel { position: static; max-height: none; } }
+@media (max-width: 860px) {
+  .app { grid-template-columns: 1fr; }
+  .side { position: static; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px; }
+  .nav { display: flex; flex-wrap: wrap; }
+  .nav button { padding: 7px 10px; }
+  .side .foot { display: none; }
+  .main { padding-inline: 16px; }
+  .analyse { grid-template-columns: 1fr; }
 }
-@media (prefers-reduced-motion: no-preference) {
-  aside.dossier { animation: slide .18s ease-out; }
-  @keyframes slide { from { transform: translateX(24px); opacity: .6; } to { transform: none; opacity: 1; } }
+@media (max-width: 560px) {
+  .grid2 { grid-template-columns: 1fr; }
+  .rw { grid-template-columns: 22px 1fr; }
+  .rw .v { grid-column: 2; }
+  .search input { width: 140px; }
+  .board { grid-auto-columns: minmax(78vw, 1fr); }
 }
 </style>
 </head>
 <body>
 
-<header class="head">
-  <div class="in">
-    <div class="brand"><span class="logo">VVE<b>gemak</b></span><span class="sub">Sales · Offertepijplijn</span></div>
-    <div class="headr">
-      <span class="src" id="srcLabel">Voorbeelddata</span>
-      <button class="hbtn" id="btnLaad" type="button" title="Laad een aanvragen.json die het intakescript heeft gemaakt">Bestand laden</button>
-      <input type="file" id="fileIn" accept=".json,application/json" hidden>
-      <button class="hbtn" id="btnReset" type="button">Wijzigingen wissen</button>
-      <button class="hbtn lime" id="btnNieuw" type="button">+ Testaanvraag</button>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-pipe" viewBox="0 0 24 24"><path d="M3 5h18M6 12h12M10 19h4"/></symbol>
+  <symbol id="i-board" viewBox="0 0 24 24"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="10" rx="1.5"/><rect x="17" y="4" width="4" height="13" rx="1.5"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></symbol>
+  <symbol id="i-euro" viewBox="0 0 24 24"><path d="M17 6.5A6.5 6.5 0 1 0 17 17.5M4 10h9M4 14h9"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></symbol>
+  <symbol id="i-bld" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+</svg>
+
+<div class="app">
+  <aside class="side">
+    <div class="logo">VVE<b>gemak</b><small>Sales</small></div>
+    <nav class="nav" aria-label="Weergave">
+      <button type="button" data-nav="lijst"><svg class="i"><use href="#i-pipe"/></svg>Offertepijplijn<span class="cnt" id="navCnt"></span></button>
+      <button type="button" data-nav="bord"><svg class="i"><use href="#i-board"/></svg>Bord</button>
+      <button type="button" data-nav="analyse"><svg class="i"><use href="#i-chart"/></svg>Analyse</button>
+    </nav>
+    <div class="foot">
+      <span class="k">Bron</span>
+      <span id="srcSide"><span class="dot"></span>Geen data geladen</span>
+      <span class="k" style="margin-top:8px">Werkscherm</span>
+      <span>Farhaad · commercie</span>
     </div>
-  </div>
-</header>
+  </aside>
 
-<main class="wrap">
-  <div class="notice" id="notice" hidden></div>
-  <div class="kpis" id="kpis"></div>
-
-  <div class="bar">
-    <div class="tools">
-      <div class="seg" role="tablist" aria-label="Pakket">
-        <button role="tab" id="tab-basic" data-pakket="basic" type="button">Basic<span class="c" id="c-basic"></span></button>
-        <button role="tab" id="tab-premium" data-pakket="premium" type="button">Premium<span class="c" id="c-premium"></span></button>
+  <main class="main">
+    <div class="top">
+      <div class="title">
+        <div class="ico"><svg class="i"><use href="#i-inbox"/></svg></div>
+        <div><h1>Offertepijplijn</h1><p>Aanvragen van vvegemak.nl, van binnenkomst tot getekend contract</p></div>
       </div>
-      <div class="seg" aria-label="Weergave">
-        <button id="v-lijst" data-view="lijst" type="button">Lijst</button>
-        <button id="v-bord" data-view="bord" type="button">Bord</button>
+      <div class="acts">
+        <span class="chip" id="srcChip">Geen data geladen</span>
+        <button class="btn" id="btnLaad" type="button"><svg class="i"><use href="#i-upload"/></svg>Bestand laden</button>
+        <input type="file" id="fileIn" accept=".json,application/json" hidden>
+        <button class="btn primary" id="btnNieuw" type="button"><svg class="i"><use href="#i-plus"/></svg>Testaanvraag</button>
       </div>
     </div>
-    <div class="tools">
-      <input id="zoek" type="search" placeholder="Zoek VvE of plaats" aria-label="Zoek VvE of plaats">
-      <select id="statusFilter" aria-label="Filter op status">
-        <option value="actief">Lopend</option>
-        <option value="alle">Alle, ook afgesloten</option>
-      </select>
+
+    <div class="notice" id="notice" hidden></div>
+    <div class="kpis" id="kpis"></div>
+
+    <div class="grid">
+      <section class="card" id="lijstKaart">
+        <div class="hd">
+          <h2 id="lijstTitel">Aanvragen</h2>
+          <div class="tools">
+            <div class="seg" aria-label="Pakket">
+              <button type="button" data-pakket="alle">Alle</button>
+              <button type="button" data-pakket="basic">Basic</button>
+              <button type="button" data-pakket="premium">Premium</button>
+            </div>
+            <label class="search"><svg class="i"><use href="#i-search"/></svg><input id="zoek" type="search" placeholder="Zoek VvE of plaats" aria-label="Zoek VvE of plaats"></label>
+          </div>
+        </div>
+        <div class="tabs" role="tablist" id="tabs"></div>
+        <div id="lijst">
+          <div class="tablebox"><table><thead><tr id="thead"></tr></thead><tbody id="tbody"></tbody></table></div>
+          <div class="pager" id="pager"></div>
+        </div>
+        <div class="board" id="bord" hidden></div>
+      </section>
+
+      <section class="card panel" id="panel" aria-label="Dossier"></section>
     </div>
-  </div>
 
-  <div class="tablebox" id="lijst">
-    <table>
-      <thead><tr id="thead"></tr></thead>
-      <tbody id="tbody"></tbody>
-    </table>
-  </div>
-  <div class="board" id="bord" hidden></div>
+    <div class="analyse" id="analyse">
+      <section class="card"><div class="hd"><h2>Aanvragen <small>per week</small></h2></div><div class="abody chart" id="chWeek"></div></section>
+      <section class="card"><div class="hd"><h2>Herkomst <small>"Hoe bent u bij ons gekomen?"</small></h2></div><div class="abody" id="chHerkomst"></div></section>
+      <section class="card"><div class="hd"><h2>Reactietijd <small>eerste antwoord</small></h2></div><div class="abody" id="chReactie"></div></section>
+    </div>
 
-  <footer>
-    <span>Prijs Basic = officiële staffel (Bassie): € 495 basis + per soort aantal × staffeltarief, betalingsverkeer separaat. Premium = maatwerk, bedrag vult Farhaad in.</span>
-    <span>Gewogen pijplijn = offertebedrag × slagingskans per status (aanname: geanalyseerd 20%, offerte uit 30%, onderhandeling 50%, gewonnen 90%). Statuswijzigingen bewaart alleen deze browser.</span>
-  </footer>
-</main>
-
-<div class="scrim" id="scrim" hidden></div>
-<aside class="dossier" id="dossier" hidden aria-label="Dossier"></aside>
+    <footer>
+      <span>Prijs Basic = officiële staffel (Bassie): € 495 basis + per soort aantal × staffeltarief, betalingsverkeer separaat. Premium = maatwerk, bedrag vult Farhaad in.</span>
+      <span>Gewogen pijplijn = offertebedrag × slagingskans per status (aanname: geanalyseerd 20%, offerte uit 30%, onderhandeling 50%, gewonnen 90%). Statuswijzigingen bewaart alleen deze browser.</span>
+    </footer>
+  </main>
+</div>
 <div class="toast" id="toast" hidden role="status"></div>
 
 <dialog id="dlg">
   <form id="frm" style="display:grid;gap:12px">
-    <div>
-      <h2>Testaanvraag</h2>
-      <p class="note">Zelfde velden als het webformulier "Offerte aanvraag". De prijs rekent direct mee.</p>
-    </div>
+    <div><h2>Testaanvraag</h2><p class="note">Zelfde velden als het webformulier "Offerte aanvraag". De prijs rekent direct mee.</p></div>
     <div class="field"><label for="f-naam">Naam van VvE</label><input id="f-naam" required value="VvE Testpand 12-20"></div>
     <div class="grid2">
       <div class="field"><label for="f-plaats">Vestigingsplaats</label><input id="f-plaats" required value="Amsterdam"></div>
@@ -289,10 +392,7 @@ dialog h2 { margin: 0 0 4px; font-size: 1.15rem; font-weight: 800; }
     </div>
     <div class="field"><label for="f-bijz">Bijzonderheden</label><input id="f-bijz" value="Willen per 1 januari overstappen."></div>
     <label class="chk"><input type="checkbox" id="f-akte" checked> Splitsingsakte geüpload</label>
-    <div class="inline" style="justify-content:flex-end">
-      <button class="btn" type="button" id="dlgCancel">Annuleren</button>
-      <button class="btn primary" type="submit">Aanvraag toevoegen</button>
-    </div>
+    <div class="inline" style="justify-content:flex-end"><button class="btn" type="button" id="dlgCancel">Annuleren</button><button class="btn primary" type="submit">Aanvraag toevoegen</button></div>
   </form>
 </dialog>
 
@@ -316,19 +416,25 @@ dialog h2 { margin: 0 0 4px; font-size: 1.15rem; font-weight: 800; }
   const AFGESLOTEN = new Set(["getekend", "verloren"]);
   const AKKOORD = new Set(["gekwalificeerd", "geanalyseerd"]);
   const VERLIESREDENEN = ["Prijs", "Wil Premium", "Geen overstap", "Geen reactie", "Concurrent"];
+  const TABS = [
+    { k: "lopend", l: "Lopend", f: d => !AFGESLOTEN.has(d.status) },
+    { k: "nieuw", l: "Nieuw", f: d => d.status === "nieuw" },
+    { k: "wacht", l: "Wacht op klant", f: d => d.status === "wacht_op_klant" },
+    { k: "akkoord", l: "Wacht op akkoord", f: d => AKKOORD.has(d.status) },
+    { k: "offerte", l: "Offerte uit", f: d => ["offerte_uit", "in_onderhandeling"].includes(d.status) },
+    { k: "af", l: "Afgesloten", f: d => ["gewonnen", "contract_uit", "getekend", "verloren"].includes(d.status) }
+  ];
+  const PER_PAGINA = 10;
 
   const isGA = p => T.ga.includes((p || "").trim().toLowerCase());
   const tier = n => { let i = 0; T.grenzen.forEach((g, k) => { if (n >= g) i = k; }); return i; };
   const totAR = d => Object.values(d.ar || {}).reduce((a, b) => a + (+b || 0), 0);
-
   function prijs(d) {
     const out = { regels: [], signalen: [], bv: null, opstart: 0, advies: "basic" };
     const tot = totAR(d), ga = isGA(d.plaats), premOk = ga && tot >= T.premiumGrens;
     if (tot > T.maxPlausibel) out.signalen.push({ t: "crit", s: "crit", txt: `Opgegeven aantal (${tot}) is onwaarschijnlijk. Controleer het aantal in de akte voordat er een prijs uitgaat.` });
-    if (d.pakket === "premium" && !premOk)
-      out.signalen.push({ t: "down", s: "warn", txt: `Downsell: Premium gevraagd, maar ${ga ? "onder " + T.premiumGrens + " appartementsrechten" : "buiten Groot-Amsterdam"}. Basic aanbieden met positieve uitleg.` });
-    if (d.pakket === "basic" && premOk && tot <= T.maxPlausibel)
-      out.signalen.push({ t: "up", s: "ok", txt: "Upgrade-kans: Basic gevraagd, maar Premium-profiel (Groot-Amsterdam en omvang)." });
+    if (d.pakket === "premium" && !premOk) out.signalen.push({ t: "down", s: "warn", txt: `Downsell: Premium gevraagd, maar ${ga ? "onder " + T.premiumGrens + " appartementsrechten" : "buiten Groot-Amsterdam"}. Basic aanbieden met positieve uitleg.` });
+    if (d.pakket === "basic" && premOk && tot <= T.maxPlausibel) out.signalen.push({ t: "up", s: "ok", txt: "Upgrade-kans: Basic gevraagd, maar Premium-profiel (Groot-Amsterdam en omvang)." });
     if (d.pakket === "premium" && premOk) { out.advies = "premium"; out.opstart = T.opstart.premium; return out; }
     out.regels.push({ o: "Basisvergoeding", b: T.basis, src: "staffel" });
     for (const k of Object.keys(T.staffel)) {
@@ -350,46 +456,19 @@ dialog h2 { margin: 0 0 4px; font-size: 1.15rem; font-weight: 800; }
     return beheer(p) + (p.bv || 0);
   }
 
-  // ── Voorbeelddata (fictief) ───────────────────────────────────────────────────
-  const dag = n => { const x = new Date(); x.setHours(9, 0, 0, 0); x.setDate(x.getDate() - n); return x.toISOString(); };
-  const ar = (w, b = 0, p = 0, g = 0) => ({ woning: w, bedrijfsruimte: b, parkeerplaats: p, berging: g });
-  const dl = n => { const x = new Date(); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); };
-  const SEED = () => [
-    { id: "D-118", naam: "VvE Lindenhof 3-17", plaats: "Amsterdam", pakket: "basic", ar: ar(8), herkomst: "Website", bron: "formulier", status: "nieuw", sinds: dag(0), binnen: dag(0), contact: "Bestuurder (voorbeeld)", bijz: "Huidige beheerder reageert traag. Contract moet binnen twee weken opgezegd.", deadline_signaal: true, docs: { akte: true }, opzeg: dl(10), tl: [[dag(0), "Aanvraag via webformulier"]] },
-    { id: "D-117", naam: "VvE Zeeburgerkade 40-58", plaats: "Amsterdam", pakket: "basic", ar: ar(52, 2, 0, 52), herkomst: "Google Ads", bron: "formulier", status: "gekwalificeerd", sinds: dag(1), binnen: dag(2), contact: "Voorzitter (voorbeeld)", bijz: "Vragen over technisch beheer.", docs: { akte: true, jaarrekening: true }, eerste_reactie_uren: 5.5, tl: [[dag(2), "Aanvraag via webformulier"], [dag(1), "Compleet, gekwalificeerd"]] },
-    { id: "D-116", naam: "VvE Hof van Rhenen", plaats: "Utrecht", pakket: "premium", ar: ar(14), herkomst: "Overig", bron: "formulier", status: "gekwalificeerd", sinds: dag(1), binnen: dag(3), contact: "Penningmeester (voorbeeld)", bijz: "Liefst volledig ontzorgd.", docs: { akte: true }, eerste_reactie_uren: 26, tl: [[dag(3), "Aanvraag via webformulier"], [dag(1), "Compleet, gekwalificeerd"]] },
-    { id: "D-115", naam: "VvE Spaarnezicht", plaats: "Haarlem", pakket: "basic", ar: ar(30, 0, 12, 0), herkomst: "Flyer", bron: "akte", status: "geanalyseerd", sinds: dag(2), binnen: dag(6), contact: "Bestuurder (voorbeeld)", bijz: "", docs: { akte: true, jaarrekening: true, notulen: true }, warmte: true, betalingsverkeer: true, eerste_reactie_uren: 20, tl: [[dag(6), "Aanvraag via webformulier"], [dag(4), "Gekwalificeerd"], [dag(2), "Akte gelezen: 30 woningen, 12 parkeerplaatsen, collectieve warmte"]] },
-    { id: "D-114", naam: "VvE De Kade 2-6", plaats: "Weesp", pakket: "basic", ar: ar(5), herkomst: "Website", bron: "formulier", status: "wacht_op_klant", sinds: dag(5), binnen: dag(6), contact: "Bestuurder (voorbeeld)", bijz: "Splitsingsakte niet bij de hand.", docs: {}, eerste_reactie_uren: 30, tl: [[dag(6), "Aanvraag via webformulier"], [dag(5), "Vragenlijst (7 vragen) verstuurd, akte opgevraagd"]] },
-    { id: "D-112", naam: "VvE Westerpark Noord", plaats: "Amsterdam", pakket: "premium", ar: ar(86, 4, 40, 0), herkomst: "Google Ads", bron: "akte", status: "offerte_uit", sinds: dag(9), binnen: dag(21), contact: "Voorzitter (voorbeeld)", bijz: "Groot onderhoud gevels 2027.", docs: { akte: true, jaarrekening: true, notulen: true, mjop: true }, premiumBedrag: 16800, alv: dl(42), eerste_reactie_uren: 4, tl: [[dag(21), "Aanvraag via webformulier"], [dag(18), "Premium-poort: akkoord Farhaad"], [dag(12), "Intakegesprek"], [dag(9), "Offerte verstuurd"]] },
-    { id: "D-110", naam: "VvE Bloemgracht 101", plaats: "Amsterdam", pakket: "basic", ar: ar(4, 1), herkomst: "Website", bron: "akte", status: "offerte_uit", sinds: dag(16), binnen: dag(24), contact: "Bestuurder (voorbeeld)", bijz: "", docs: { akte: true }, betalingsverkeer: true, eerste_reactie_uren: 48, tl: [[dag(24), "Aanvraag via webformulier"], [dag(16), "Offerte verstuurd"], [dag(9), "Dag 7: opvolgmail verstuurd"]] },
-    { id: "D-108", naam: "VvE Parkzicht Almere", plaats: "Almere", pakket: "basic", ar: ar(24, 0, 24, 24), herkomst: "Flyer", bron: "akte", status: "in_onderhandeling", sinds: dag(6), binnen: dag(30), contact: "Bestuurder (voorbeeld)", bijz: "Vergelijken met huidige beheerder.", docs: { akte: true, jaarrekening: true }, hoofdsplitsing: true, alv: dl(13), eerste_reactie_uren: 22, tl: [[dag(30), "Aanvraag via webformulier"], [dag(20), "Offerte verstuurd"], [dag(6), "Nagebeld: ALV-datum bekend"]] },
-    { id: "D-104", naam: "VvE Kinkerhof", plaats: "Amsterdam", pakket: "premium", ar: ar(48, 2, 0, 48), herkomst: "Bestaande klant", bron: "akte", status: "gewonnen", sinds: dag(3), binnen: dag(44), contact: "Voorzitter (voorbeeld)", bijz: "", docs: { akte: true, jaarrekening: true, notulen: true, mjop: true, beheerovereenkomst: true }, premiumBedrag: 9600, tl: [[dag(44), "Aanvraag"], [dag(30), "Offerte verstuurd"], [dag(4), "ALV: akkoord"], [dag(3), "Gewonnen"]] },
-    { id: "D-101", naam: "VvE Oranjehof 7-11", plaats: "Zaandam", pakket: "basic", ar: ar(11), herkomst: "Website", bron: "akte", status: "getekend", sinds: dag(8), binnen: dag(52), contact: "Bestuurder (voorbeeld)", bijz: "", docs: { akte: true, beheerovereenkomst: true }, betalingsverkeer: true, tl: [[dag(52), "Aanvraag"], [dag(40), "Offerte verstuurd"], [dag(8), "Contract getekend → overdracht Randy"]] },
-    { id: "D-097", naam: "VvE Slotermeer Zuid", plaats: "Amsterdam", pakket: "basic", ar: ar(16), herkomst: "Google Ads", bron: "akte", status: "verloren", reden: "Geen overstap", heractiveren: "2027-09-01", sinds: dag(12), binnen: dag(60), contact: "Bestuurder (voorbeeld)", bijz: "", docs: { akte: true }, tl: [[dag(60), "Aanvraag"], [dag(45), "Offerte verstuurd"], [dag(12), "Verloren: geen overstap"]] }
-  ];
-
-  // ── State ─────────────────────────────────────────────────────────────────────
-  // Basis = bron (servicebalie of voorbeeld); wijzigingen per dossier-id staan apart (alleen deze browser).
-  const LS = k => "offertepijplijn-v2-" + k;
+  // ── State: basis = geladen bron; wijzigingen per dossier-id apart (alleen deze browser) ──
+  const LS = k => "offertepijplijn-v3-" + k;
   const lees = (k, d) => { try { const v = JSON.parse(localStorage.getItem(LS(k))); return v ?? d; } catch (e) { return d; } };
   const schrijf = (k, v) => { try { localStorage.setItem(LS(k), JSON.stringify(v)); } catch (e) {} };
-  let bron = { soort: "voorbeeld", ververst: null }, basis = SEED(), extra = [];
-  let wijz = {}, pakket = lees("tab", "basic"), view = lees("view", "lijst"), sortKey = "binnen", sortDir = -1, openId = null;
-  const sleutel = () => bron.soort === "servicebalie" ? "wijz-live" : "wijz-demo";
+  let bron = { soort: "leeg", ververst: null }, basis = [], extra = lees("extra", []), wijz = lees("wijz", {});
+  let view = lees("view", "lijst"), pakket = lees("pakket", "alle"), tab = "lopend", pagina = 1, sortKey = "binnen", sortDir = -1, openId = null, ptab = "overzicht";
 
-  function data() {
-    return [...extra, ...basis].map(b => {
-      const w = wijz[b.id]; if (!w) return b;
-      return { ...b, ...w, tl: [...(b.tl || []), ...(w.tl || [])] };
-    });
-  }
+  const data = () => [...extra, ...basis].map(b => { const w = wijz[b.id]; return w ? { ...b, ...w, tl: [...(b.tl || []), ...(w.tl || [])] } : b; });
   const vind = id => data().find(d => d.id === id);
   function wijzig(id, velden, logtekst) {
-    const w = wijz[id] || {};
-    Object.assign(w, velden);
+    const w = wijz[id] || {}; Object.assign(w, velden);
     if (logtekst) w.tl = [...(w.tl || []), [new Date().toISOString(), logtekst]];
-    wijz[id] = w; schrijf(sleutel(), wijz);
-    const e = extra.find(x => x.id === id); if (e) schrijf("extra", extra);
+    wijz[id] = w; schrijf("wijz", wijz);
   }
 
   // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -397,39 +476,33 @@ dialog h2 { margin: 0 0 4px; font-size: 1.15rem; font-weight: 800; }
   const dagen = iso => Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 864e5));
   const fmtD = iso => iso ? new Date(iso).toLocaleDateString("nl-NL", { day: "2-digit", month: "2-digit", year: "2-digit" }) : "—";
   const fmtDT = iso => iso ? new Date(iso).toLocaleString("nl-NL", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "—";
+  function relatief(iso) {
+    const d = new Date(iso), nu = new Date(), t = d.toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" });
+    const dd = Math.round((new Date(nu.toDateString()) - new Date(d.toDateString())) / 864e5);
+    return dd === 0 ? `Vandaag ${t}` : dd === 1 ? `Gisteren ${t}` : fmtD(iso);
+  }
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const tabVan = d => d.pakket === "premium" && prijs(d).advies !== "premium" && !["nieuw", "gekwalificeerd", "wacht_op_klant"].includes(d.status) ? "basic" : (d.pakket === "premium" ? "premium" : "basic");
+  const ico = n => `<svg class="i"><use href="#i-${n}"/></svg>`;
+  const pakketVan = d => d.pakket === "premium" && prijs(d).advies !== "premium" && !["nieuw", "gekwalificeerd", "wacht_op_klant"].includes(d.status) ? "basic" : d.pakket;
   const LIMIET = { nieuw: [1, 2], gekwalificeerd: [2, 4], wacht_op_klant: [5, 10], geanalyseerd: [1, 3], offerte_uit: [7, 14], in_onderhandeling: [14, 28], gewonnen: [7, 14], contract_uit: [7, 14] };
-  function ageClass(d) {
-    if (AFGESLOTEN.has(d.status)) return "";
-    const n = dagen(d.sinds), l = LIMIET[d.status] || [7, 14];
-    return n >= l[1] ? "crit" : n >= l[0] ? "warn" : "";
-  }
-  function deadlineTag(d) {
-    if (AFGESLOTEN.has(d.status)) return "";
-    if (d.opzeg) {
-      const n = Math.ceil((new Date(d.opzeg + "T23:59:00") - Date.now()) / 864e5);
-      if (n < 0) return `<span class="tag crit">Opzegdatum voorbij</span>`;
-      if (n <= 14) return `<span class="tag dl">Opzeggen ${n === 0 ? "vandaag" : "≤ " + n + " d"}</span>`;
-    }
-    if (d.deadline_signaal) return `<span class="tag dl">Deadline genoemd</span>`;
-    return "";
-  }
+  function ageClass(d) { if (AFGESLOTEN.has(d.status)) return ""; const n = dagen(d.sinds), l = LIMIET[d.status] || [7, 14]; return n >= l[1] ? "crit" : n >= l[0] ? "warn" : ""; }
   function tags(d) {
-    const p = prijs(d); let h = deadlineTag(d);
+    if (AFGESLOTEN.has(d.status)) return "";
+    const p = prijs(d); let h = "";
+    if (d.opzeg) { const n = Math.ceil((new Date(d.opzeg + "T23:59:00") - Date.now()) / 864e5); if (n < 0) h += `<span class="tag crit">Opzegdatum voorbij</span>`; else if (n <= 14) h += `<span class="tag dl">Opzeggen ≤ ${n} d</span>`; }
+    else if (d.deadline_signaal) h += `<span class="tag dl">Deadline genoemd</span>`;
     for (const s of p.signalen) h += s.t === "up" ? `<span class="tag up">Upgrade-kans</span>` : s.t === "crit" ? `<span class="tag crit">Aantal controleren</span>` : `<span class="tag down">Downsell</span>`;
-    if (d.bron === "formulier" && !AFGESLOTEN.has(d.status)) h += `<span class="tag info">Indicatief</span>`;
-    if (d.alv && !AFGESLOTEN.has(d.status)) h += `<span class="tag info">ALV ${fmtD(d.alv)}</span>`;
+    if (d.bron === "formulier") h += `<span class="tag info">Indicatief</span>`;
     return h;
   }
   let tt; function toast(t) { const el = document.getElementById("toast"); el.textContent = t; el.hidden = false; clearTimeout(tt); tt = setTimeout(() => el.hidden = true, 2600); }
 
   // ── Statusovergangen (zelfde regels voor knop, slepen en keuzelijst) ───────────
   function naarStatus(d, st) {
-    if (st === d.status) return;
-    if (st === "verloren") { openId = d.id; render(); toast("Kies een verliesreden om af te sluiten"); setTimeout(() => document.getElementById("reden")?.focus(), 60); return; }
+    if (!d || st === d.status) return;
+    if (st === "verloren") { openId = d.id; ptab = "overzicht"; render(); toast("Kies een verliesreden om af te sluiten"); setTimeout(() => document.getElementById("reden")?.focus(), 60); return; }
     if (st === "offerte_uit") {
-      if (prijs(d).advies === "premium" && !d.premiumBedrag) { openId = d.id; render(); toast("Vul eerst het Premium-bedrag in"); return; }
+      if (prijs(d).advies === "premium" && !d.premiumBedrag) { openId = d.id; ptab = "prijs"; render(); toast("Vul eerst het Premium-bedrag in"); return; }
       if (bedrag(d) == null) { openId = d.id; render(); toast("Controleer eerst het aantal appartementsrechten"); return; }
       const txt = AKKOORD.has(d.status) ? `Akkoord Farhaad: offerte verstuurd (${eur(bedrag(d))})` : "Status: Offerte uit";
       wijzig(d.id, { status: st, sinds: new Date().toISOString() }, txt); render(); toast(txt); return;
@@ -437,176 +510,172 @@ dialog h2 { margin: 0 0 4px; font-size: 1.15rem; font-weight: 800; }
     wijzig(d.id, { status: st, sinds: new Date().toISOString() }, `Status: ${STATUS[st]}`); render(); toast(`${d.naam} → ${STATUS[st]}`);
   }
 
-  // ── Render ────────────────────────────────────────────────────────────────────
-  const COLS = [
-    { k: "naam", l: "Naam VvE" }, { k: "ar", l: "App.rechten", r: 1 }, { k: "bedrag", l: "Offertebedrag", r: 1 },
-    { k: "status", l: "Status" }, { k: "dagen", l: "In status", r: 1 }, { k: "binnen", l: "Binnengekomen" },
-    { k: "sig", l: "Signalen" }, { k: "act", l: "" }
-  ];
-  const sortVal = (d, k) => ({ naam: d.naam.toLowerCase(), ar: totAR(d), bedrag: bedrag(d) ?? -1, status: Object.keys(STATUS).indexOf(d.status), dagen: dagen(d.sinds), binnen: d.binnen }[k]);
-  function zichtbaar() {
+  // ── Selectie ──────────────────────────────────────────────────────────────────
+  function inPakket() {
     const q = document.getElementById("zoek").value.trim().toLowerCase();
-    const alle = document.getElementById("statusFilter").value === "alle";
-    return data().filter(d => tabVan(d) === pakket && (alle || view === "bord" || !AFGESLOTEN.has(d.status)) && (!q || (d.naam + " " + d.plaats).toLowerCase().includes(q)));
+    return data().filter(d => (pakket === "alle" || pakketVan(d) === pakket) && (!q || (d.naam + " " + d.plaats).toLowerCase().includes(q)));
   }
 
-  function renderHead() {
-    const src = document.getElementById("srcLabel"), notice = document.getElementById("notice");
-    if (bron.soort === "servicebalie") {
-      src.textContent = `Servicebalie · ververst ${fmtDT(bron.ververst)}`; src.classList.add("live");
-      notice.hidden = false;
-      notice.innerHTML = "<b>Echte aanvragen.</b> De status is een voorstel uit de mailstroom van de servicebalie. Wat Farhaad vanuit zijn eigen mailbox afhandelt, is hier niet zichtbaar. Deze pagina bevat persoonsgegevens: niet delen of publiceren.";
-    } else {
-      src.textContent = "Voorbeelddata"; src.classList.remove("live"); notice.hidden = true;
-    }
+  // ── Render: kop, kengetallen ──────────────────────────────────────────────────
+  function renderKop() {
+    const live = bron.soort === "servicebalie", n = basis.length;
+    const t = live ? `Servicebalie · ververst ${fmtDT(bron.ververst)}` : bron.soort === "bestand" ? `Bestand · ${n} aanvragen` : "Geen data geladen";
+    document.getElementById("srcChip").textContent = t;
+    document.getElementById("srcSide").innerHTML = `<span class="dot ${n ? "live" : ""}"></span>${esc(t)}`;
+    const notice = document.getElementById("notice");
+    notice.hidden = !n;
+    if (n) notice.textContent = "Echte aanvragen. De status is een voorstel uit de mailstroom van de servicebalie; wat Farhaad vanuit zijn eigen mailbox afhandelt, is hier niet zichtbaar. Deze pagina bevat persoonsgegevens: niet delen of publiceren.";
+    document.getElementById("navCnt").textContent = data().filter(d => !AFGESLOTEN.has(d.status)).length || "";
+    document.querySelectorAll("[data-nav]").forEach(b => b.setAttribute("aria-current", String(b.dataset.nav === view)));
+    document.querySelectorAll("[data-pakket]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.pakket === pakket)));
   }
 
   function renderKpis() {
-    const all = data();
-    const lopend = all.filter(d => !AFGESLOTEN.has(d.status));
-    const akk = all.filter(d => AKKOORD.has(d.status));
-    const teLang = lopend.filter(d => ageClass(d) === "crit").length;
+    const all = inPakket(), lopend = all.filter(d => !AFGESLOTEN.has(d.status));
+    const nieuw = all.filter(d => d.status === "nieuw").length;
+    const week = all.filter(d => dagen(d.binnen) < 7).length, vorige = all.filter(d => dagen(d.binnen) >= 7 && dagen(d.binnen) < 14).length;
+    const r = all.map(d => d.eerste_reactie_uren).filter(x => x != null).sort((a, b) => a - b);
+    const med = r.length ? r[Math.floor(r.length / 2)] : null;
+    const binnen24 = r.length ? Math.round(r.filter(x => x <= 24).length / r.length * 100) : null;
     let pijp = 0; for (const d of lopend) pijp += (bedrag(d) || 0) * (KANS[d.status] || 0);
     const uit = all.filter(d => ["offerte_uit", "in_onderhandeling", "gewonnen", "contract_uit", "getekend", "verloren"].includes(d.status));
     const won = all.filter(d => ["gewonnen", "contract_uit", "getekend"].includes(d.status));
-    const r = all.map(d => d.eerste_reactie_uren).filter(x => x != null).sort((a, b) => a - b);
-    const med = r.length ? r[Math.floor(r.length / 2)] : null;
-    const k = (l, v, s, cls = "") => `<div class="kpi ${cls}"><span class="lbl">${l}</span><span class="val">${v}</span><span class="sub">${s}</span></div>`;
+    const delta = week - vorige;
+    const k = (c, i, l, v, s) => `<div class="kpi"><div class="bub ${c}">${ico(i)}</div><div class="txt"><span class="lbl">${l}</span><span class="val num">${v}</span><span class="sub">${s}</span></div></div>`;
     document.getElementById("kpis").innerHTML =
-      k("Lopende aanvragen", lopend.length, `${all.filter(d => d.status === "nieuw").length} nog niet beantwoord`, all.some(d => d.status === "nieuw") ? "alert" : "") +
-      k("Wacht op akkoord", akk.length, "offerte kan uit") +
-      k("Te lang in status", teLang, "rood gemarkeerd", teLang ? "alert" : "") +
-      k("Eerste reactie", med == null ? "—" : (med < 24 ? med.toFixed(0) + " u" : (med / 24).toFixed(1) + " d"), `mediaan over ${r.length} aanvragen`) +
-      k("Gewogen pijplijn", eur(pijp), "bedrag × slagingskans") +
-      k("Conversie", uit.length ? Math.round(won.length / uit.length * 100) + "%" : "—", `${won.length} gewonnen van ${uit.length} offertes`);
+      k("b-info", "inbox", "Aanvragen (deze week)", all.length ? week : "—", all.length ? `<span class="${delta >= 0 ? "up" : "dn"}">${delta >= 0 ? "↑" : "↓"} ${Math.abs(delta)}</span> vs vorige week` : "nog geen data") +
+      k("b-warn", "clock", "Eerste reactie (mediaan)", med == null ? "—" : med < 24 ? med.toFixed(0) + " u" : (med / 24).toFixed(1) + " d", binnen24 == null ? "nog geen data" : `${binnen24}% binnen 24 uur`) +
+      k("b-acc", "check", "Lopende aanvragen", all.length ? lopend.length : "—", nieuw ? `<span class="dn">${nieuw} nog niet beantwoord</span>` : "alles beantwoord") +
+      k("b-violet", "euro", "Gewogen pijplijn", all.length ? eur(pijp) : "—", "offertebedrag × slagingskans") +
+      k("b-ok", "trend", "Conversie", uit.length ? Math.round(won.length / uit.length * 100) + "%" : "—", `${won.length} gewonnen van ${uit.length} offertes`);
   }
 
-  function renderBar() {
-    for (const p of ["basic", "premium"]) {
-      document.getElementById("c-" + p).textContent = data().filter(d => tabVan(d) === p && !AFGESLOTEN.has(d.status)).length;
-      document.getElementById("tab-" + p).setAttribute("aria-selected", String(p === pakket));
-    }
-    document.getElementById("v-lijst").setAttribute("aria-pressed", String(view === "lijst"));
-    document.getElementById("v-bord").setAttribute("aria-pressed", String(view === "bord"));
-    document.getElementById("lijst").hidden = view !== "lijst";
-    document.getElementById("bord").hidden = view !== "bord";
-    document.getElementById("statusFilter").disabled = view === "bord";
+  // ── Render: lijst ─────────────────────────────────────────────────────────────
+  const COLS = [{ k: "naam", l: "VvE" }, { k: "ar", l: "Rechten", r: 1 }, { k: "status", l: "Status" }, { k: "bedrag", l: "Offertebedrag", r: 1 }, { k: "dagen", l: "In status", r: 1 }, { k: "sig", l: "Signalen" }, { k: "binnen", l: "Binnengekomen" }, { k: "act", l: "" }];
+  const sortVal = (d, k) => ({ naam: d.naam.toLowerCase(), ar: totAR(d), bedrag: bedrag(d) ?? -1, status: Object.keys(STATUS).indexOf(d.status), dagen: dagen(d.sinds), binnen: d.binnen }[k]);
+
+  function leegTekst() {
+    if (!basis.length && !extra.length) return `<div class="empty"><strong>Nog geen aanvragen geladen</strong><span>Start op de pc met Outlook: <code>uv run sales-dashboard</code>, of kies "Bestand laden" met een aanvragen.json.</span></div>`;
+    return `<div class="empty"><strong>Geen aanvragen in deze selectie</strong><span>Kies een andere tab of zet het pakketfilter op "Alle".</span></div>`;
+  }
+
+  function renderTabs() {
+    const set = inPakket();
+    document.getElementById("tabs").innerHTML = TABS.map(t => `<button type="button" role="tab" data-tab="${t.k}" aria-selected="${t.k === tab}">${t.l}<span class="n">${set.filter(t.f).length}</span></button>`).join("");
+    document.getElementById("tabs").hidden = view === "bord";
   }
 
   function renderLijst() {
+    const f = TABS.find(t => t.k === tab).f;
+    const rows = inPakket().filter(f).sort((a, b) => { const x = sortVal(a, sortKey), y = sortVal(b, sortKey); return (x > y ? 1 : x < y ? -1 : 0) * sortDir; });
+    const pages = Math.max(1, Math.ceil(rows.length / PER_PAGINA)); pagina = Math.min(pagina, pages);
+    const deel = rows.slice((pagina - 1) * PER_PAGINA, pagina * PER_PAGINA);
     document.getElementById("thead").innerHTML = COLS.map(c => `<th class="${c.r ? "r" : ""}" ${["sig", "act"].includes(c.k) ? "" : `data-k="${c.k}" tabindex="0"`} ${sortKey === c.k ? `aria-sort="${sortDir > 0 ? "ascending" : "descending"}"` : ""}>${c.l}</th>`).join("");
-    const rows = zichtbaar().sort((a, b) => { const x = sortVal(a, sortKey), y = sortVal(b, sortKey); return (x > y ? 1 : x < y ? -1 : 0) * sortDir; });
     const tb = document.getElementById("tbody");
-    if (!rows.length) { tb.innerHTML = `<tr><td colspan="${COLS.length}" class="empty">Geen aanvragen in deze weergave. Kies "Alle, ook afgesloten" of de andere pakket-tab.</td></tr>`; return; }
-    tb.innerHTML = rows.map(d => {
+    tb.innerHTML = deel.length ? deel.map(d => {
       const b = bedrag(d), premOpen = prijs(d).advies === "premium" && !d.premiumBedrag;
       return `<tr data-id="${esc(d.id)}" tabindex="0" class="${d.id === openId ? "sel" : ""}">
-        <td><div class="vve">${esc(d.naam)}</div><div class="plaats">${esc(d.plaats)} · ${esc(d.id)}</div></td>
+        <td><div class="vcell"><span class="di">${ico("bld")}</span><div><div class="vve">${esc(d.naam)}</div><div class="sub2">${esc(d.plaats)} · ${d.pakket === "premium" ? "Premium" : "Basic"} gevraagd</div></div></div></td>
         <td class="r num">${totAR(d)}</td>
+        <td><span class="pill st-${d.status}">${STATUS[d.status]}</span>${d.status === "verloren" ? `<div class="sub2">${esc(d.reden)}</div>` : ""}</td>
         <td class="r num">${b == null ? `<span class="leeg">${premOpen ? "maatwerk" : "—"}</span>` : eur(b)}</td>
-        <td><span class="pill st-${d.status}">${STATUS[d.status]}</span>${d.status === "verloren" ? `<div class="plaats">${esc(d.reden)}</div>` : ""}</td>
         <td class="r"><span class="age ${ageClass(d)}">${dagen(d.sinds)} d</span></td>
-        <td class="num">${fmtD(d.binnen)}</td>
         <td>${tags(d) || '<span class="leeg">—</span>'}</td>
+        <td class="sub2">${relatief(d.binnen)}</td>
         <td class="r">${AKKOORD.has(d.status) ? `<button class="btn sm primary" data-akkoord="${esc(d.id)}" type="button">Akkoord</button>` : ""}</td>
       </tr>`;
-    }).join("");
+    }).join("") : `<tr><td colspan="${COLS.length}">${leegTekst()}</td></tr>`;
+    const pg = [];
+    for (let i = 1; i <= pages; i++) if (pages <= 7 || i === 1 || i === pages || Math.abs(i - pagina) <= 1) pg.push(i); else if (pg[pg.length - 1] !== "…") pg.push("…");
+    document.getElementById("pager").innerHTML = rows.length ? `<span>Toont ${(pagina - 1) * PER_PAGINA + 1} t/m ${Math.min(pagina * PER_PAGINA, rows.length)} van ${rows.length}</span>
+      <div class="pg"><button type="button" data-pg="${pagina - 1}" ${pagina === 1 ? "disabled" : ""} aria-label="Vorige">‹</button>${pg.map(p => p === "…" ? `<button type="button" disabled>…</button>` : `<button type="button" data-pg="${p}" aria-current="${p === pagina}">${p}</button>`).join("")}<button type="button" data-pg="${pagina + 1}" ${pagina === pages ? "disabled" : ""} aria-label="Volgende">›</button></div>` : "";
   }
 
+  // ── Render: bord ──────────────────────────────────────────────────────────────
   const KOLOMMEN = ["nieuw", "wacht_op_klant", "gekwalificeerd", "geanalyseerd", "offerte_uit", "in_onderhandeling", "gewonnen", "contract_uit", "getekend", "verloren"];
   function renderBord() {
-    const rows = zichtbaar();
-    document.getElementById("bord").innerHTML = KOLOMMEN.map(st => {
-      const kaarten = rows.filter(d => d.status === st).sort((a, b) => (b.binnen > a.binnen ? 1 : -1));
-      const som = kaarten.reduce((s, d) => s + (bedrag(d) || 0), 0);
+    const rows = inPakket(), el = document.getElementById("bord");
+    if (!rows.length) { el.innerHTML = leegTekst(); return; }
+    el.innerHTML = KOLOMMEN.map(st => {
+      const ks = rows.filter(d => d.status === st).sort((a, b) => (b.binnen > a.binnen ? 1 : -1));
       return `<div class="col ${st === "verloren" ? "lost" : ""}" data-status="${st}">
-        <div class="colh"><span class="t">${STATUS[st]} <span class="n">${kaarten.length}</span></span>${som ? `<span class="s">${eur(som)}</span>` : ""}</div>
-        ${kaarten.map(d => {
-          const b = bedrag(d);
-          return `<div class="card ${d.id === openId ? "sel" : ""}" draggable="true" tabindex="0" data-id="${esc(d.id)}">
-            <div class="r1"><span class="nm">${esc(d.naam)}</span><span class="bd">${b == null ? "" : eur(b)}</span></div>
-            <div class="mt"><span>${esc(d.plaats)} · ${totAR(d)} rechten</span><span class="age ${ageClass(d)}">${dagen(d.sinds)} d</span></div>
-            ${tags(d) ? `<div class="tg">${tags(d)}</div>` : ""}
-          </div>`;
-        }).join("") || `<div class="dropnote">${st === "verloren" ? "Sleep hierheen om af te sluiten (met reden)" : "Leeg"}</div>`}
+        <div class="colh"><span>${STATUS[st]}</span><span class="n">${ks.length}</span></div>
+        ${ks.map(d => { const b = bedrag(d); return `<div class="kaart ${d.id === openId ? "sel" : ""}" draggable="true" tabindex="0" data-id="${esc(d.id)}">
+            <span class="nm">${esc(d.naam)}</span>
+            <div class="mt"><span>${esc(d.plaats)} · ${totAR(d)}</span><span>${b == null ? "" : eur(b)}</span></div>
+            <div class="mt"><span>${tags(d)}</span><span class="age ${ageClass(d)}">${dagen(d.sinds)} d</span></div>
+          </div>`; }).join("") || `<div class="dropnote">${st === "verloren" ? "Sleep hierheen om af te sluiten (met reden)" : "Leeg"}</div>`}
       </div>`;
     }).join("");
   }
 
-  function renderDossier() {
-    const el = document.getElementById("dossier"), scrim = document.getElementById("scrim");
-    const d = openId && vind(openId);
-    if (!d) { el.hidden = true; scrim.hidden = true; return; }
-    el.hidden = false; scrim.hidden = false;
-    const p = prijs(d), live = bron.soort === "servicebalie";
+  // ── Render: dossierpaneel ─────────────────────────────────────────────────────
+  function renderPanel() {
+    const el = document.getElementById("panel"), d = openId && vind(openId);
+    if (!d) { el.innerHTML = `<div class="pempty"><span class="di">${ico("note")}</span><strong>Geen aanvraag gekozen</strong><span>Klik op een regel of kaart om het dossier, de prijs en het logboek te zien.</span></div>`; return; }
+    const p = prijs(d), closed = AFGESLOTEN.has(d.status);
     const sigs = [...p.signalen];
-    if (d.opzeg) { const n = Math.ceil((new Date(d.opzeg + "T23:59:00") - Date.now()) / 864e5); if (n <= 14 && !AFGESLOTEN.has(d.status)) sigs.unshift({ s: "crit", txt: `Opzegdatum huidige beheerder: ${fmtD(d.opzeg)}. Vandaag contact opnemen.` }); }
-    else if (d.deadline_signaal && !AFGESLOTEN.has(d.status)) sigs.unshift({ s: "warn", txt: "De aanvrager noemt een deadline of opzegging in de bijzonderheden. Lees mee en neem tijdig contact op." });
+    if (d.deadline_signaal && !closed) sigs.unshift({ s: "warn", txt: "De aanvrager noemt een deadline of opzegging in de bijzonderheden. Lees mee en neem tijdig contact op." });
     if (d.bron === "formulier") sigs.push({ s: "", txt: "Indicatief: aantal van het formulier, alles gerekend als woning. De akte bepaalt de definitieve prijs." });
-    if (p.advies === "premium") sigs.push({ s: "", txt: "Premium is maatwerk: geen automatische prijs. Vul hieronder het jaarbedrag in." });
-
-    let prijsHtml;
-    if (totAR(d) > T.maxPlausibel) prijsHtml = `<p class="note">Geen prijs: het opgegeven aantal is onwaarschijnlijk.</p>`;
-    else if (p.advies === "premium") {
-      prijsHtml = `<div class="inline"><div class="field"><label for="pb">Jaarbedrag Premium excl. btw</label><input id="pb" type="number" min="0" step="100" value="${d.premiumBedrag || ""}" placeholder="bijv. 12000"></div><button class="btn" id="pbSave" type="button">Vastleggen</button></div>
-        <p class="note">Referentie werkomschrijving: Westerkaap II € 20.000 voor 114 eenheden (€ 175 per eenheid), Plesman € 5.000. Opstart € 1.500.</p>`;
-    } else {
-      const bh = beheer(p), tot = bh + (p.bv || 0), ta = totAR(d);
-      prijsHtml = `<div class="prijs">
-        ${p.regels.map(r => `<div class="row"><span>${esc(r.o)} <span class="src2">${r.src}</span></span><span class="num">${eur(r.b, 2)}</span></div>`).join("")}
-        <div class="row tot"><span>Beheervergoeding per jaar excl. btw</span><span class="num">${eur(bh, 2)}</span></div>
-        ${p.bv != null ? `<div class="row"><span>Betalingsverkeer (separaat)</span><span class="num">${eur(p.bv, 2)}</span></div>` : ""}
-        <div class="row tot"><span>Totaal per jaar incl. btw</span><span class="num">${eur(tot * (1 + T.btw), 2)}</span></div>
-        <div class="row"><span>Gemiddeld per recht per maand incl. btw</span><span class="num">${eur(tot * (1 + T.btw) / ta / 12, 2)}</span></div>
-        <div class="row"><span>Eenmalige opstartvergoeding excl. btw</span><span class="num">${eur(p.opstart, 2)}</span></div>
-      </div>
-      <label class="chk"><input type="checkbox" id="bvChk" ${d.betalingsverkeer ? "checked" : ""}> Betalingsverkeer meenemen</label>`;
-    }
-    const docs = [["akte", "Splitsingsakte"], ["jaarrekening", "Jaarrekening"], ["notulen", "Notulen"], ["mjop", "MJOP"], ["beheerovereenkomst", "Lopende beheerovereenkomst"]];
-    const contactRegels = [
-      `<dt>Contact</dt><dd>${esc(d.contact) || "—"}</dd>`,
-      d.telefoon ? `<dt>Telefoon</dt><dd><span class="num">${esc(d.telefoon)}</span><button class="copy" data-copy="${esc(d.telefoon)}" type="button">kopieer</button></dd>` : "",
-      d.email ? `<dt>E-mail</dt><dd>${esc(d.email)}<button class="copy" data-copy="${esc(d.email)}" type="button">kopieer</button></dd>` : ""
-    ].join("");
-
-    el.innerHTML = `
-      <div class="dtop">
-        <div><h2>${esc(d.naam)}</h2><div class="meta">${esc(d.id)} · ${esc(d.plaats)} · binnen ${fmtDT(d.binnen)}</div></div>
-        <button class="close" id="dClose" type="button" aria-label="Dossier sluiten">✕</button>
-      </div>
-      <div class="dbody">
-        <div class="inline"><span class="pill st-${d.status}">${STATUS[d.status]}</span><span class="age ${ageClass(d)}">${dagen(d.sinds)} dagen in deze status</span></div>
-        ${sigs.length ? `<section class="blk"><h3>Signalen</h3>${sigs.map(s => `<div class="signal ${s.s}">${esc(s.txt)}</div>`).join("")}</section>` : ""}
-        <section class="blk"><h3>Prijs · ${p.advies === "premium" ? "Premium, maatwerk" : "Basic, officiële staffel"}</h3>${prijsHtml}</section>
-        <section class="blk"><h3>Aanvraag</h3><dl class="kv">
-          <dt>Productkeuze klant</dt><dd>${d.pakket === "premium" ? "Premium beheer" : "Basic beheer"}</dd>
-          <dt>Appartementsrechten</dt><dd>${Object.entries(d.ar || {}).filter(([, n]) => n).map(([k, n]) => `${n} ${SOORT[k]}`).join(", ") || "—"} <span class="note">(bron: ${d.bron === "akte" ? "akte" : "formulier"})</span></dd>
-          ${contactRegels}
-          <dt>Herkomst</dt><dd>${esc(d.herkomst) || "—"}</dd>
-          <dt>Bijzonderheden</dt><dd>${esc(d.bijz) || "—"}</dd>
-          <dt>ALV-datum</dt><dd>${d.alv ? fmtD(d.alv) : "nog onbekend"}</dd>
-          ${d.eerste_reactie_uren != null ? `<dt>Eerste reactie</dt><dd>na ${d.eerste_reactie_uren} uur</dd>` : ""}
-          ${d.heractiveren ? `<dt>Heractiveren op</dt><dd>${fmtD(d.heractiveren)}</dd>` : ""}
-        </dl></section>
-        <section class="blk"><h3>Documenten</h3><div class="docs">${docs.map(([k, l]) => `<div class="doc"><span class="mk ${(d.docs || {})[k] ? "y" : "n"}">${(d.docs || {})[k] ? "✓" : "–"}</span>${l}</div>`).join("")}</div>
-          ${(d.akte_bestanden || []).length ? `<p class="note">Geüpload: ${d.akte_bestanden.map(esc).join(", ")}</p>` : ""}</section>
-        <section class="blk"><h3>Logboek</h3><ol class="tl">${[...(d.tl || [])].sort((a, b) => a[0] < b[0] ? 1 : -1).map(([t, x]) => `<li><span class="d">${fmtD(t)}</span><span>${esc(x)}</span></li>`).join("")}</ol></section>
-        ${AFGESLOTEN.has(d.status) ? "" : `<div class="actions">
+    const rw = (i, k, v) => `<div class="rw">${ico(i)}<span class="k">${k}</span><span class="v">${v}</span></div>`;
+    const kop = (t, l) => `<button type="button" role="tab" data-ptab="${t}" aria-selected="${ptab === t}">${l}</button>`;
+    let inhoud = "";
+    if (ptab === "overzicht") {
+      inhoud = `${sigs.length ? `<div class="docs">${sigs.map(s => `<div class="signal ${s.s}">${esc(s.txt)}</div>`).join("")}</div>` : ""}
+        <div class="rows">
+          ${rw("user", "Contact", esc(d.contact) || "—")}
+          ${d.telefoon ? rw("phone", "Telefoon", `<span class="num">${esc(d.telefoon)}</span><button class="copy" data-copy="${esc(d.telefoon)}" type="button">kopieer</button>`) : ""}
+          ${d.email ? rw("mail", "E-mail", `${esc(d.email)}<button class="copy" data-copy="${esc(d.email)}" type="button">kopieer</button>`) : ""}
+          ${rw("box", "Rechten", `${Object.entries(d.ar || {}).filter(([, n]) => n).map(([k, n]) => `${n} ${SOORT[k]}`).join(", ") || "—"} <span class="sub2">(${d.bron === "akte" ? "akte" : "formulier"})</span>`)}
+          ${rw("euro", "Offertebedrag", bedrag(d) == null ? (p.advies === "premium" ? "maatwerk, nog in te vullen" : "—") : `${eur(bedrag(d))} per jaar excl. btw`)}
+          ${rw("flag", "Herkomst", esc(d.herkomst) || "—")}
+          ${rw("clock", "Eerste reactie", d.eerste_reactie_uren != null ? `na ${d.eerste_reactie_uren} uur` : "nog niet beantwoord")}
+          ${rw("note", "Bijzonderheden", esc(d.bijz) || "—")}
+        </div>
+        ${closed ? "" : `<div class="docs">
           <div class="inline">
             ${AKKOORD.has(d.status) ? `<button class="btn primary" id="dAkkoord" type="button">Akkoord: offerte versturen</button>` : ""}
-            <div class="field"><label for="stSel">Status wijzigen</label><select id="stSel">${Object.entries(STATUS).filter(([k]) => k !== "verloren").map(([k, l]) => `<option value="${k}" ${k === d.status ? "selected" : ""}>${l}</option>`).join("")}</select></div>
+            <div class="field"><label for="stSel">Status</label><select id="stSel">${Object.entries(STATUS).filter(([k]) => k !== "verloren").map(([k, l]) => `<option value="${k}" ${k === d.status ? "selected" : ""}>${l}</option>`).join("")}</select></div>
           </div>
           <div class="inline"><div class="field"><label for="reden">Verliesreden</label><select id="reden"><option value="">Kies een reden</option>${VERLIESREDENEN.map(r => `<option>${r}</option>`).join("")}</select></div><button class="btn danger" id="dLost" type="button" disabled>Zet op verloren</button></div>
-          <p class="note">Akkoord zet de offerte klaar in Outlook namens Farhaad (in dit format alleen een statuswissel). Verloren kan alleen met een reden; "Geen overstap" plant heractivering over 12 maanden.${live ? " Wijzigingen blijven in deze browser; een nieuwe inleesrun overschrijft ze niet." : ""}</p>
-        </div>`}
-      </div>`;
+          <p class="note">Akkoord zet de offerte klaar in Outlook namens Farhaad (nu alleen een statuswissel). "Geen overstap" plant heractivering over 12 maanden.</p>
+        </div>`}`;
+    } else if (ptab === "prijs") {
+      if (totAR(d) > T.maxPlausibel) inhoud = `<p class="note">Geen prijs: het opgegeven aantal is onwaarschijnlijk.</p>`;
+      else if (p.advies === "premium") inhoud = `<div class="inline"><div class="field"><label for="pb">Jaarbedrag Premium excl. btw</label><input id="pb" type="number" min="0" step="100" value="${d.premiumBedrag || ""}" placeholder="bijv. 12000"></div><button class="btn" id="pbSave" type="button">Vastleggen</button></div>
+        <p class="note">Referentie werkomschrijving: Westerkaap II € 20.000 voor 114 eenheden (€ 175 per eenheid), Plesman € 5.000. Opstart € 1.500.</p>`;
+      else {
+        const bh = beheer(p), tot = bh + (p.bv || 0), ta = totAR(d);
+        inhoud = `<div class="prijs">
+          ${p.regels.map(r => `<div class="row"><span>${esc(r.o)} <span class="s2">${r.src}</span></span><span class="num">${eur(r.b, 2)}</span></div>`).join("")}
+          <div class="row tot"><span>Beheervergoeding excl. btw</span><span class="num">${eur(bh, 2)}</span></div>
+          ${p.bv != null ? `<div class="row"><span>Betalingsverkeer (separaat)</span><span class="num">${eur(p.bv, 2)}</span></div>` : ""}
+          <div class="row tot"><span>Totaal per jaar incl. btw</span><span class="num">${eur(tot * (1 + T.btw), 2)}</span></div>
+          <div class="row"><span>Gem. per recht per maand incl. btw</span><span class="num">${eur(tot * (1 + T.btw) / ta / 12, 2)}</span></div>
+          <div class="row"><span>Opstartvergoeding (eenmalig) excl. btw</span><span class="num">${eur(p.opstart, 2)}</span></div>
+        </div>
+        <label class="chk"><input type="checkbox" id="bvChk" ${d.betalingsverkeer ? "checked" : ""}> Betalingsverkeer meenemen</label>`;
+      }
+    } else if (ptab === "docs") {
+      const docs = [["akte", "Splitsingsakte"], ["jaarrekening", "Jaarrekening"], ["notulen", "Notulen"], ["mjop", "MJOP"], ["beheerovereenkomst", "Lopende beheerovereenkomst"]];
+      inhoud = `<div class="docs">${docs.map(([k, l]) => `<div class="doc"><span class="mk ${(d.docs || {})[k] ? "y" : "n"}">${(d.docs || {})[k] ? "✓" : "–"}</span>${l}</div>`).join("")}</div>
+        ${(d.akte_bestanden || []).length ? `<p class="note">Geüpload via het formulier: ${d.akte_bestanden.map(esc).join(", ")}</p>` : ""}`;
+    } else {
+      inhoud = `<ol class="tl">${[...(d.tl || [])].sort((a, b) => a[0] < b[0] ? 1 : -1).map(([t, x]) => `<li><span class="d">${fmtD(t)}</span><span>${esc(x)}</span></li>`).join("")}</ol>`;
+    }
+    el.innerHTML = `
+      <div class="ph"><span class="di">${ico("bld")}</span>
+        <div style="min-width:0"><h3>${esc(d.naam)} <span class="pill st-${d.status}">${STATUS[d.status]}</span></h3>
+        <div class="meta">${esc(d.plaats)} · ${esc(d.id)} · binnen ${fmtDT(d.binnen)}</div>
+        <div class="meta"><span class="age ${ageClass(d)}">${dagen(d.sinds)} dagen in deze status</span></div></div>
+        <button class="x" id="pClose" type="button" aria-label="Dossier sluiten">✕</button></div>
+      <div class="tabs" role="tablist">${kop("overzicht", "Overzicht")}${kop("prijs", "Prijs")}${kop("docs", "Documenten")}${kop("log", "Logboek")}</div>
+      <div class="pbody">${inhoud}</div>`;
 
-    el.querySelector("#dClose").onclick = () => { openId = null; render(); };
-    el.querySelectorAll("[data-copy]").forEach(b => b.onclick = () => {
-      navigator.clipboard?.writeText(b.dataset.copy).then(() => toast("Gekopieerd"), () => toast("Kopiëren lukt hier niet; selecteer de tekst"));
-    });
-    const pb = el.querySelector("#pbSave");
-    if (pb) pb.onclick = () => { const v = Number(el.querySelector("#pb").value); if (!v) return toast("Vul een jaarbedrag in"); wijzig(d.id, { premiumBedrag: v }, `Premium-bedrag vastgelegd: ${eur(v)}`); render(); toast("Bedrag vastgelegd"); };
+    el.querySelector("#pClose").onclick = () => { openId = null; render(); };
+    el.querySelectorAll("[data-ptab]").forEach(b => b.onclick = () => { ptab = b.dataset.ptab; renderPanel(); });
+    el.querySelectorAll("[data-copy]").forEach(b => b.onclick = () => navigator.clipboard?.writeText(b.dataset.copy).then(() => toast("Gekopieerd"), () => toast("Kopiëren lukt hier niet; selecteer de tekst")));
+    const pb = el.querySelector("#pbSave"); if (pb) pb.onclick = () => { const v = Number(el.querySelector("#pb").value); if (!v) return toast("Vul een jaarbedrag in"); wijzig(d.id, { premiumBedrag: v }, `Premium-bedrag vastgelegd: ${eur(v)}`); render(); toast("Bedrag vastgelegd"); };
     const bvc = el.querySelector("#bvChk"); if (bvc) bvc.onchange = () => { wijzig(d.id, { betalingsverkeer: bvc.checked }, bvc.checked ? "Betalingsverkeer meegenomen" : "Betalingsverkeer eruit"); render(); };
     const ak = el.querySelector("#dAkkoord"); if (ak) ak.onclick = () => naarStatus(d, "offerte_uit");
     const ss = el.querySelector("#stSel"); if (ss) ss.onchange = () => naarStatus(d, ss.value);
@@ -618,70 +687,113 @@ dialog h2 { margin: 0 0 4px; font-size: 1.15rem; font-weight: 800; }
     }; }
   }
 
-  function render() { renderHead(); renderKpis(); renderBar(); if (view === "lijst") renderLijst(); else renderBord(); renderDossier(); }
+  // ── Render: analyse ───────────────────────────────────────────────────────────
+  function renderAnalyse() {
+    const all = inPakket(), W = 12;
+    const maandag = x => { const d = new Date(x); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return d; };
+    const nuW = maandag(new Date());
+    const telling = Array.from({ length: W }, (_, i) => { const s = new Date(nuW); s.setDate(s.getDate() - (W - 1 - i) * 7); return { s, n: 0 }; });
+    for (const d of all) { const m = maandag(d.binnen).getTime(); const b = telling.find(t => t.s.getTime() === m); if (b) b.n++; }
+    const max = Math.max(4, ...telling.map(t => t.n)), stap = Math.ceil(max / 4), top = stap * 4;
+    const w = 340, h = 170, l = 28, rm = 8, t = 10, bo = 24, iw = w - l - rm, ih = h - t - bo;
+    const x = i => l + i * iw / (W - 1), y = v => t + ih - v / top * ih;
+    const pts = telling.map((c, i) => `${x(i).toFixed(1)},${y(c.n).toFixed(1)}`);
+    const totaalW = telling.reduce((s, c) => s + c.n, 0);
+    document.getElementById("chWeek").innerHTML = `<div class="bigr"><span class="sub2">Laatste ${W} weken</span><span class="bn num">${totaalW}</span></div>
+      <svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Aanvragen per week">
+        ${[0, 1, 2, 3, 4].map(k => `<line class="gl" x1="${l}" x2="${w - rm}" y1="${y(k * stap)}" y2="${y(k * stap)}"/><text class="ax" x="${l - 6}" y="${y(k * stap) + 4}" text-anchor="end">${k * stap}</text>`).join("")}
+        <polygon class="ar" points="${x(0)},${y(0)} ${pts.join(" ")} ${x(W - 1)},${y(0)}"/>
+        <polyline class="ln" points="${pts.join(" ")}"/>
+        ${telling.map((c, i) => `<circle class="pt" cx="${x(i)}" cy="${y(c.n)}" r="${i === W - 1 ? 4 : 2.6}"/>`).join("")}
+        ${telling.map((c, i) => i % 3 === 0 || i === W - 1 ? `<text class="ax" x="${x(i)}" y="${h - 6}" text-anchor="middle">${c.s.getDate()}-${c.s.getMonth() + 1}</text>` : "").join("")}
+      </svg>`;
+
+    const her = {}; for (const d of all) { const k = d.herkomst || "Onbekend"; her[k] = (her[k] || 0) + 1; }
+    const lijst = Object.entries(her).sort((a, b) => b[1] - a[1]);
+    document.getElementById("chHerkomst").innerHTML = lijst.length ? `<div class="bars">${lijst.map(([k, n]) => `<div class="bar"><span>${esc(k)}</span><span class="tr"><span class="fl" style="width:${(n / all.length * 100).toFixed(0)}%"></span></span><span class="pc">${n} · ${Math.round(n / all.length * 100)}%</span></div>`).join("")}</div>
+      <p class="note" style="margin-top:12px">${lijst.find(([k]) => /overig|onbekend/i.test(k)) ? "Een groot deel valt onder Overig: het herkomstveld op het formulier is te grof (zie werkomschrijving)." : ""}</p>` : `<p class="note">Nog geen data.</p>`;
+
+    const r = all.map(d => d.eerste_reactie_uren).filter(v => v != null);
+    const open = all.filter(d => d.eerste_reactie_uren == null && !AFGESLOTEN.has(d.status)).length;
+    const a = r.filter(v => v <= 24).length, b = r.filter(v => v > 24 && v <= 72).length, c = r.filter(v => v > 72).length, tot = a + b + c + open;
+    const med = r.length ? [...r].sort((p, q) => p - q)[Math.floor(r.length / 2)] : null;
+    const R = 56, C = 2 * Math.PI * R; let off = 0;
+    const seg = (n, kleur) => { if (!n || !tot) return ""; const len = n / tot * C; const s = `<circle cx="75" cy="75" r="${R}" fill="none" stroke="${kleur}" stroke-width="16" stroke-dasharray="${len} ${C - len}" stroke-dashoffset="${-off}" transform="rotate(-90 75 75)"/>`; off += len; return s; };
+    document.getElementById("chReactie").innerHTML = tot ? `<div class="donut">
+        <svg viewBox="0 0 150 150" role="img" aria-label="Verdeling reactietijd"><circle cx="75" cy="75" r="${R}" fill="none" stroke="var(--surface-2)" stroke-width="16"/>
+          ${seg(a, "var(--ok)")}${seg(b, "var(--accent)")}${seg(c, "var(--orange)")}${seg(open, "var(--crit)")}
+          <text x="75" y="74" text-anchor="middle" style="font: 800 20px var(--font-ui); fill: var(--fg)">${med == null ? "—" : med < 24 ? med.toFixed(0) + " u" : (med / 24).toFixed(1) + " d"}</text>
+          <text x="75" y="93" text-anchor="middle" style="font: 500 11px var(--font-ui); fill: var(--muted)">mediaan</text></svg>
+        <div class="lg">
+          <div><span><span class="sw" style="background:var(--ok)"></span>Binnen 24 uur</span><span class="num">${a}</span></div>
+          <div><span><span class="sw" style="background:var(--accent)"></span>1 tot 3 dagen</span><span class="num">${b}</span></div>
+          <div><span><span class="sw" style="background:var(--orange)"></span>Langer dan 3 dagen</span><span class="num">${c}</span></div>
+          <div><span><span class="sw" style="background:var(--crit)"></span>Nog geen antwoord</span><span class="num">${open}</span></div>
+          ${r.length ? `<span class="badge">${Math.round(a / r.length * 100)}% binnen 24 uur beantwoord</span>` : ""}
+        </div></div>` : `<p class="note">Nog geen data.</p>`;
+  }
+
+  function render() {
+    renderKop(); renderKpis(); renderTabs();
+    document.getElementById("lijst").hidden = view === "bord";
+    document.getElementById("bord").hidden = view !== "bord";
+    document.getElementById("lijstTitel").textContent = view === "bord" ? "Bord" : "Aanvragen";
+    if (view === "bord") renderBord(); else renderLijst();
+    renderPanel(); renderAnalyse();
+  }
 
   // ── Bron laden ────────────────────────────────────────────────────────────────
-  function gebruik(json) {
+  function gebruik(json, soort) {
     if (!json || !Array.isArray(json.dossiers)) throw new Error("Geen geldig aanvragenbestand");
-    bron = { soort: "servicebalie", ververst: json.ververst || null };
-    basis = json.dossiers; extra = []; wijz = lees("wijz-live", {}); openId = null; render();
+    bron = { soort, ververst: json.ververst || null }; basis = json.dossiers; openId = null; pagina = 1; render();
   }
   async function start() {
-    wijz = lees("wijz-demo", {}); extra = lees("extra", []);
     render();
-    try {
-      const r = await fetch("data/aanvragen.json", { cache: "no-store" });
-      if (r.ok) gebruik(await r.json());
-    } catch (e) { /* geen lokaal bestand: voorbeelddata blijft staan */ }
+    try { const r = await fetch("data/aanvragen.json", { cache: "no-store" }); if (r.ok) gebruik(await r.json(), "servicebalie"); } catch (e) { /* geen lokaal bestand: leeg blijven */ }
   }
 
   // ── Events ────────────────────────────────────────────────────────────────────
-  document.querySelector('[role="tablist"]').addEventListener("click", e => { const b = e.target.closest("[data-pakket]"); if (!b) return; pakket = b.dataset.pakket; schrijf("tab", pakket); render(); });
-  document.querySelectorAll("[data-view]").forEach(b => b.onclick = () => { view = b.dataset.view; schrijf("view", view); render(); });
+  document.querySelectorAll("[data-nav]").forEach(b => b.onclick = () => {
+    if (b.dataset.nav === "analyse") { document.getElementById("analyse").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+    view = b.dataset.nav; schrijf("view", view); render();
+  });
+  document.querySelectorAll("[data-pakket]").forEach(b => b.onclick = () => { pakket = b.dataset.pakket; schrijf("pakket", pakket); pagina = 1; render(); });
+  document.getElementById("tabs").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if (!b) return; tab = b.dataset.tab; pagina = 1; render(); });
   document.getElementById("thead").addEventListener("click", e => { const th = e.target.closest("th[data-k]"); if (!th) return; const k = th.dataset.k; sortDir = sortKey === k ? -sortDir : (k === "naam" ? 1 : -1); sortKey = k; render(); });
   document.getElementById("thead").addEventListener("keydown", e => { if (e.key === "Enter") e.target.click(); });
+  document.getElementById("pager").addEventListener("click", e => { const b = e.target.closest("[data-pg]"); if (!b || b.disabled) return; pagina = +b.dataset.pg; render(); });
   const tb = document.getElementById("tbody");
-  tb.addEventListener("click", e => { const a = e.target.closest("[data-akkoord]"); if (a) { e.stopPropagation(); naarStatus(vind(a.dataset.akkoord), "offerte_uit"); return; } const tr = e.target.closest("tr[data-id]"); if (tr) { openId = tr.dataset.id; render(); } });
+  tb.addEventListener("click", e => { const a = e.target.closest("[data-akkoord]"); if (a) { e.stopPropagation(); naarStatus(vind(a.dataset.akkoord), "offerte_uit"); return; } const tr = e.target.closest("tr[data-id]"); if (tr) { openId = tr.dataset.id; ptab = "overzicht"; render(); } });
   tb.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("tr[data-id]")) { openId = e.target.dataset.id; render(); } });
-
-  const bord = document.getElementById("bord");
-  let sleep = null;
-  bord.addEventListener("click", e => { const c = e.target.closest(".card"); if (c) { openId = c.dataset.id; render(); } });
-  bord.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches(".card")) { openId = e.target.dataset.id; render(); } });
-  bord.addEventListener("dragstart", e => { const c = e.target.closest(".card"); if (!c) return; sleep = c.dataset.id; c.classList.add("dragging"); e.dataTransfer.effectAllowed = "move"; try { e.dataTransfer.setData("text/plain", sleep); } catch (x) {} });
-  bord.addEventListener("dragend", e => { e.target.closest(".card")?.classList.remove("dragging"); bord.querySelectorAll(".over").forEach(x => x.classList.remove("over")); });
+  const bord = document.getElementById("bord"); let sleep = null;
+  bord.addEventListener("click", e => { const c = e.target.closest(".kaart"); if (c) { openId = c.dataset.id; ptab = "overzicht"; render(); } });
+  bord.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches(".kaart")) { openId = e.target.dataset.id; render(); } });
+  bord.addEventListener("dragstart", e => { const c = e.target.closest(".kaart"); if (!c) return; sleep = c.dataset.id; c.classList.add("dragging"); e.dataTransfer.effectAllowed = "move"; try { e.dataTransfer.setData("text/plain", sleep); } catch (x) {} });
+  bord.addEventListener("dragend", e => { e.target.closest(".kaart")?.classList.remove("dragging"); bord.querySelectorAll(".over").forEach(x => x.classList.remove("over")); });
   bord.addEventListener("dragover", e => { const col = e.target.closest(".col"); if (!col || !sleep) return; e.preventDefault(); bord.querySelectorAll(".over").forEach(x => x !== col && x.classList.remove("over")); col.classList.add("over"); });
-  bord.addEventListener("drop", e => { const col = e.target.closest(".col"); if (!col || !sleep) return; e.preventDefault(); const d = vind(sleep); sleep = null; col.classList.remove("over"); if (d) naarStatus(d, col.dataset.status); });
-
-  document.getElementById("scrim").onclick = () => { openId = null; render(); };
+  bord.addEventListener("drop", e => { const col = e.target.closest(".col"); if (!col || !sleep) return; e.preventDefault(); const d = vind(sleep); sleep = null; col.classList.remove("over"); naarStatus(d, col.dataset.status); });
   document.addEventListener("keydown", e => { if (e.key === "Escape" && openId && !document.getElementById("dlg").open) { openId = null; render(); } });
-  document.getElementById("zoek").oninput = render;
-  document.getElementById("statusFilter").onchange = render;
-  document.getElementById("btnReset").onclick = () => { wijz = {}; extra = []; schrijf(sleutel(), {}); schrijf("extra", []); openId = null; render(); toast("Wijzigingen gewist"); };
+  document.getElementById("zoek").oninput = () => { pagina = 1; render(); };
   const fileIn = document.getElementById("fileIn");
   document.getElementById("btnLaad").onclick = () => fileIn.click();
   fileIn.onchange = () => {
     const f = fileIn.files[0]; if (!f) return;
     const rd = new FileReader();
-    rd.onload = () => { try { gebruik(JSON.parse(rd.result)); toast(`${basis.length} aanvragen geladen`); } catch (e) { toast("Dit bestand is geen aanvragen.json van het intakescript"); } };
+    rd.onload = () => { try { gebruik(JSON.parse(rd.result), "bestand"); toast(`${basis.length} aanvragen geladen`); } catch (e) { toast("Dit bestand is geen aanvragen.json van het intakescript"); } };
     rd.readAsText(f); fileIn.value = "";
   };
-
   const dlg = document.getElementById("dlg");
   document.getElementById("btnNieuw").onclick = () => { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); };
   document.getElementById("dlgCancel").onclick = () => dlg.close();
   document.getElementById("frm").addEventListener("submit", e => {
     e.preventDefault();
-    const n = Math.max(1, parseInt(document.getElementById("f-ar").value, 10) || 1), nu = new Date().toISOString();
-    const akte = document.getElementById("f-akte").checked;
-    const d = {
-      id: "T-" + (100 + extra.length + 1), naam: document.getElementById("f-naam").value.trim() || "VvE Testpand", plaats: document.getElementById("f-plaats").value.trim(),
-      pakket: document.getElementById("f-pakket").value, ar: ar(n), herkomst: document.getElementById("f-herkomst").value, bron: "formulier",
-      status: akte ? "gekwalificeerd" : "wacht_op_klant", sinds: nu, binnen: nu, contact: "Testaanvrager", bijz: document.getElementById("f-bijz").value,
-      deadline_signaal: /opzeg|deadline|zsm|spoed/i.test(document.getElementById("f-bijz").value), docs: { akte },
-      tl: [[nu, "Testaanvraag via formulier"], [nu, akte ? "Compleet, gekwalificeerd" : "Incompleet: vragenlijst en akte opgevraagd"]]
-    };
-    extra.unshift(d); schrijf("extra", extra); pakket = tabVan(d); openId = d.id; dlg.close(); render(); toast("Testaanvraag toegevoegd");
+    const n = Math.max(1, parseInt(document.getElementById("f-ar").value, 10) || 1), nu = new Date().toISOString(), akte = document.getElementById("f-akte").checked;
+    const bijz = document.getElementById("f-bijz").value;
+    const d = { id: "T-" + (101 + extra.length), naam: document.getElementById("f-naam").value.trim() || "VvE Testpand", plaats: document.getElementById("f-plaats").value.trim(),
+      pakket: document.getElementById("f-pakket").value, ar: { woning: n, bedrijfsruimte: 0, parkeerplaats: 0, berging: 0 }, herkomst: document.getElementById("f-herkomst").value, bron: "formulier",
+      status: akte ? "gekwalificeerd" : "wacht_op_klant", sinds: nu, binnen: nu, contact: "Testaanvrager", bijz, deadline_signaal: /opzeg|deadline|zsm|spoed/i.test(bijz), docs: { akte },
+      tl: [[nu, "Testaanvraag via formulier"], [nu, akte ? "Compleet, gekwalificeerd" : "Incompleet: vragenlijst en akte opgevraagd"]] };
+    extra.unshift(d); schrijf("extra", extra); openId = d.id; tab = "lopend"; dlg.close(); render(); toast("Testaanvraag toegevoegd");
   });
 
   start();
