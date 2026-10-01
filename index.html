@@ -325,6 +325,14 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
 .mailbox textarea { border: 0; background: var(--surface); color: var(--fg); padding: 12px; min-height: 340px; resize: vertical; font: inherit; font-size: .92rem; line-height: 1.5; outline: none; }
 .mailbox textarea:focus, .mailbox input:focus { background: var(--surface-2); }
 @media (max-width: 860px) { .schema { grid-template-columns: 1fr; } }
+td.num, .prijs .num, .kaart .mt span:last-child { white-space: nowrap; }
+td:first-child { min-width: 230px; }
+.vve { line-height: 1.25; }
+.panel .tabs { gap: 0; padding-inline: 12px; }
+.panel .tabs button { padding: 8px 8px 10px; }
+.grid { grid-template-columns: minmax(0, 1fr) 360px; }
+@media (max-width: 1080px) { .grid { grid-template-columns: 1fr; } }
+
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -487,9 +495,9 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
   const DAGOPTIES = [3, 5, 7, 10, 14, 21, 28, 35];
   const TABS = [
     { k: "lopend", l: "Lopend", f: d => !AFGESLOTEN.has(d.status) },
-    { k: "b1", l: "Blok 1 · Aanvraag", f: d => BLOK[d.status] === 1 },
-    { k: "b2", l: "Blok 2 · Offerte", f: d => BLOK[d.status] === 2 },
-    { k: "b3", l: "Blok 3 · Overeenkomst", f: d => BLOK[d.status] === 3 && d.status !== "naar_opstart" },
+    { k: "b1", l: "Blok 1", f: d => BLOK[d.status] === 1 },
+    { k: "b2", l: "Blok 2", f: d => BLOK[d.status] === 2 },
+    { k: "b3", l: "Blok 3", f: d => BLOK[d.status] === 3 && d.status !== "naar_opstart" },
     { k: "opv", l: "Opvolging nu", f: d => ["nu", "bel"].includes(opvolging(d).soort) },
     { k: "af", l: "Afgesloten", f: d => AFGESLOTEN.has(d.status) }
   ];
@@ -869,7 +877,7 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
         <div class="meta">${BLOK[d.status] ? `Blok ${BLOK[d.status]} · ${BLOKNAAM[BLOK[d.status]]} · stap ${STAP[d.status]}` : "Afgesloten"}</div>
         <div class="meta">${esc(d.plaats)} · ${esc(d.id)} · binnen ${fmtDT(d.binnen)}</div></div>
         <button class="x" id="pClose" type="button" aria-label="Dossier sluiten">✕</button></div>
-      <div class="tabs" role="tablist">${kop("overzicht", "Overzicht")}${kop("mail", "Mail")}${kop("prijs", "Prijs")}${kop("docs", "Documenten")}${kop("log", "Logboek")}</div>
+      <div class="tabs" role="tablist">${kop("overzicht", "Overzicht")}${kop("mail", "Mail")}${kop("prijs", "Prijs")}${kop("docs", "Stukken")}${kop("log", "Logboek")}</div>
       <div class="pbody">${inhoud}</div>`;
 
     el.querySelector("#pClose").onclick = () => { openId = null; render(); };
