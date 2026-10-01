@@ -8,76 +8,105 @@
 <title>Offertepijplijn VVEgemak</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: werkscherm — kop met kengetallen, tabs Basic/Premium, sorteerbare aanvraagregels, dossier schuift rechts in */
+/* Layout: petrol kopband in VVEgemak-huisstijl; kengetallen; schakel Lijst/Bord; bord = kolommen per status met sleepbare kaarten; dossier schuift rechts in */
 :root {
-  --bg: #f4f6f9;
+  --petrol: #005e69;
+  --petrol-ink: #00454d;
+  --lime: #93d400;
+  --orange: #ff6c00;
+  --bg: #f2f6f6;
   --surface: #ffffff;
-  --surface-2: #eef1f6;
-  --line: #d9dfe8;
-  --fg: #16202e;
-  --muted: #5d6a7c;
-  --accent: #1f4fa3;
-  --accent-soft: #e3ebf8;
-  --accent-fg: #ffffff;
-  --ok: #1d7a4a;  --ok-soft: #dff2e7;
-  --warn: #9a5b00; --warn-soft: #fbeed6;
-  --crit: #b3261e; --crit-soft: #fbe2e0;
-  --shadow: 0 10px 30px rgba(22, 32, 46, .14);
-  --font-ui: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --surface-2: #e8eff0;
+  --line: #d3dfe0;
+  --fg: #10282b;
+  --muted: #557074;
+  --head-bg: var(--petrol);
+  --head-fg: #ffffff;
+  --head-muted: #b9dadd;
+  --primary-bg: var(--petrol);
+  --primary-fg: #ffffff;
+  --accent: var(--petrol);
+  --accent-soft: #dcecee;
+  --ok: #3f7d00;    --ok-soft: #e9f6d2;
+  --warn: #b84d00;  --warn-soft: #ffe9d9;
+  --crit: #b3261e;  --crit-soft: #fbe2e0;
+  --shadow: 0 12px 32px rgba(0, 54, 60, .16);
+  --font-ui: "Urbanist", "Century Gothic", "Avant Garde", "Segoe UI", system-ui, sans-serif;
   --font-num: "IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #0f141c; --surface: #171e29; --surface-2: #1e2734; --line: #2c3746;
-  --fg: #e6ebf2; --muted: #95a2b5; --accent: #7aa5ef; --accent-soft: #1d2c46; --accent-fg: #0f141c;
-  --ok: #6fd19c; --ok-soft: #173326; --warn: #f0b860; --warn-soft: #3a2c14; --crit: #f08a82; --crit-soft: #3d1c1a;
-  --shadow: 0 10px 30px rgba(0, 0, 0, .5); color-scheme: dark; } }
+  --bg: #0a1618; --surface: #102225; --surface-2: #162d31; --line: #25444a;
+  --fg: #e3eff0; --muted: #8fb0b4; --head-bg: #062f34; --head-fg: #ffffff; --head-muted: #8fc3c8;
+  --primary-bg: var(--lime); --primary-fg: #0a1f22; --accent: #6fd0da; --accent-soft: #123a40;
+  --ok: #a6e04a; --ok-soft: #1f3510; --warn: #ff9a52; --warn-soft: #3b2412; --crit: #f08a82; --crit-soft: #3d1c1a;
+  --shadow: 0 12px 32px rgba(0, 0, 0, .55); color-scheme: dark; } }
 :root[data-theme="dark"] {
-  --bg: #0f141c; --surface: #171e29; --surface-2: #1e2734; --line: #2c3746;
-  --fg: #e6ebf2; --muted: #95a2b5; --accent: #7aa5ef; --accent-soft: #1d2c46; --accent-fg: #0f141c;
-  --ok: #6fd19c; --ok-soft: #173326; --warn: #f0b860; --warn-soft: #3a2c14; --crit: #f08a82; --crit-soft: #3d1c1a;
-  --shadow: 0 10px 30px rgba(0, 0, 0, .5); color-scheme: dark; }
+  --bg: #0a1618; --surface: #102225; --surface-2: #162d31; --line: #25444a;
+  --fg: #e3eff0; --muted: #8fb0b4; --head-bg: #062f34; --head-fg: #ffffff; --head-muted: #8fc3c8;
+  --primary-bg: var(--lime); --primary-fg: #0a1f22; --accent: #6fd0da; --accent-soft: #123a40;
+  --ok: #a6e04a; --ok-soft: #1f3510; --warn: #ff9a52; --warn-soft: #3b2412; --crit: #f08a82; --crit-soft: #3d1c1a;
+  --shadow: 0 12px 32px rgba(0, 0, 0, .55); color-scheme: dark; }
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-body { background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 14px; line-height: 1.45; }
-.wrap { max-width: 1320px; margin: 0 auto; padding-inline: 20px; padding-block: 20px 48px; display: grid; gap: 18px; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 15px; line-height: 1.45; }
 .num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
-button { font: inherit; cursor: pointer; }
-button:focus-visible, input:focus-visible, select:focus-visible, tr:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
 
-header.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; }
-header.top h1 { margin: 0; font-size: 1.55rem; font-weight: 700; letter-spacing: -.01em; text-wrap: balance; }
-header.top p { margin: 2px 0 0; color: var(--muted); }
-.demo { display: inline-flex; align-items: center; gap: 6px; background: var(--warn-soft); color: var(--warn); border-radius: 999px; padding: 4px 10px; font-size: .78rem; font-weight: 600; letter-spacing: .02em; }
-.btn { border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 8px; padding: 7px 12px; font-weight: 500; }
+/* Kopband */
+.head { background: var(--head-bg); color: var(--head-fg); }
+.head .in { max-width: 1440px; margin: 0 auto; padding-inline: 20px; padding-block: 16px 18px; display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: baseline; gap: 12px; min-width: 0; }
+.brand .logo { font-weight: 800; font-size: 1.5rem; letter-spacing: -.01em; }
+.brand .logo b { color: var(--lime); font-weight: 800; }
+.brand .sub { color: var(--head-muted); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: .78rem; }
+.headr { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.src { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; padding: 5px 12px; font-size: .82rem; color: var(--head-fg); max-width: 100%; }
+.src::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); flex: none; }
+.src.live::before { background: var(--lime); }
+.hbtn { border: 1px solid rgba(255,255,255,.3); background: transparent; color: var(--head-fg); border-radius: 8px; padding: 6px 12px; font-weight: 600; font-size: .88rem; }
+.hbtn:hover { background: rgba(255,255,255,.1); }
+.hbtn.lime { background: var(--lime); border-color: var(--lime); color: #0a1f22; }
+
+.wrap { max-width: 1440px; margin: 0 auto; padding-inline: 20px; padding-block: 18px 48px; display: grid; gap: 16px; min-width: 0; }
+.btn { border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 8px; padding: 7px 13px; font-weight: 600; }
 .btn:hover { border-color: var(--accent); }
-.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); font-weight: 600; }
-.btn.primary:hover { filter: brightness(1.08); }
+.btn.primary { background: var(--primary-bg); border-color: var(--primary-bg); color: var(--primary-fg); }
 .btn.danger { color: var(--crit); }
-.btn.sm { padding: 4px 10px; font-size: .82rem; }
+.btn.sm { padding: 4px 10px; font-size: .84rem; }
 .btn:disabled { opacity: .45; cursor: not-allowed; }
 
-.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
-.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 2px; min-width: 0; }
-.kpi .lbl { color: var(--muted); font-size: .74rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
-.kpi .val { font-family: var(--font-num); font-size: 1.45rem; font-weight: 500; }
-.kpi .sub { color: var(--muted); font-size: .8rem; }
-.kpi.alert .val { color: var(--crit); }
+.notice { background: var(--warn-soft); color: var(--warn); border-radius: 10px; padding: 10px 14px; font-size: .9rem; }
+.notice b { font-weight: 700; }
 
+/* Kengetallen */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 15px; display: grid; gap: 1px; min-width: 0; }
+.kpi .lbl { color: var(--muted); font-size: .76rem; text-transform: uppercase; letter-spacing: .07em; font-weight: 700; }
+.kpi .val { font-family: var(--font-num); font-size: 1.5rem; font-weight: 500; color: var(--fg); }
+.kpi .sub { color: var(--muted); font-size: .82rem; }
+.kpi.alert { border-color: var(--orange); }
+.kpi.alert .val { color: var(--warn); }
+
+/* Balk */
 .bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
-.tabs { display: inline-flex; background: var(--surface-2); border-radius: 10px; padding: 3px; gap: 2px; }
-.tab { border: 0; background: transparent; color: var(--muted); padding: 7px 16px; border-radius: 8px; font-weight: 600; }
-.tab[aria-selected="true"] { background: var(--surface); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
-.tab .c { font-family: var(--font-num); font-weight: 400; margin-left: 6px; color: var(--muted); }
-.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.filters input, .filters select, .field input, .field select { border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 8px; padding: 7px 10px; font: inherit; min-width: 0; }
-.filters input { width: 220px; max-width: 100%; }
+.seg { display: inline-flex; background: var(--surface-2); border-radius: 10px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: transparent; color: var(--muted); padding: 7px 15px; border-radius: 8px; font-weight: 700; }
+.seg button[aria-pressed="true"], .seg button[aria-selected="true"] { background: var(--surface); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,.14); }
+.seg .c { font-family: var(--font-num); font-weight: 400; margin-left: 6px; color: var(--muted); }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-width: 0; }
+.tools input, .tools select, .field input, .field select, .field textarea { border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 8px; padding: 7px 10px; min-width: 0; }
+.tools input[type="search"] { width: 230px; max-width: 100%; }
 
+/* Lijst */
 .tablebox { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; min-width: 900px; }
-th { text-align: left; font-size: .74rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; user-select: none; cursor: pointer; background: var(--surface); }
+table { width: 100%; border-collapse: collapse; min-width: 940px; }
+th { text-align: left; font-size: .75rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); font-weight: 700; padding: 11px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; user-select: none; }
+th[data-k] { cursor: pointer; }
 th[aria-sort="ascending"]::after { content: " ▲"; font-size: .7em; }
 th[aria-sort="descending"]::after { content: " ▼"; font-size: .7em; }
 th.r, td.r { text-align: right; }
@@ -86,76 +115,101 @@ tbody tr { cursor: pointer; }
 tbody tr:hover { background: var(--surface-2); }
 tbody tr.sel { background: var(--accent-soft); }
 tbody tr:last-child td { border-bottom: 0; }
-.vve { font-weight: 600; }
-.plaats { color: var(--muted); font-size: .82rem; }
+.vve { font-weight: 700; }
+.plaats { color: var(--muted); font-size: .84rem; }
 .empty { padding: 28px; text-align: center; color: var(--muted); }
 
-.pill { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 3px 9px; font-size: .78rem; font-weight: 600; white-space: nowrap; background: var(--surface-2); color: var(--muted); }
+/* Status & signalen */
+.pill { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 3px 10px; font-size: .8rem; font-weight: 700; white-space: nowrap; background: var(--surface-2); color: var(--muted); }
 .pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
 .st-nieuw, .st-gekwalificeerd { background: var(--accent-soft); color: var(--accent); }
 .st-wacht_op_klant, .st-in_onderhandeling { background: var(--warn-soft); color: var(--warn); }
 .st-geanalyseerd, .st-offerte_uit, .st-contract_uit { background: var(--surface-2); color: var(--fg); }
 .st-gewonnen, .st-getekend { background: var(--ok-soft); color: var(--ok); }
 .st-verloren { background: var(--crit-soft); color: var(--crit); }
-.tag { display: inline-block; border-radius: 6px; padding: 2px 7px; font-size: .74rem; font-weight: 600; margin: 1px 4px 1px 0; white-space: nowrap; }
+.tag { display: inline-block; border-radius: 6px; padding: 2px 7px; font-size: .76rem; font-weight: 700; margin: 1px 4px 1px 0; white-space: nowrap; }
 .tag.up { background: var(--ok-soft); color: var(--ok); }
 .tag.down { background: var(--accent-soft); color: var(--accent); }
-.tag.dl { background: var(--crit-soft); color: var(--crit); }
+.tag.dl { background: var(--warn-soft); color: var(--warn); }
+.tag.crit { background: var(--crit-soft); color: var(--crit); }
 .tag.info { background: var(--surface-2); color: var(--muted); }
-.age { font-family: var(--font-num); }
+.age { font-family: var(--font-num); font-size: .9rem; }
 .age.warn { color: var(--warn); font-weight: 600; }
 .age.crit { color: var(--crit); font-weight: 600; }
 .leeg { color: var(--muted); }
 
+/* Bord */
+.board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(250px, 1fr); gap: 12px; overflow-x: auto; padding-bottom: 8px; align-items: start; }
+.col { background: var(--surface-2); border-radius: 12px; padding: 10px; display: grid; gap: 8px; align-content: start; min-height: 160px; border: 2px dashed transparent; }
+.col.over { border-color: var(--accent); background: var(--accent-soft); }
+.col.lost { background: var(--crit-soft); }
+.colh { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 2px 4px 4px; }
+.colh .t { font-weight: 800; font-size: .92rem; }
+.colh .n { font-family: var(--font-num); color: var(--muted); font-size: .82rem; }
+.colh .s { color: var(--muted); font-size: .78rem; font-family: var(--font-num); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 11px; display: grid; gap: 5px; cursor: grab; min-width: 0; }
+.card:hover { border-color: var(--accent); }
+.card.sel { outline: 2px solid var(--accent); }
+.card.dragging { opacity: .45; }
+.card .r1 { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.card .nm { font-weight: 700; line-height: 1.25; overflow-wrap: anywhere; }
+.card .bd { font-family: var(--font-num); font-size: .86rem; white-space: nowrap; }
+.card .mt { color: var(--muted); font-size: .82rem; display: flex; justify-content: space-between; gap: 8px; }
+.card .tg { min-height: 0; }
+.dropnote { color: var(--muted); font-size: .8rem; text-align: center; padding: 10px 4px; }
+
 /* Dossier */
-.scrim { position: fixed; inset: 0; background: rgba(10, 15, 22, .35); }
-aside.dossier { position: fixed; top: 0; right: 0; bottom: 0; width: min(560px, 100%); background: var(--surface); border-left: 1px solid var(--line); box-shadow: var(--shadow); overflow-y: auto; padding: calc(18px + env(safe-area-inset-top, 0px)) 22px calc(24px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 18px; align-content: start; }
-.dhead { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
-.dhead h2 { margin: 0; font-size: 1.25rem; text-wrap: balance; }
-.dhead .meta { color: var(--muted); font-size: .85rem; margin-top: 2px; }
-.close { border: 0; background: var(--surface-2); color: var(--fg); border-radius: 8px; width: 34px; height: 34px; font-size: 1.1rem; flex: none; }
+.scrim { position: fixed; inset: 0; background: rgba(0, 30, 34, .38); }
+aside.dossier { position: fixed; top: 0; right: 0; bottom: 0; width: min(580px, 100%); background: var(--surface); border-left: 1px solid var(--line); box-shadow: var(--shadow); overflow-y: auto; display: grid; align-content: start; }
+.dtop { background: var(--head-bg); color: var(--head-fg); padding: calc(16px + env(safe-area-inset-top, 0px)) 22px 16px; display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+.dtop h2 { margin: 0; font-size: 1.3rem; font-weight: 800; text-wrap: balance; }
+.dtop .meta { color: var(--head-muted); font-size: .88rem; margin-top: 3px; }
+.close { border: 1px solid rgba(255,255,255,.3); background: transparent; color: var(--head-fg); border-radius: 8px; width: 34px; height: 34px; font-size: 1.05rem; flex: none; }
+.dbody { padding: 18px 22px calc(26px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 18px; }
 section.blk { display: grid; gap: 8px; }
-section.blk h3 { margin: 0; font-size: .74rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
-dl.kv { display: grid; grid-template-columns: 150px 1fr; gap: 5px 12px; margin: 0; }
+section.blk h3 { margin: 0; font-size: .76rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 800; }
+dl.kv { display: grid; grid-template-columns: 160px 1fr; gap: 6px 12px; margin: 0; }
 dl.kv dt { color: var(--muted); }
-dl.kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+dl.kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; white-space: pre-line; }
+.copy { border: 0; background: var(--surface-2); color: var(--fg); border-radius: 6px; padding: 1px 7px; font-size: .78rem; margin-left: 6px; }
 .prijs { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
 .prijs .row { display: flex; justify-content: space-between; gap: 12px; padding: 7px 12px; border-bottom: 1px solid var(--line); }
 .prijs .row:last-child { border-bottom: 0; }
-.prijs .row.tot { background: var(--surface-2); font-weight: 600; }
-.prijs .row .src { color: var(--muted); font-size: .76rem; }
-.signal { display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; border-radius: 8px; background: var(--surface-2); font-size: .88rem; }
+.prijs .row.tot { background: var(--surface-2); font-weight: 700; }
+.prijs .src2 { color: var(--muted); font-size: .76rem; }
+.signal { padding: 8px 11px; border-radius: 8px; background: var(--surface-2); font-size: .9rem; }
 .signal.warn { background: var(--warn-soft); color: var(--warn); }
 .signal.crit { background: var(--crit-soft); color: var(--crit); }
 .signal.ok { background: var(--ok-soft); color: var(--ok); }
-.docs { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
-.doc { display: flex; gap: 6px; align-items: center; font-size: .86rem; }
-.doc .mk { width: 18px; height: 18px; border-radius: 5px; display: grid; place-items: center; font-size: .72rem; font-weight: 700; flex: none; }
+.docs { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; }
+.doc { display: flex; gap: 7px; align-items: center; font-size: .88rem; }
+.doc .mk { width: 18px; height: 18px; border-radius: 5px; display: grid; place-items: center; font-size: .72rem; font-weight: 800; flex: none; }
 .doc .mk.y { background: var(--ok-soft); color: var(--ok); }
 .doc .mk.n { background: var(--surface-2); color: var(--muted); }
-ol.tl { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
-ol.tl li { display: grid; grid-template-columns: 92px 1fr; gap: 10px; padding: 6px 0; border-bottom: 1px dashed var(--line); font-size: .86rem; }
+ol.tl { list-style: none; margin: 0; padding: 0; display: grid; }
+ol.tl li { display: grid; grid-template-columns: 100px 1fr; gap: 10px; padding: 6px 0; border-bottom: 1px dashed var(--line); font-size: .88rem; }
 ol.tl li:last-child { border-bottom: 0; }
 ol.tl .d { color: var(--muted); font-family: var(--font-num); font-size: .8rem; }
-.actions { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px; border-top: 1px solid var(--line); padding-top: 14px; }
-.field { display: grid; gap: 4px; }
-.field label { font-size: .8rem; color: var(--muted); font-weight: 600; }
+.actions { display: grid; gap: 12px; border-top: 1px solid var(--line); padding-top: 14px; }
 .inline { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
-.note { color: var(--muted); font-size: .82rem; }
-.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 9px 16px; border-radius: 8px; font-weight: 600; box-shadow: var(--shadow); }
-footer { color: var(--muted); font-size: .8rem; display: grid; gap: 4px; }
+.field { display: grid; gap: 4px; }
+.field label { font-size: .8rem; color: var(--muted); font-weight: 700; }
+.note { color: var(--muted); font-size: .84rem; margin: 0; }
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 9px 16px; border-radius: 8px; font-weight: 700; box-shadow: var(--shadow); max-width: calc(100% - 32px); }
+footer { color: var(--muted); font-size: .82rem; display: grid; gap: 4px; }
 
-/* Nieuwe testaanvraag */
-dialog { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--fg); padding: 20px; width: min(520px, calc(100% - 32px)); box-shadow: var(--shadow); }
-dialog::backdrop { background: rgba(10, 15, 22, .4); }
-dialog h2 { margin: 0 0 4px; font-size: 1.1rem; }
+dialog { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--fg); padding: 20px; width: min(540px, calc(100% - 32px)); box-shadow: var(--shadow); }
+dialog::backdrop { background: rgba(0, 30, 34, .45); }
+dialog h2 { margin: 0 0 4px; font-size: 1.15rem; font-weight: 800; }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.chk { display: flex; gap: 8px; align-items: center; font-size: .88rem; }
-@media (max-width: 560px) {
+.chk { display: flex; gap: 8px; align-items: center; font-size: .9rem; }
+
+@media (max-width: 600px) {
   .grid2 { grid-template-columns: 1fr; }
-  dl.kv { grid-template-columns: 1fr; gap: 0 0; }
+  dl.kv { grid-template-columns: 1fr; gap: 0; }
   dl.kv dt { margin-top: 6px; }
-  .filters input { width: 100%; }
+  .tools input[type="search"] { width: 100%; }
+  .board { grid-auto-columns: minmax(78vw, 1fr); }
 }
 @media (prefers-reduced-motion: no-preference) {
   aside.dossier { animation: slide .18s ease-out; }
@@ -165,57 +219,66 @@ dialog h2 { margin: 0 0 4px; font-size: 1.1rem; }
 </head>
 <body>
 
-<div class="wrap">
-  <header class="top">
-    <div>
-      <h1>Offertepijplijn</h1>
-      <p>Werkscherm Farhaad · per aanvraag één regel, één handeling: Akkoord.</p>
+<header class="head">
+  <div class="in">
+    <div class="brand"><span class="logo">VVE<b>gemak</b></span><span class="sub">Sales · Offertepijplijn</span></div>
+    <div class="headr">
+      <span class="src" id="srcLabel">Voorbeelddata</span>
+      <button class="hbtn" id="btnLaad" type="button" title="Laad een aanvragen.json die het intakescript heeft gemaakt">Bestand laden</button>
+      <input type="file" id="fileIn" accept=".json,application/json" hidden>
+      <button class="hbtn" id="btnReset" type="button">Wijzigingen wissen</button>
+      <button class="hbtn lime" id="btnNieuw" type="button">+ Testaanvraag</button>
     </div>
-    <div class="filters">
-      <span class="demo" title="Fictieve aanvragen om het format te tonen">Voorbeelddata</span>
-      <button class="btn" id="btnNieuw" type="button">+ Testaanvraag</button>
-      <button class="btn" id="btnReset" type="button">Herstel voorbeeld</button>
-    </div>
-  </header>
+  </div>
+</header>
 
+<main class="wrap">
+  <div class="notice" id="notice" hidden></div>
   <div class="kpis" id="kpis"></div>
 
   <div class="bar">
-    <div class="tabs" role="tablist" aria-label="Pakket">
-      <button class="tab" role="tab" id="tab-basic" aria-selected="true" data-pakket="basic">Basic<span class="c" id="c-basic"></span></button>
-      <button class="tab" role="tab" id="tab-premium" aria-selected="false" data-pakket="premium">Premium<span class="c" id="c-premium"></span></button>
+    <div class="tools">
+      <div class="seg" role="tablist" aria-label="Pakket">
+        <button role="tab" id="tab-basic" data-pakket="basic" type="button">Basic<span class="c" id="c-basic"></span></button>
+        <button role="tab" id="tab-premium" data-pakket="premium" type="button">Premium<span class="c" id="c-premium"></span></button>
+      </div>
+      <div class="seg" aria-label="Weergave">
+        <button id="v-lijst" data-view="lijst" type="button">Lijst</button>
+        <button id="v-bord" data-view="bord" type="button">Bord</button>
+      </div>
     </div>
-    <div class="filters">
+    <div class="tools">
       <input id="zoek" type="search" placeholder="Zoek VvE of plaats" aria-label="Zoek VvE of plaats">
       <select id="statusFilter" aria-label="Filter op status">
-        <option value="actief">Lopend (zonder afgesloten)</option>
-        <option value="alle">Alle statussen</option>
+        <option value="actief">Lopend</option>
+        <option value="alle">Alle, ook afgesloten</option>
       </select>
     </div>
   </div>
 
-  <div class="tablebox">
+  <div class="tablebox" id="lijst">
     <table>
       <thead><tr id="thead"></tr></thead>
       <tbody id="tbody"></tbody>
     </table>
   </div>
+  <div class="board" id="bord" hidden></div>
 
   <footer>
-    <span>Prijs Basic = officiële staffel (Bassie): €495 basis + per soort aantal × staffeltarief, betalingsverkeer separaat. Premium = maatwerk, bedrag vult Farhaad in.</span>
-    <span>Gewogen pijplijn = offertebedrag × slagingskans per status (aanname: geanalyseerd 20%, offerte uit 30%, onderhandeling 50%, gewonnen 90%). Wijzigingen blijven alleen in deze browser.</span>
+    <span>Prijs Basic = officiële staffel (Bassie): € 495 basis + per soort aantal × staffeltarief, betalingsverkeer separaat. Premium = maatwerk, bedrag vult Farhaad in.</span>
+    <span>Gewogen pijplijn = offertebedrag × slagingskans per status (aanname: geanalyseerd 20%, offerte uit 30%, onderhandeling 50%, gewonnen 90%). Statuswijzigingen bewaart alleen deze browser.</span>
   </footer>
-</div>
+</main>
 
 <div class="scrim" id="scrim" hidden></div>
 <aside class="dossier" id="dossier" hidden aria-label="Dossier"></aside>
 <div class="toast" id="toast" hidden role="status"></div>
 
 <dialog id="dlg">
-  <form id="frm" method="dialog" style="display:grid;gap:12px">
+  <form id="frm" style="display:grid;gap:12px">
     <div>
       <h2>Testaanvraag</h2>
-      <p class="note" style="margin:0">Zelfde velden als het webformulier "Offerte aanvraag". De prijs rekent mee.</p>
+      <p class="note">Zelfde velden als het webformulier "Offerte aanvraag". De prijs rekent direct mee.</p>
     </div>
     <div class="field"><label for="f-naam">Naam van VvE</label><input id="f-naam" required value="VvE Testpand 12-20"></div>
     <div class="grid2">
@@ -227,7 +290,7 @@ dialog h2 { margin: 0 0 4px; font-size: 1.1rem; }
     <div class="field"><label for="f-bijz">Bijzonderheden</label><input id="f-bijz" value="Willen per 1 januari overstappen."></div>
     <label class="chk"><input type="checkbox" id="f-akte" checked> Splitsingsakte geüpload</label>
     <div class="inline" style="justify-content:flex-end">
-      <button class="btn" value="cancel" type="button" id="dlgCancel">Annuleren</button>
+      <button class="btn" type="button" id="dlgCancel">Annuleren</button>
       <button class="btn primary" type="submit">Aanvraag toevoegen</button>
     </div>
   </form>
@@ -240,10 +303,10 @@ dialog h2 { margin: 0 0 4px; font-size: 1.1rem; }
     btw: 0.21, basis: 495, grenzen: [2, 6, 10, 20],
     staffel: { woning: [90, 85, 80, 75], bedrijfsruimte: [130, 125, 120, 115], parkeerplaats: [40, 35, 30, 25], berging: [30, 25, 22.5, 20] },
     bv: { klein: 200, groot: 275 }, opstart: { basic: 750, premium: 1500 },
-    warmte: 20, hoofdsplitsing: 495, premiumGrens: 40,
+    warmte: 20, hoofdsplitsing: 495, premiumGrens: 40, maxPlausibel: 400,
     ga: ["amsterdam", "amstelveen", "diemen", "ouder-amstel", "duivendrecht", "zaandam", "zaanstad", "haarlemmermeer", "hoofddorp", "badhoevedorp", "landsmeer", "oostzaan", "weesp", "almere"]
   };
-  const SOORT_LABEL = { woning: "Woningen", bedrijfsruimte: "Bedrijfsruimten", parkeerplaats: "Parkeerplaatsen", berging: "Bergingen" };
+  const SOORT = { woning: "woningen", bedrijfsruimte: "bedrijfsruimten", parkeerplaats: "parkeerplaatsen", berging: "bergingen" };
   const STATUS = {
     nieuw: "Nieuw", wacht_op_klant: "Wacht op klant", gekwalificeerd: "Gekwalificeerd", geanalyseerd: "Geanalyseerd",
     offerte_uit: "Offerte uit", in_onderhandeling: "In onderhandeling", gewonnen: "Gewonnen", contract_uit: "Contract uit",
@@ -251,40 +314,38 @@ dialog h2 { margin: 0 0 4px; font-size: 1.1rem; }
   };
   const KANS = { geanalyseerd: .2, offerte_uit: .3, in_onderhandeling: .5, gewonnen: .9, contract_uit: .95, getekend: 1 };
   const AFGESLOTEN = new Set(["getekend", "verloren"]);
+  const AKKOORD = new Set(["gekwalificeerd", "geanalyseerd"]);
   const VERLIESREDENEN = ["Prijs", "Wil Premium", "Geen overstap", "Geen reactie", "Concurrent"];
-  const AKKOORD_STATUS = new Set(["gekwalificeerd", "geanalyseerd"]);
 
   const isGA = p => T.ga.includes((p || "").trim().toLowerCase());
-  const tier = (n) => { let i = 0; T.grenzen.forEach((g, k) => { if (n >= g) i = k; }); return i; };
+  const tier = n => { let i = 0; T.grenzen.forEach((g, k) => { if (n >= g) i = k; }); return i; };
+  const totAR = d => Object.values(d.ar || {}).reduce((a, b) => a + (+b || 0), 0);
 
   function prijs(d) {
     const out = { regels: [], signalen: [], bv: null, opstart: 0, advies: "basic" };
-    const tot = Object.keys(T.staffel).reduce((s, k) => s + (d.ar[k] || 0), 0);
-    const ga = isGA(d.plaats);
-    const premOk = ga && tot >= T.premiumGrens;
+    const tot = totAR(d), ga = isGA(d.plaats), premOk = ga && tot >= T.premiumGrens;
+    if (tot > T.maxPlausibel) out.signalen.push({ t: "crit", s: "crit", txt: `Opgegeven aantal (${tot}) is onwaarschijnlijk. Controleer het aantal in de akte voordat er een prijs uitgaat.` });
     if (d.pakket === "premium" && !premOk)
       out.signalen.push({ t: "down", s: "warn", txt: `Downsell: Premium gevraagd, maar ${ga ? "onder " + T.premiumGrens + " appartementsrechten" : "buiten Groot-Amsterdam"}. Basic aanbieden met positieve uitleg.` });
-    if (d.pakket === "basic" && premOk)
+    if (d.pakket === "basic" && premOk && tot <= T.maxPlausibel)
       out.signalen.push({ t: "up", s: "ok", txt: "Upgrade-kans: Basic gevraagd, maar Premium-profiel (Groot-Amsterdam en omvang)." });
-    if (d.pakket === "premium" && premOk) {
-      out.advies = "premium"; out.opstart = T.opstart.premium;
-      return out;
-    }
+    if (d.pakket === "premium" && premOk) { out.advies = "premium"; out.opstart = T.opstart.premium; return out; }
     out.regels.push({ o: "Basisvergoeding", b: T.basis, src: "staffel" });
     for (const k of Object.keys(T.staffel)) {
-      const n = d.ar[k] || 0; if (!n) continue;
+      const n = +(d.ar || {})[k] || 0; if (!n) continue;
       const tf = T.staffel[k][tier(n)];
-      out.regels.push({ o: `${SOORT_LABEL[k]} ${n} × ${eur(tf)}`, b: n * tf, src: "staffel" });
+      out.regels.push({ o: `${n} ${SOORT[k]} × ${eur(tf, tf % 1 ? 2 : 0)}`, b: n * tf, src: "staffel" });
     }
     if (d.warmte) out.regels.push({ o: `Warmteafrekening ${tot} × ${eur(T.warmte)}`, b: tot * T.warmte, src: "meerprijs akte" });
     if (d.hoofdsplitsing) out.regels.push({ o: "Hoofdsplitsing: tweede basisvergoeding", b: T.hoofdsplitsing, src: "meerprijs akte" });
-    if (d.betalingsverkeer) out.bv = (d.ar.woning || 0) <= 9 ? T.bv.klein : T.bv.groot;
+    if (d.betalingsverkeer) out.bv = (+(d.ar || {}).woning || 0) <= 9 ? T.bv.klein : T.bv.groot;
     out.opstart = T.opstart.basic;
     return out;
   }
   const beheer = p => p.regels.reduce((s, r) => s + r.b, 0);
-  function offertebedrag(d) {
+  function bedrag(d) {
     const p = prijs(d);
+    if (totAR(d) > T.maxPlausibel) return null;
     if (p.advies === "premium") return d.premiumBedrag || null;
     return beheer(p) + (p.bv || 0);
   }
@@ -292,224 +353,338 @@ dialog h2 { margin: 0 0 4px; font-size: 1.1rem; }
   // ── Voorbeelddata (fictief) ───────────────────────────────────────────────────
   const dag = n => { const x = new Date(); x.setHours(9, 0, 0, 0); x.setDate(x.getDate() - n); return x.toISOString(); };
   const ar = (w, b = 0, p = 0, g = 0) => ({ woning: w, bedrijfsruimte: b, parkeerplaats: p, berging: g });
+  const dl = n => { const x = new Date(); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); };
   const SEED = () => [
-    { id: "D-2026-118", naam: "VvE Lindenhof 3-17", plaats: "Amsterdam", pakket: "basic", ar: ar(8), herkomst: "Website", bron: "formulier", status: "nieuw", sinds: dag(0), binnen: dag(0), contact: "Bestuurder (voorbeeld)", bijz: "Huidige beheerder reageert traag. Willen per 1-1 overstappen.", docs: { akte: true }, opzeg: "2026-10-01", tl: [[dag(0), "Aanvraag via webformulier"]] },
-    { id: "D-2026-117", naam: "VvE Zeeburgerkade 40-58", plaats: "Amsterdam", pakket: "basic", ar: ar(52, 2, 0, 52), herkomst: "Google Ads", bron: "formulier", status: "gekwalificeerd", sinds: dag(1), binnen: dag(2), contact: "Voorzitter (voorbeeld)", bijz: "Vragen over technisch beheer.", docs: { akte: true, jaarrekening: true }, tl: [[dag(2), "Aanvraag via webformulier"], [dag(1), "Compleet, gekwalificeerd"]] },
-    { id: "D-2026-116", naam: "VvE Hof van Rhenen", plaats: "Utrecht", pakket: "premium", ar: ar(14), herkomst: "Overig", bron: "formulier", status: "gekwalificeerd", sinds: dag(1), binnen: dag(3), contact: "Penningmeester (voorbeeld)", bijz: "Liefst volledig ontzorgd.", docs: { akte: true }, tl: [[dag(3), "Aanvraag via webformulier"], [dag(1), "Compleet, gekwalificeerd"]] },
-    { id: "D-2026-115", naam: "VvE Spaarnezicht", plaats: "Haarlem", pakket: "basic", ar: ar(30, 0, 12, 0), herkomst: "Flyer", bron: "akte", status: "geanalyseerd", sinds: dag(2), binnen: dag(6), contact: "Bestuurder (voorbeeld)", bijz: "", docs: { akte: true, jaarrekening: true, notulen: true }, warmte: true, betalingsverkeer: true, tl: [[dag(6), "Aanvraag via webformulier"], [dag(4), "Gekwalificeerd"], [dag(2), "Akte gelezen: 30 woningen, 12 parkeerplaatsen, collectieve warmte"]] },
-    { id: "D-2026-114", naam: "VvE De Kade 2-6", plaats: "Weesp", pakket: "basic", ar: ar(5), herkomst: "Website", bron: "formulier", status: "wacht_op_klant", sinds: dag(5), binnen: dag(6), contact: "Bestuurder (voorbeeld)", bijz: "Splitsingsakte niet bij de hand.", docs: {}, tl: [[dag(6), "Aanvraag via webformulier"], [dag(5), "Vragenlijst (7 vragen) verstuurd, akte opgevraagd"]] },
-    { id: "D-2026-112", naam: "VvE Westerpark Noord", plaats: "Amsterdam", pakket: "premium", ar: ar(86, 4, 40, 0), herkomst: "Google Ads", bron: "akte", status: "offerte_uit", sinds: dag(9), binnen: dag(21), contact: "Voorzitter (voorbeeld)", bijz: "Groot onderhoud gevels 2027.", docs: { akte: true, jaarrekening: true, notulen: true, mjop: true }, premiumBedrag: 16800, alv: "2026-11-12", tl: [[dag(21), "Aanvraag via webformulier"], [dag(18), "Premium-poort: akkoord Farhaad"], [dag(12), "Intakegesprek"], [dag(9), "Offerte verstuurd"]] },
-    { id: "D-2026-110", naam: "VvE Bloemgracht 101", plaats: "Amsterdam", pakket: "basic", ar: ar(4, 1), herkomst: "Website", bron: "akte", status: "offerte_uit", sinds: dag(16), binnen: dag(24), contact: "Bestuurder (voorbeeld)", bijz: "", docs: { akte: true }, betalingsverkeer: true, tl: [[dag(24), "Aanvraag via webformulier"], [dag(16), "Offerte verstuurd"], [dag(9), "Dag 7: opvolgmail verstuurd"]] },
-    { id: "D-2026-108", naam: "VvE Parkzicht Almere", plaats: "Almere", pakket: "basic", ar: ar(24, 0, 24, 24), herkomst: "Flyer", bron: "akte", status: "in_onderhandeling", sinds: dag(6), binnen: dag(30), contact: "Bestuurder (voorbeeld)", bijz: "Vergelijken met huidige beheerder.", docs: { akte: true, jaarrekening: true }, hoofdsplitsing: true, alv: "2026-10-14", tl: [[dag(30), "Aanvraag via webformulier"], [dag(20), "Offerte verstuurd"], [dag(6), "Nagebeld: ALV 14-10 bekend"]] },
-    { id: "D-2026-104", naam: "VvE Kinkerhof", plaats: "Amsterdam", pakket: "premium", ar: ar(48, 2, 0, 48), herkomst: "Bestaande klant", bron: "akte", status: "gewonnen", sinds: dag(3), binnen: dag(44), contact: "Voorzitter (voorbeeld)", bijz: "", docs: { akte: true, jaarrekening: true, notulen: true, mjop: true, beheerovereenkomst: true }, premiumBedrag: 9600, tl: [[dag(44), "Aanvraag"], [dag(30), "Offerte verstuurd"], [dag(4), "ALV: akkoord"], [dag(3), "Gewonnen"]] },
-    { id: "D-2026-101", naam: "VvE Oranjehof 7-11", plaats: "Zaandam", pakket: "basic", ar: ar(11), herkomst: "Website", bron: "akte", status: "getekend", sinds: dag(8), binnen: dag(52), contact: "Bestuurder (voorbeeld)", bijz: "", docs: { akte: true, beheerovereenkomst: true }, betalingsverkeer: true, tl: [[dag(52), "Aanvraag"], [dag(40), "Offerte verstuurd"], [dag(8), "Contract getekend → overdracht Randy"]] },
-    { id: "D-2026-097", naam: "VvE Slotermeer Zuid", plaats: "Amsterdam", pakket: "basic", ar: ar(16), herkomst: "Google Ads", bron: "akte", status: "verloren", reden: "Geen overstap", heractiveren: "2027-09-01", sinds: dag(12), binnen: dag(60), contact: "Bestuurder (voorbeeld)", bijz: "", docs: { akte: true }, tl: [[dag(60), "Aanvraag"], [dag(45), "Offerte verstuurd"], [dag(12), "Verloren: geen overstap, heractiveren 01-09-2027"]] }
+    { id: "D-118", naam: "VvE Lindenhof 3-17", plaats: "Amsterdam", pakket: "basic", ar: ar(8), herkomst: "Website", bron: "formulier", status: "nieuw", sinds: dag(0), binnen: dag(0), contact: "Bestuurder (voorbeeld)", bijz: "Huidige beheerder reageert traag. Contract moet binnen twee weken opgezegd.", deadline_signaal: true, docs: { akte: true }, opzeg: dl(10), tl: [[dag(0), "Aanvraag via webformulier"]] },
+    { id: "D-117", naam: "VvE Zeeburgerkade 40-58", plaats: "Amsterdam", pakket: "basic", ar: ar(52, 2, 0, 52), herkomst: "Google Ads", bron: "formulier", status: "gekwalificeerd", sinds: dag(1), binnen: dag(2), contact: "Voorzitter (voorbeeld)", bijz: "Vragen over technisch beheer.", docs: { akte: true, jaarrekening: true }, eerste_reactie_uren: 5.5, tl: [[dag(2), "Aanvraag via webformulier"], [dag(1), "Compleet, gekwalificeerd"]] },
+    { id: "D-116", naam: "VvE Hof van Rhenen", plaats: "Utrecht", pakket: "premium", ar: ar(14), herkomst: "Overig", bron: "formulier", status: "gekwalificeerd", sinds: dag(1), binnen: dag(3), contact: "Penningmeester (voorbeeld)", bijz: "Liefst volledig ontzorgd.", docs: { akte: true }, eerste_reactie_uren: 26, tl: [[dag(3), "Aanvraag via webformulier"], [dag(1), "Compleet, gekwalificeerd"]] },
+    { id: "D-115", naam: "VvE Spaarnezicht", plaats: "Haarlem", pakket: "basic", ar: ar(30, 0, 12, 0), herkomst: "Flyer", bron: "akte", status: "geanalyseerd", sinds: dag(2), binnen: dag(6), contact: "Bestuurder (voorbeeld)", bijz: "", docs: { akte: true, jaarrekening: true, notulen: true }, warmte: true, betalingsverkeer: true, eerste_reactie_uren: 20, tl: [[dag(6), "Aanvraag via webformulier"], [dag(4), "Gekwalificeerd"], [dag(2), "Akte gelezen: 30 woningen, 12 parkeerplaatsen, collectieve warmte"]] },
+    { id: "D-114", naam: "VvE De Kade 2-6", plaats: "Weesp", pakket: "basic", ar: ar(5), herkomst: "Website", bron: "formulier", status: "wacht_op_klant", sinds: dag(5), binnen: dag(6), contact: "Bestuurder (voorbeeld)", bijz: "Splitsingsakte niet bij de hand.", docs: {}, eerste_reactie_uren: 30, tl: [[dag(6), "Aanvraag via webformulier"], [dag(5), "Vragenlijst (7 vragen) verstuurd, akte opgevraagd"]] },
+    { id: "D-112", naam: "VvE Westerpark Noord", plaats: "Amsterdam", pakket: "premium", ar: ar(86, 4, 40, 0), herkomst: "Google Ads", bron: "akte", status: "offerte_uit", sinds: dag(9), binnen: dag(21), contact: "Voorzitter (voorbeeld)", bijz: "Groot onderhoud gevels 2027.", docs: { akte: true, jaarrekening: true, notulen: true, mjop: true }, premiumBedrag: 16800, alv: dl(42), eerste_reactie_uren: 4, tl: [[dag(21), "Aanvraag via webformulier"], [dag(18), "Premium-poort: akkoord Farhaad"], [dag(12), "Intakegesprek"], [dag(9), "Offerte verstuurd"]] },
+    { id: "D-110", naam: "VvE Bloemgracht 101", plaats: "Amsterdam", pakket: "basic", ar: ar(4, 1), herkomst: "Website", bron: "akte", status: "offerte_uit", sinds: dag(16), binnen: dag(24), contact: "Bestuurder (voorbeeld)", bijz: "", docs: { akte: true }, betalingsverkeer: true, eerste_reactie_uren: 48, tl: [[dag(24), "Aanvraag via webformulier"], [dag(16), "Offerte verstuurd"], [dag(9), "Dag 7: opvolgmail verstuurd"]] },
+    { id: "D-108", naam: "VvE Parkzicht Almere", plaats: "Almere", pakket: "basic", ar: ar(24, 0, 24, 24), herkomst: "Flyer", bron: "akte", status: "in_onderhandeling", sinds: dag(6), binnen: dag(30), contact: "Bestuurder (voorbeeld)", bijz: "Vergelijken met huidige beheerder.", docs: { akte: true, jaarrekening: true }, hoofdsplitsing: true, alv: dl(13), eerste_reactie_uren: 22, tl: [[dag(30), "Aanvraag via webformulier"], [dag(20), "Offerte verstuurd"], [dag(6), "Nagebeld: ALV-datum bekend"]] },
+    { id: "D-104", naam: "VvE Kinkerhof", plaats: "Amsterdam", pakket: "premium", ar: ar(48, 2, 0, 48), herkomst: "Bestaande klant", bron: "akte", status: "gewonnen", sinds: dag(3), binnen: dag(44), contact: "Voorzitter (voorbeeld)", bijz: "", docs: { akte: true, jaarrekening: true, notulen: true, mjop: true, beheerovereenkomst: true }, premiumBedrag: 9600, tl: [[dag(44), "Aanvraag"], [dag(30), "Offerte verstuurd"], [dag(4), "ALV: akkoord"], [dag(3), "Gewonnen"]] },
+    { id: "D-101", naam: "VvE Oranjehof 7-11", plaats: "Zaandam", pakket: "basic", ar: ar(11), herkomst: "Website", bron: "akte", status: "getekend", sinds: dag(8), binnen: dag(52), contact: "Bestuurder (voorbeeld)", bijz: "", docs: { akte: true, beheerovereenkomst: true }, betalingsverkeer: true, tl: [[dag(52), "Aanvraag"], [dag(40), "Offerte verstuurd"], [dag(8), "Contract getekend → overdracht Randy"]] },
+    { id: "D-097", naam: "VvE Slotermeer Zuid", plaats: "Amsterdam", pakket: "basic", ar: ar(16), herkomst: "Google Ads", bron: "akte", status: "verloren", reden: "Geen overstap", heractiveren: "2027-09-01", sinds: dag(12), binnen: dag(60), contact: "Bestuurder (voorbeeld)", bijz: "", docs: { akte: true }, tl: [[dag(60), "Aanvraag"], [dag(45), "Offerte verstuurd"], [dag(12), "Verloren: geen overstap"]] }
   ];
 
-  // ── State (alleen in deze browser) ────────────────────────────────────────────
-  const KEY = "offertepijplijn-v1";
-  let data, pakket = "basic", sortKey = "binnen", sortDir = -1, openId = null;
-  try { data = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) { data = null; }
-  if (!Array.isArray(data)) data = SEED();
-  try { pakket = localStorage.getItem(KEY + "-tab") || "basic"; } catch (e) {}
-  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(data)); localStorage.setItem(KEY + "-tab", pakket); } catch (e) {} };
+  // ── State ─────────────────────────────────────────────────────────────────────
+  // Basis = bron (servicebalie of voorbeeld); wijzigingen per dossier-id staan apart (alleen deze browser).
+  const LS = k => "offertepijplijn-v2-" + k;
+  const lees = (k, d) => { try { const v = JSON.parse(localStorage.getItem(LS(k))); return v ?? d; } catch (e) { return d; } };
+  const schrijf = (k, v) => { try { localStorage.setItem(LS(k), JSON.stringify(v)); } catch (e) {} };
+  let bron = { soort: "voorbeeld", ververst: null }, basis = SEED(), extra = [];
+  let wijz = {}, pakket = lees("tab", "basic"), view = lees("view", "lijst"), sortKey = "binnen", sortDir = -1, openId = null;
+  const sleutel = () => bron.soort === "servicebalie" ? "wijz-live" : "wijz-demo";
+
+  function data() {
+    return [...extra, ...basis].map(b => {
+      const w = wijz[b.id]; if (!w) return b;
+      return { ...b, ...w, tl: [...(b.tl || []), ...(w.tl || [])] };
+    });
+  }
+  const vind = id => data().find(d => d.id === id);
+  function wijzig(id, velden, logtekst) {
+    const w = wijz[id] || {};
+    Object.assign(w, velden);
+    if (logtekst) w.tl = [...(w.tl || []), [new Date().toISOString(), logtekst]];
+    wijz[id] = w; schrijf(sleutel(), wijz);
+    const e = extra.find(x => x.id === id); if (e) schrijf("extra", extra);
+  }
 
   // ── Helpers ───────────────────────────────────────────────────────────────────
   function eur(x, dec = 0) { return x == null ? "—" : "€ " + Number(x).toLocaleString("nl-NL", { minimumFractionDigits: dec, maximumFractionDigits: dec }); }
-  const dagenSinds = iso => Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 864e5));
-  const fmtD = iso => new Date(iso).toLocaleDateString("nl-NL", { day: "2-digit", month: "2-digit", year: "2-digit" });
+  const dagen = iso => Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 864e5));
+  const fmtD = iso => iso ? new Date(iso).toLocaleDateString("nl-NL", { day: "2-digit", month: "2-digit", year: "2-digit" }) : "—";
+  const fmtDT = iso => iso ? new Date(iso).toLocaleString("nl-NL", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "—";
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const totAR = d => Object.values(d.ar).reduce((a, b) => a + b, 0);
-  // Premium-aanvragen die naar Basic gaan staan op tab Basic zodra ze geanalyseerd zijn; daarvoor op Premium (poort)
   const tabVan = d => d.pakket === "premium" && prijs(d).advies !== "premium" && !["nieuw", "gekwalificeerd", "wacht_op_klant"].includes(d.status) ? "basic" : (d.pakket === "premium" ? "premium" : "basic");
+  const LIMIET = { nieuw: [1, 2], gekwalificeerd: [2, 4], wacht_op_klant: [5, 10], geanalyseerd: [1, 3], offerte_uit: [7, 14], in_onderhandeling: [14, 28], gewonnen: [7, 14], contract_uit: [7, 14] };
   function ageClass(d) {
     if (AFGESLOTEN.has(d.status)) return "";
-    const n = dagenSinds(d.sinds);
-    const lim = { nieuw: [1, 2], gekwalificeerd: [2, 4], wacht_op_klant: [3, 7], geanalyseerd: [1, 3], offerte_uit: [7, 14], in_onderhandeling: [14, 28] }[d.status] || [7, 14];
-    return n >= lim[1] ? "crit" : n >= lim[0] ? "warn" : "";
+    const n = dagen(d.sinds), l = LIMIET[d.status] || [7, 14];
+    return n >= l[1] ? "crit" : n >= l[0] ? "warn" : "";
   }
   function deadlineTag(d) {
-    if (!d.opzeg || AFGESLOTEN.has(d.status)) return "";
-    const dl = Math.ceil((new Date(d.opzeg + "T23:59:00") - Date.now()) / 864e5);
-    if (dl < 0) return `<span class="tag dl">Opzegdeadline verstreken</span>`;
-    if (dl <= 14) return `<span class="tag dl">Opzeggen ${dl === 0 ? "vandaag" : "binnen " + dl + " d"}</span>`;
+    if (AFGESLOTEN.has(d.status)) return "";
+    if (d.opzeg) {
+      const n = Math.ceil((new Date(d.opzeg + "T23:59:00") - Date.now()) / 864e5);
+      if (n < 0) return `<span class="tag crit">Opzegdatum voorbij</span>`;
+      if (n <= 14) return `<span class="tag dl">Opzeggen ${n === 0 ? "vandaag" : "≤ " + n + " d"}</span>`;
+    }
+    if (d.deadline_signaal) return `<span class="tag dl">Deadline genoemd</span>`;
     return "";
   }
-  function signaalTags(d) {
+  function tags(d) {
     const p = prijs(d); let h = deadlineTag(d);
-    for (const s of p.signalen) h += s.t === "up" ? `<span class="tag up">Upgrade-kans</span>` : `<span class="tag down">Downsell</span>`;
+    for (const s of p.signalen) h += s.t === "up" ? `<span class="tag up">Upgrade-kans</span>` : s.t === "crit" ? `<span class="tag crit">Aantal controleren</span>` : `<span class="tag down">Downsell</span>`;
     if (d.bron === "formulier" && !AFGESLOTEN.has(d.status)) h += `<span class="tag info">Indicatief</span>`;
     if (d.alv && !AFGESLOTEN.has(d.status)) h += `<span class="tag info">ALV ${fmtD(d.alv)}</span>`;
-    return h || `<span class="leeg">—</span>`;
+    return h;
+  }
+  let tt; function toast(t) { const el = document.getElementById("toast"); el.textContent = t; el.hidden = false; clearTimeout(tt); tt = setTimeout(() => el.hidden = true, 2600); }
+
+  // ── Statusovergangen (zelfde regels voor knop, slepen en keuzelijst) ───────────
+  function naarStatus(d, st) {
+    if (st === d.status) return;
+    if (st === "verloren") { openId = d.id; render(); toast("Kies een verliesreden om af te sluiten"); setTimeout(() => document.getElementById("reden")?.focus(), 60); return; }
+    if (st === "offerte_uit") {
+      if (prijs(d).advies === "premium" && !d.premiumBedrag) { openId = d.id; render(); toast("Vul eerst het Premium-bedrag in"); return; }
+      if (bedrag(d) == null) { openId = d.id; render(); toast("Controleer eerst het aantal appartementsrechten"); return; }
+      const txt = AKKOORD.has(d.status) ? `Akkoord Farhaad: offerte verstuurd (${eur(bedrag(d))})` : "Status: Offerte uit";
+      wijzig(d.id, { status: st, sinds: new Date().toISOString() }, txt); render(); toast(txt); return;
+    }
+    wijzig(d.id, { status: st, sinds: new Date().toISOString() }, `Status: ${STATUS[st]}`); render(); toast(`${d.naam} → ${STATUS[st]}`);
   }
 
   // ── Render ────────────────────────────────────────────────────────────────────
   const COLS = [
     { k: "naam", l: "Naam VvE" }, { k: "ar", l: "App.rechten", r: 1 }, { k: "bedrag", l: "Offertebedrag", r: 1 },
-    { k: "status", l: "Status" }, { k: "dagen", l: "Dagen in status", r: 1 }, { k: "binnen", l: "Binnengekomen" },
-    { k: "sig", l: "Signalen", nosort: 1 }, { k: "act", l: "", nosort: 1 }
+    { k: "status", l: "Status" }, { k: "dagen", l: "In status", r: 1 }, { k: "binnen", l: "Binnengekomen" },
+    { k: "sig", l: "Signalen" }, { k: "act", l: "" }
   ];
-  const sortVal = (d, k) => ({ naam: d.naam.toLowerCase(), ar: totAR(d), bedrag: offertebedrag(d) ?? -1, status: Object.keys(STATUS).indexOf(d.status), dagen: dagenSinds(d.sinds), binnen: d.binnen }[k]);
+  const sortVal = (d, k) => ({ naam: d.naam.toLowerCase(), ar: totAR(d), bedrag: bedrag(d) ?? -1, status: Object.keys(STATUS).indexOf(d.status), dagen: dagen(d.sinds), binnen: d.binnen }[k]);
+  function zichtbaar() {
+    const q = document.getElementById("zoek").value.trim().toLowerCase();
+    const alle = document.getElementById("statusFilter").value === "alle";
+    return data().filter(d => tabVan(d) === pakket && (alle || view === "bord" || !AFGESLOTEN.has(d.status)) && (!q || (d.naam + " " + d.plaats).toLowerCase().includes(q)));
+  }
 
   function renderHead() {
-    document.getElementById("thead").innerHTML = COLS.map(c => `<th class="${c.r ? "r" : ""}" ${c.nosort ? "" : `data-k="${c.k}" tabindex="0"`} ${sortKey === c.k ? `aria-sort="${sortDir > 0 ? "ascending" : "descending"}"` : ""}>${c.l}</th>`).join("");
-  }
-
-  function renderKpis() {
-    const lopend = data.filter(d => !AFGESLOTEN.has(d.status));
-    const wachtAkkoord = data.filter(d => AKKOORD_STATUS.has(d.status));
-    const teLang = lopend.filter(d => ageClass(d) === "crit").length;
-    let pijp = 0; for (const d of lopend) pijp += (offertebedrag(d) || 0) * (KANS[d.status] || 0);
-    const uit = data.filter(d => ["offerte_uit", "in_onderhandeling", "gewonnen", "contract_uit", "getekend", "verloren"].includes(d.status));
-    const won = data.filter(d => ["gewonnen", "contract_uit", "getekend"].includes(d.status));
-    const conv = uit.length ? Math.round(won.length / uit.length * 100) : 0;
-    const kpi = (l, v, s, cls = "") => `<div class="kpi ${cls}"><span class="lbl">${l}</span><span class="val">${v}</span><span class="sub">${s}</span></div>`;
-    document.getElementById("kpis").innerHTML =
-      kpi("Lopende aanvragen", lopend.length, `${data.filter(d => d.status === "nieuw").length} nieuw vandaag of eerder`) +
-      kpi("Wacht op jouw akkoord", wachtAkkoord.length, "offerte staat klaar", wachtAkkoord.length ? "" : "") +
-      kpi("Te lang in status", teLang, "rood gemarkeerd in de lijst", teLang ? "alert" : "") +
-      kpi("Gewogen pijplijn", eur(pijp), "bedrag × slagingskans per jaar") +
-      kpi("Conversie", conv + "%", `${won.length} gewonnen van ${uit.length} offertes`);
-  }
-
-  function renderTabs() {
-    for (const p of ["basic", "premium"]) {
-      const n = data.filter(d => tabVan(d) === p && !AFGESLOTEN.has(d.status)).length;
-      document.getElementById("c-" + p).textContent = n;
-      const t = document.getElementById("tab-" + p);
-      t.setAttribute("aria-selected", String(p === pakket));
+    const src = document.getElementById("srcLabel"), notice = document.getElementById("notice");
+    if (bron.soort === "servicebalie") {
+      src.textContent = `Servicebalie · ververst ${fmtDT(bron.ververst)}`; src.classList.add("live");
+      notice.hidden = false;
+      notice.innerHTML = "<b>Echte aanvragen.</b> De status is een voorstel uit de mailstroom van de servicebalie. Wat Farhaad vanuit zijn eigen mailbox afhandelt, is hier niet zichtbaar. Deze pagina bevat persoonsgegevens: niet delen of publiceren.";
+    } else {
+      src.textContent = "Voorbeelddata"; src.classList.remove("live"); notice.hidden = true;
     }
   }
 
-  function renderRows() {
-    const q = document.getElementById("zoek").value.trim().toLowerCase();
-    const alle = document.getElementById("statusFilter").value === "alle";
-    let rows = data.filter(d => tabVan(d) === pakket && (alle || !AFGESLOTEN.has(d.status)) && (!q || (d.naam + " " + d.plaats).toLowerCase().includes(q)));
-    rows.sort((a, b) => { const x = sortVal(a, sortKey), y = sortVal(b, sortKey); return (x > y ? 1 : x < y ? -1 : 0) * sortDir; });
+  function renderKpis() {
+    const all = data();
+    const lopend = all.filter(d => !AFGESLOTEN.has(d.status));
+    const akk = all.filter(d => AKKOORD.has(d.status));
+    const teLang = lopend.filter(d => ageClass(d) === "crit").length;
+    let pijp = 0; for (const d of lopend) pijp += (bedrag(d) || 0) * (KANS[d.status] || 0);
+    const uit = all.filter(d => ["offerte_uit", "in_onderhandeling", "gewonnen", "contract_uit", "getekend", "verloren"].includes(d.status));
+    const won = all.filter(d => ["gewonnen", "contract_uit", "getekend"].includes(d.status));
+    const r = all.map(d => d.eerste_reactie_uren).filter(x => x != null).sort((a, b) => a - b);
+    const med = r.length ? r[Math.floor(r.length / 2)] : null;
+    const k = (l, v, s, cls = "") => `<div class="kpi ${cls}"><span class="lbl">${l}</span><span class="val">${v}</span><span class="sub">${s}</span></div>`;
+    document.getElementById("kpis").innerHTML =
+      k("Lopende aanvragen", lopend.length, `${all.filter(d => d.status === "nieuw").length} nog niet beantwoord`, all.some(d => d.status === "nieuw") ? "alert" : "") +
+      k("Wacht op akkoord", akk.length, "offerte kan uit") +
+      k("Te lang in status", teLang, "rood gemarkeerd", teLang ? "alert" : "") +
+      k("Eerste reactie", med == null ? "—" : (med < 24 ? med.toFixed(0) + " u" : (med / 24).toFixed(1) + " d"), `mediaan over ${r.length} aanvragen`) +
+      k("Gewogen pijplijn", eur(pijp), "bedrag × slagingskans") +
+      k("Conversie", uit.length ? Math.round(won.length / uit.length * 100) + "%" : "—", `${won.length} gewonnen van ${uit.length} offertes`);
+  }
+
+  function renderBar() {
+    for (const p of ["basic", "premium"]) {
+      document.getElementById("c-" + p).textContent = data().filter(d => tabVan(d) === p && !AFGESLOTEN.has(d.status)).length;
+      document.getElementById("tab-" + p).setAttribute("aria-selected", String(p === pakket));
+    }
+    document.getElementById("v-lijst").setAttribute("aria-pressed", String(view === "lijst"));
+    document.getElementById("v-bord").setAttribute("aria-pressed", String(view === "bord"));
+    document.getElementById("lijst").hidden = view !== "lijst";
+    document.getElementById("bord").hidden = view !== "bord";
+    document.getElementById("statusFilter").disabled = view === "bord";
+  }
+
+  function renderLijst() {
+    document.getElementById("thead").innerHTML = COLS.map(c => `<th class="${c.r ? "r" : ""}" ${["sig", "act"].includes(c.k) ? "" : `data-k="${c.k}" tabindex="0"`} ${sortKey === c.k ? `aria-sort="${sortDir > 0 ? "ascending" : "descending"}"` : ""}>${c.l}</th>`).join("");
+    const rows = zichtbaar().sort((a, b) => { const x = sortVal(a, sortKey), y = sortVal(b, sortKey); return (x > y ? 1 : x < y ? -1 : 0) * sortDir; });
     const tb = document.getElementById("tbody");
-    if (!rows.length) { tb.innerHTML = `<tr><td colspan="${COLS.length}" class="empty">Geen aanvragen in deze weergave. Zet het filter op "Alle statussen" of voeg een testaanvraag toe.</td></tr>`; return; }
+    if (!rows.length) { tb.innerHTML = `<tr><td colspan="${COLS.length}" class="empty">Geen aanvragen in deze weergave. Kies "Alle, ook afgesloten" of de andere pakket-tab.</td></tr>`; return; }
     tb.innerHTML = rows.map(d => {
-      const b = offertebedrag(d); const n = dagenSinds(d.sinds);
-      const premOpen = prijs(d).advies === "premium" && !d.premiumBedrag;
-      const kanAkkoord = AKKOORD_STATUS.has(d.status) && !premOpen;
-      return `<tr data-id="${d.id}" tabindex="0" class="${d.id === openId ? "sel" : ""}">
+      const b = bedrag(d), premOpen = prijs(d).advies === "premium" && !d.premiumBedrag;
+      return `<tr data-id="${esc(d.id)}" tabindex="0" class="${d.id === openId ? "sel" : ""}">
         <td><div class="vve">${esc(d.naam)}</div><div class="plaats">${esc(d.plaats)} · ${esc(d.id)}</div></td>
         <td class="r num">${totAR(d)}</td>
         <td class="r num">${b == null ? `<span class="leeg">${premOpen ? "maatwerk" : "—"}</span>` : eur(b)}</td>
         <td><span class="pill st-${d.status}">${STATUS[d.status]}</span>${d.status === "verloren" ? `<div class="plaats">${esc(d.reden)}</div>` : ""}</td>
-        <td class="r"><span class="age ${ageClass(d)}">${n} d</span></td>
+        <td class="r"><span class="age ${ageClass(d)}">${dagen(d.sinds)} d</span></td>
         <td class="num">${fmtD(d.binnen)}</td>
-        <td>${signaalTags(d)}</td>
-        <td class="r">${AKKOORD_STATUS.has(d.status) ? `<button class="btn sm primary" data-akkoord="${d.id}" ${kanAkkoord ? "" : "disabled title='Vul eerst het Premium-bedrag in het dossier in'"}>Akkoord</button>` : ""}</td>
+        <td>${tags(d) || '<span class="leeg">—</span>'}</td>
+        <td class="r">${AKKOORD.has(d.status) ? `<button class="btn sm primary" data-akkoord="${esc(d.id)}" type="button">Akkoord</button>` : ""}</td>
       </tr>`;
+    }).join("");
+  }
+
+  const KOLOMMEN = ["nieuw", "wacht_op_klant", "gekwalificeerd", "geanalyseerd", "offerte_uit", "in_onderhandeling", "gewonnen", "contract_uit", "getekend", "verloren"];
+  function renderBord() {
+    const rows = zichtbaar();
+    document.getElementById("bord").innerHTML = KOLOMMEN.map(st => {
+      const kaarten = rows.filter(d => d.status === st).sort((a, b) => (b.binnen > a.binnen ? 1 : -1));
+      const som = kaarten.reduce((s, d) => s + (bedrag(d) || 0), 0);
+      return `<div class="col ${st === "verloren" ? "lost" : ""}" data-status="${st}">
+        <div class="colh"><span class="t">${STATUS[st]} <span class="n">${kaarten.length}</span></span>${som ? `<span class="s">${eur(som)}</span>` : ""}</div>
+        ${kaarten.map(d => {
+          const b = bedrag(d);
+          return `<div class="card ${d.id === openId ? "sel" : ""}" draggable="true" tabindex="0" data-id="${esc(d.id)}">
+            <div class="r1"><span class="nm">${esc(d.naam)}</span><span class="bd">${b == null ? "" : eur(b)}</span></div>
+            <div class="mt"><span>${esc(d.plaats)} · ${totAR(d)} rechten</span><span class="age ${ageClass(d)}">${dagen(d.sinds)} d</span></div>
+            ${tags(d) ? `<div class="tg">${tags(d)}</div>` : ""}
+          </div>`;
+        }).join("") || `<div class="dropnote">${st === "verloren" ? "Sleep hierheen om af te sluiten (met reden)" : "Leeg"}</div>`}
+      </div>`;
     }).join("");
   }
 
   function renderDossier() {
     const el = document.getElementById("dossier"), scrim = document.getElementById("scrim");
-    const d = data.find(x => x.id === openId);
+    const d = openId && vind(openId);
     if (!d) { el.hidden = true; scrim.hidden = true; return; }
     el.hidden = false; scrim.hidden = false;
-    const p = prijs(d);
-    const docs = [["akte", "Splitsingsakte"], ["jaarrekening", "Jaarrekening"], ["notulen", "Notulen"], ["mjop", "MJOP"], ["beheerovereenkomst", "Lopende beheerovereenkomst"]];
+    const p = prijs(d), live = bron.soort === "servicebalie";
     const sigs = [...p.signalen];
-    if (d.bron === "formulier") sigs.push({ s: "", txt: "Indicatief: aantallen van het formulier, alles als woning gerekend. De akte bepaalt de definitieve prijs." });
-    const dlt = deadlineTag(d); if (dlt) sigs.unshift({ s: "crit", txt: `Opzegdeadline huidige beheerder: ${fmtD(d.opzeg)}. Vandaag contact opnemen.` });
-    if (p.advies === "premium") sigs.push({ s: "", txt: "Premium is maatwerk: geen automatische prijs. Vul het jaarbedrag hieronder in." });
+    if (d.opzeg) { const n = Math.ceil((new Date(d.opzeg + "T23:59:00") - Date.now()) / 864e5); if (n <= 14 && !AFGESLOTEN.has(d.status)) sigs.unshift({ s: "crit", txt: `Opzegdatum huidige beheerder: ${fmtD(d.opzeg)}. Vandaag contact opnemen.` }); }
+    else if (d.deadline_signaal && !AFGESLOTEN.has(d.status)) sigs.unshift({ s: "warn", txt: "De aanvrager noemt een deadline of opzegging in de bijzonderheden. Lees mee en neem tijdig contact op." });
+    if (d.bron === "formulier") sigs.push({ s: "", txt: "Indicatief: aantal van het formulier, alles gerekend als woning. De akte bepaalt de definitieve prijs." });
+    if (p.advies === "premium") sigs.push({ s: "", txt: "Premium is maatwerk: geen automatische prijs. Vul hieronder het jaarbedrag in." });
+
     let prijsHtml;
-    if (p.advies === "premium") {
-      prijsHtml = `<div class="inline"><div class="field"><label for="pb">Jaarbedrag Premium excl. btw</label><input id="pb" type="number" min="0" step="100" value="${d.premiumBedrag || ""}" placeholder="bijv. 12000"></div><button class="btn" id="pbSave" type="button">Bedrag vastleggen</button></div>
-        <div class="note">Referentie werkomschrijving: Westerkaap II € 20.000 voor 114 eenheden (€ 175 per eenheid), Plesman € 5.000. Opstart € 1.500.</div>`;
+    if (totAR(d) > T.maxPlausibel) prijsHtml = `<p class="note">Geen prijs: het opgegeven aantal is onwaarschijnlijk.</p>`;
+    else if (p.advies === "premium") {
+      prijsHtml = `<div class="inline"><div class="field"><label for="pb">Jaarbedrag Premium excl. btw</label><input id="pb" type="number" min="0" step="100" value="${d.premiumBedrag || ""}" placeholder="bijv. 12000"></div><button class="btn" id="pbSave" type="button">Vastleggen</button></div>
+        <p class="note">Referentie werkomschrijving: Westerkaap II € 20.000 voor 114 eenheden (€ 175 per eenheid), Plesman € 5.000. Opstart € 1.500.</p>`;
     } else {
       const bh = beheer(p), tot = bh + (p.bv || 0), ta = totAR(d);
       prijsHtml = `<div class="prijs">
-        ${p.regels.map(r => `<div class="row"><span>${esc(r.o)} <span class="src">${r.src}</span></span><span class="num">${eur(r.b, 2)}</span></div>`).join("")}
+        ${p.regels.map(r => `<div class="row"><span>${esc(r.o)} <span class="src2">${r.src}</span></span><span class="num">${eur(r.b, 2)}</span></div>`).join("")}
         <div class="row tot"><span>Beheervergoeding per jaar excl. btw</span><span class="num">${eur(bh, 2)}</span></div>
         ${p.bv != null ? `<div class="row"><span>Betalingsverkeer (separaat)</span><span class="num">${eur(p.bv, 2)}</span></div>` : ""}
         <div class="row tot"><span>Totaal per jaar incl. btw</span><span class="num">${eur(tot * (1 + T.btw), 2)}</span></div>
-        <div class="row"><span>Gemiddeld per app.recht per maand incl. btw</span><span class="num">${eur(tot * (1 + T.btw) / ta / 12, 2)}</span></div>
+        <div class="row"><span>Gemiddeld per recht per maand incl. btw</span><span class="num">${eur(tot * (1 + T.btw) / ta / 12, 2)}</span></div>
         <div class="row"><span>Eenmalige opstartvergoeding excl. btw</span><span class="num">${eur(p.opstart, 2)}</span></div>
-      </div>`;
+      </div>
+      <label class="chk"><input type="checkbox" id="bvChk" ${d.betalingsverkeer ? "checked" : ""}> Betalingsverkeer meenemen</label>`;
     }
-    const kanAkkoord = AKKOORD_STATUS.has(d.status) && !(p.advies === "premium" && !d.premiumBedrag);
+    const docs = [["akte", "Splitsingsakte"], ["jaarrekening", "Jaarrekening"], ["notulen", "Notulen"], ["mjop", "MJOP"], ["beheerovereenkomst", "Lopende beheerovereenkomst"]];
+    const contactRegels = [
+      `<dt>Contact</dt><dd>${esc(d.contact) || "—"}</dd>`,
+      d.telefoon ? `<dt>Telefoon</dt><dd><span class="num">${esc(d.telefoon)}</span><button class="copy" data-copy="${esc(d.telefoon)}" type="button">kopieer</button></dd>` : "",
+      d.email ? `<dt>E-mail</dt><dd>${esc(d.email)}<button class="copy" data-copy="${esc(d.email)}" type="button">kopieer</button></dd>` : ""
+    ].join("");
+
     el.innerHTML = `
-      <div class="dhead">
-        <div><h2>${esc(d.naam)}</h2><div class="meta">${esc(d.id)} · ${esc(d.plaats)} · <span class="pill st-${d.status}">${STATUS[d.status]}</span></div></div>
+      <div class="dtop">
+        <div><h2>${esc(d.naam)}</h2><div class="meta">${esc(d.id)} · ${esc(d.plaats)} · binnen ${fmtDT(d.binnen)}</div></div>
         <button class="close" id="dClose" type="button" aria-label="Dossier sluiten">✕</button>
       </div>
-      ${sigs.length ? `<section class="blk"><h3>Signalen</h3>${sigs.map(s => `<div class="signal ${s.s}">${esc(s.txt)}</div>`).join("")}</section>` : ""}
-      <section class="blk"><h3>Prijs (${p.advies === "premium" ? "Premium, maatwerk" : "Basic, officiële staffel"})</h3>${prijsHtml}</section>
-      <section class="blk"><h3>Aanvraag</h3><dl class="kv">
-        <dt>Productkeuze klant</dt><dd>${d.pakket === "premium" ? "Premium beheer" : "Basic beheer"}</dd>
-        <dt>Appartementsrechten</dt><dd>${Object.entries(d.ar).filter(([, n]) => n).map(([k, n]) => `${n} ${SOORT_LABEL[k].toLowerCase()}`).join(", ")} <span class="note">(bron: ${d.bron === "akte" ? "akte" : "formulier"})</span></dd>
-        <dt>Contact</dt><dd>${esc(d.contact)}</dd>
-        <dt>Herkomst</dt><dd>${esc(d.herkomst)}</dd>
-        <dt>Bijzonderheden</dt><dd>${esc(d.bijz) || "—"}</dd>
-        <dt>ALV-datum</dt><dd>${d.alv ? fmtD(d.alv) : "nog onbekend"}</dd>
-        ${d.heractiveren ? `<dt>Heractiveren op</dt><dd>${fmtD(d.heractiveren)}</dd>` : ""}
-      </dl></section>
-      <section class="blk"><h3>Documenten</h3><div class="docs">${docs.map(([k, l]) => `<div class="doc"><span class="mk ${d.docs[k] ? "y" : "n"}">${d.docs[k] ? "✓" : "–"}</span>${l}</div>`).join("")}</div></section>
-      <section class="blk"><h3>Logboek</h3><ol class="tl">${[...d.tl].reverse().map(([t, x]) => `<li><span class="d">${fmtD(t)}</span><span>${esc(x)}</span></li>`).join("")}</ol></section>
-      ${AFGESLOTEN.has(d.status) ? "" : `<div class="actions">
-        ${AKKOORD_STATUS.has(d.status) ? `<button class="btn primary" id="dAkkoord" type="button" ${kanAkkoord ? "" : "disabled"}>Akkoord: offerte versturen</button>` : ""}
-        ${["offerte_uit", "in_onderhandeling"].includes(d.status) ? `<button class="btn" id="dWon" type="button">Gewonnen</button>` : ""}
-        <div class="inline"><div class="field"><label for="reden">Verliesreden</label><select id="reden"><option value="">Kies een reden</option>${VERLIESREDENEN.map(r => `<option>${r}</option>`).join("")}</select></div><button class="btn danger" id="dLost" type="button" disabled>Zet op verloren</button></div>
-      </div>
-      <p class="note">Akkoord zet de offerte klaar in Outlook namens Farhaad (in dit format alleen een statuswissel). Verloren kan alleen met een reden; "Geen overstap" plant heractivering over 12 maanden.</p>`}
-    `;
+      <div class="dbody">
+        <div class="inline"><span class="pill st-${d.status}">${STATUS[d.status]}</span><span class="age ${ageClass(d)}">${dagen(d.sinds)} dagen in deze status</span></div>
+        ${sigs.length ? `<section class="blk"><h3>Signalen</h3>${sigs.map(s => `<div class="signal ${s.s}">${esc(s.txt)}</div>`).join("")}</section>` : ""}
+        <section class="blk"><h3>Prijs · ${p.advies === "premium" ? "Premium, maatwerk" : "Basic, officiële staffel"}</h3>${prijsHtml}</section>
+        <section class="blk"><h3>Aanvraag</h3><dl class="kv">
+          <dt>Productkeuze klant</dt><dd>${d.pakket === "premium" ? "Premium beheer" : "Basic beheer"}</dd>
+          <dt>Appartementsrechten</dt><dd>${Object.entries(d.ar || {}).filter(([, n]) => n).map(([k, n]) => `${n} ${SOORT[k]}`).join(", ") || "—"} <span class="note">(bron: ${d.bron === "akte" ? "akte" : "formulier"})</span></dd>
+          ${contactRegels}
+          <dt>Herkomst</dt><dd>${esc(d.herkomst) || "—"}</dd>
+          <dt>Bijzonderheden</dt><dd>${esc(d.bijz) || "—"}</dd>
+          <dt>ALV-datum</dt><dd>${d.alv ? fmtD(d.alv) : "nog onbekend"}</dd>
+          ${d.eerste_reactie_uren != null ? `<dt>Eerste reactie</dt><dd>na ${d.eerste_reactie_uren} uur</dd>` : ""}
+          ${d.heractiveren ? `<dt>Heractiveren op</dt><dd>${fmtD(d.heractiveren)}</dd>` : ""}
+        </dl></section>
+        <section class="blk"><h3>Documenten</h3><div class="docs">${docs.map(([k, l]) => `<div class="doc"><span class="mk ${(d.docs || {})[k] ? "y" : "n"}">${(d.docs || {})[k] ? "✓" : "–"}</span>${l}</div>`).join("")}</div>
+          ${(d.akte_bestanden || []).length ? `<p class="note">Geüpload: ${d.akte_bestanden.map(esc).join(", ")}</p>` : ""}</section>
+        <section class="blk"><h3>Logboek</h3><ol class="tl">${[...(d.tl || [])].sort((a, b) => a[0] < b[0] ? 1 : -1).map(([t, x]) => `<li><span class="d">${fmtD(t)}</span><span>${esc(x)}</span></li>`).join("")}</ol></section>
+        ${AFGESLOTEN.has(d.status) ? "" : `<div class="actions">
+          <div class="inline">
+            ${AKKOORD.has(d.status) ? `<button class="btn primary" id="dAkkoord" type="button">Akkoord: offerte versturen</button>` : ""}
+            <div class="field"><label for="stSel">Status wijzigen</label><select id="stSel">${Object.entries(STATUS).filter(([k]) => k !== "verloren").map(([k, l]) => `<option value="${k}" ${k === d.status ? "selected" : ""}>${l}</option>`).join("")}</select></div>
+          </div>
+          <div class="inline"><div class="field"><label for="reden">Verliesreden</label><select id="reden"><option value="">Kies een reden</option>${VERLIESREDENEN.map(r => `<option>${r}</option>`).join("")}</select></div><button class="btn danger" id="dLost" type="button" disabled>Zet op verloren</button></div>
+          <p class="note">Akkoord zet de offerte klaar in Outlook namens Farhaad (in dit format alleen een statuswissel). Verloren kan alleen met een reden; "Geen overstap" plant heractivering over 12 maanden.${live ? " Wijzigingen blijven in deze browser; een nieuwe inleesrun overschrijft ze niet." : ""}</p>
+        </div>`}
+      </div>`;
+
     el.querySelector("#dClose").onclick = () => { openId = null; render(); };
+    el.querySelectorAll("[data-copy]").forEach(b => b.onclick = () => {
+      navigator.clipboard?.writeText(b.dataset.copy).then(() => toast("Gekopieerd"), () => toast("Kopiëren lukt hier niet; selecteer de tekst"));
+    });
     const pb = el.querySelector("#pbSave");
-    if (pb) pb.onclick = () => { const v = Number(el.querySelector("#pb").value); if (!v) return toast("Vul een jaarbedrag in"); d.premiumBedrag = v; log(d, `Premium-bedrag vastgelegd: ${eur(v)}`); save(); render(); toast("Bedrag vastgelegd"); };
-    const ak = el.querySelector("#dAkkoord"); if (ak) ak.onclick = () => akkoord(d.id);
-    const won = el.querySelector("#dWon"); if (won) won.onclick = () => zet(d, "gewonnen", "Gewonnen");
+    if (pb) pb.onclick = () => { const v = Number(el.querySelector("#pb").value); if (!v) return toast("Vul een jaarbedrag in"); wijzig(d.id, { premiumBedrag: v }, `Premium-bedrag vastgelegd: ${eur(v)}`); render(); toast("Bedrag vastgelegd"); };
+    const bvc = el.querySelector("#bvChk"); if (bvc) bvc.onchange = () => { wijzig(d.id, { betalingsverkeer: bvc.checked }, bvc.checked ? "Betalingsverkeer meegenomen" : "Betalingsverkeer eruit"); render(); };
+    const ak = el.querySelector("#dAkkoord"); if (ak) ak.onclick = () => naarStatus(d, "offerte_uit");
+    const ss = el.querySelector("#stSel"); if (ss) ss.onchange = () => naarStatus(d, ss.value);
     const rs = el.querySelector("#reden"), lost = el.querySelector("#dLost");
     if (rs) { rs.onchange = () => { lost.disabled = !rs.value; }; lost.onclick = () => {
-      d.reden = rs.value;
-      if (rs.value === "Geen overstap") { const h = new Date(); h.setFullYear(h.getFullYear() + 1); d.heractiveren = h.toISOString().slice(0, 10); }
-      zet(d, "verloren", `Verloren: ${rs.value}${d.heractiveren ? ", heractiveren " + fmtD(d.heractiveren) : ""}`);
+      const v = { status: "verloren", sinds: new Date().toISOString(), reden: rs.value };
+      if (rs.value === "Geen overstap") { const h = new Date(); h.setFullYear(h.getFullYear() + 1); v.heractiveren = h.toISOString().slice(0, 10); }
+      wijzig(d.id, v, `Verloren: ${rs.value}${v.heractiveren ? ", heractiveren " + fmtD(v.heractiveren) : ""}`); render(); toast(`Verloren: ${rs.value}`);
     }; }
   }
 
-  function render() { renderHead(); renderKpis(); renderTabs(); renderRows(); renderDossier(); }
+  function render() { renderHead(); renderKpis(); renderBar(); if (view === "lijst") renderLijst(); else renderBord(); renderDossier(); }
 
-  // ── Acties ────────────────────────────────────────────────────────────────────
-  const log = (d, txt) => d.tl.push([new Date().toISOString(), txt]);
-  function zet(d, st, txt) { d.status = st; d.sinds = new Date().toISOString(); log(d, txt); save(); render(); toast(txt); }
-  function akkoord(id) { const d = data.find(x => x.id === id); if (!d) return; zet(d, "offerte_uit", `Akkoord Farhaad: offerte verstuurd (${eur(offertebedrag(d))})`); }
-  let tt; function toast(t) { const el = document.getElementById("toast"); el.textContent = t; el.hidden = false; clearTimeout(tt); tt = setTimeout(() => el.hidden = true, 2200); }
+  // ── Bron laden ────────────────────────────────────────────────────────────────
+  function gebruik(json) {
+    if (!json || !Array.isArray(json.dossiers)) throw new Error("Geen geldig aanvragenbestand");
+    bron = { soort: "servicebalie", ververst: json.ververst || null };
+    basis = json.dossiers; extra = []; wijz = lees("wijz-live", {}); openId = null; render();
+  }
+  async function start() {
+    wijz = lees("wijz-demo", {}); extra = lees("extra", []);
+    render();
+    try {
+      const r = await fetch("data/aanvragen.json", { cache: "no-store" });
+      if (r.ok) gebruik(await r.json());
+    } catch (e) { /* geen lokaal bestand: voorbeelddata blijft staan */ }
+  }
 
-  document.querySelector(".tabs").addEventListener("click", e => { const b = e.target.closest(".tab"); if (!b) return; pakket = b.dataset.pakket; save(); render(); });
+  // ── Events ────────────────────────────────────────────────────────────────────
+  document.querySelector('[role="tablist"]').addEventListener("click", e => { const b = e.target.closest("[data-pakket]"); if (!b) return; pakket = b.dataset.pakket; schrijf("tab", pakket); render(); });
+  document.querySelectorAll("[data-view]").forEach(b => b.onclick = () => { view = b.dataset.view; schrijf("view", view); render(); });
   document.getElementById("thead").addEventListener("click", e => { const th = e.target.closest("th[data-k]"); if (!th) return; const k = th.dataset.k; sortDir = sortKey === k ? -sortDir : (k === "naam" ? 1 : -1); sortKey = k; render(); });
   document.getElementById("thead").addEventListener("keydown", e => { if (e.key === "Enter") e.target.click(); });
   const tb = document.getElementById("tbody");
-  tb.addEventListener("click", e => { const a = e.target.closest("[data-akkoord]"); if (a) { e.stopPropagation(); akkoord(a.dataset.akkoord); return; } const tr = e.target.closest("tr[data-id]"); if (tr) { openId = tr.dataset.id; render(); } });
+  tb.addEventListener("click", e => { const a = e.target.closest("[data-akkoord]"); if (a) { e.stopPropagation(); naarStatus(vind(a.dataset.akkoord), "offerte_uit"); return; } const tr = e.target.closest("tr[data-id]"); if (tr) { openId = tr.dataset.id; render(); } });
   tb.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("tr[data-id]")) { openId = e.target.dataset.id; render(); } });
+
+  const bord = document.getElementById("bord");
+  let sleep = null;
+  bord.addEventListener("click", e => { const c = e.target.closest(".card"); if (c) { openId = c.dataset.id; render(); } });
+  bord.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches(".card")) { openId = e.target.dataset.id; render(); } });
+  bord.addEventListener("dragstart", e => { const c = e.target.closest(".card"); if (!c) return; sleep = c.dataset.id; c.classList.add("dragging"); e.dataTransfer.effectAllowed = "move"; try { e.dataTransfer.setData("text/plain", sleep); } catch (x) {} });
+  bord.addEventListener("dragend", e => { e.target.closest(".card")?.classList.remove("dragging"); bord.querySelectorAll(".over").forEach(x => x.classList.remove("over")); });
+  bord.addEventListener("dragover", e => { const col = e.target.closest(".col"); if (!col || !sleep) return; e.preventDefault(); bord.querySelectorAll(".over").forEach(x => x !== col && x.classList.remove("over")); col.classList.add("over"); });
+  bord.addEventListener("drop", e => { const col = e.target.closest(".col"); if (!col || !sleep) return; e.preventDefault(); const d = vind(sleep); sleep = null; col.classList.remove("over"); if (d) naarStatus(d, col.dataset.status); });
+
   document.getElementById("scrim").onclick = () => { openId = null; render(); };
-  document.addEventListener("keydown", e => { if (e.key === "Escape" && openId) { openId = null; render(); } });
-  document.getElementById("zoek").oninput = renderRows;
-  document.getElementById("statusFilter").onchange = renderRows;
-  document.getElementById("btnReset").onclick = () => { data = SEED(); openId = null; save(); render(); toast("Voorbeelddata hersteld"); };
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && openId && !document.getElementById("dlg").open) { openId = null; render(); } });
+  document.getElementById("zoek").oninput = render;
+  document.getElementById("statusFilter").onchange = render;
+  document.getElementById("btnReset").onclick = () => { wijz = {}; extra = []; schrijf(sleutel(), {}); schrijf("extra", []); openId = null; render(); toast("Wijzigingen gewist"); };
+  const fileIn = document.getElementById("fileIn");
+  document.getElementById("btnLaad").onclick = () => fileIn.click();
+  fileIn.onchange = () => {
+    const f = fileIn.files[0]; if (!f) return;
+    const rd = new FileReader();
+    rd.onload = () => { try { gebruik(JSON.parse(rd.result)); toast(`${basis.length} aanvragen geladen`); } catch (e) { toast("Dit bestand is geen aanvragen.json van het intakescript"); } };
+    rd.readAsText(f); fileIn.value = "";
+  };
 
   const dlg = document.getElementById("dlg");
   document.getElementById("btnNieuw").onclick = () => { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); };
   document.getElementById("dlgCancel").onclick = () => dlg.close();
   document.getElementById("frm").addEventListener("submit", e => {
     e.preventDefault();
-    const n = Math.max(1, parseInt(document.getElementById("f-ar").value, 10) || 1);
-    const nr = 119 + data.filter(d => d.id.startsWith("D-2026-T")).length;
+    const n = Math.max(1, parseInt(document.getElementById("f-ar").value, 10) || 1), nu = new Date().toISOString();
+    const akte = document.getElementById("f-akte").checked;
     const d = {
-      id: "D-2026-T" + nr, naam: document.getElementById("f-naam").value.trim() || "VvE Testpand", plaats: document.getElementById("f-plaats").value.trim(),
+      id: "T-" + (100 + extra.length + 1), naam: document.getElementById("f-naam").value.trim() || "VvE Testpand", plaats: document.getElementById("f-plaats").value.trim(),
       pakket: document.getElementById("f-pakket").value, ar: ar(n), herkomst: document.getElementById("f-herkomst").value, bron: "formulier",
-      status: document.getElementById("f-akte").checked ? "gekwalificeerd" : "wacht_op_klant", sinds: new Date().toISOString(), binnen: new Date().toISOString(),
-      contact: "Testaanvrager", bijz: document.getElementById("f-bijz").value, docs: { akte: document.getElementById("f-akte").checked },
-      tl: [[new Date().toISOString(), "Testaanvraag via formulier"]]
+      status: akte ? "gekwalificeerd" : "wacht_op_klant", sinds: nu, binnen: nu, contact: "Testaanvrager", bijz: document.getElementById("f-bijz").value,
+      deadline_signaal: /opzeg|deadline|zsm|spoed/i.test(document.getElementById("f-bijz").value), docs: { akte },
+      tl: [[nu, "Testaanvraag via formulier"], [nu, akte ? "Compleet, gekwalificeerd" : "Incompleet: vragenlijst en akte opgevraagd"]]
     };
-    if (!d.docs.akte) log(d, "Incompleet: vragenlijst en akte opgevraagd (herinnering na 3 en 7 werkdagen)");
-    else log(d, "Compleet, gekwalificeerd");
-    data.unshift(d); pakket = tabVan(d); openId = d.id; save(); dlg.close(); render(); toast("Testaanvraag toegevoegd");
+    extra.unshift(d); schrijf("extra", extra); pakket = tabVan(d); openId = d.id; dlg.close(); render(); toast("Testaanvraag toegevoegd");
   });
 
-  render();
+  start();
 })();
 </script>
 </body>
