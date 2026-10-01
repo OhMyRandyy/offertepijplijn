@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>Offertepijplijn VVEgemak</title>
+<title>Sales-agent VVEgemak</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -230,6 +230,16 @@ ol.tl .d { color: var(--muted); font-family: var(--font-num); font-size: .8rem; 
 .field input, .field select { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 7px 10px; min-width: 0; }
 .chk { display: flex; gap: 8px; align-items: center; font-size: .9rem; }
 .note { color: var(--muted); font-size: .84rem; margin: 0; }
+.mailkies { display: flex; flex-wrap: wrap; gap: 6px; }
+.mailkies button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 12px; font-weight: 700; font-size: .84rem; color: var(--muted); }
+.mailkies button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.mailkies .adv { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; margin-left: 4px; color: var(--ok); }
+.mailbox { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: grid; }
+.mailbox .mrow { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 8px; align-items: center; padding: 7px 12px; border-bottom: 1px solid var(--line); font-size: .9rem; }
+.mailbox .mrow span { color: var(--muted); }
+.mailbox input { border: 0; background: transparent; padding: 2px 0; min-width: 0; outline: none; font-weight: 600; }
+.mailbox textarea { border: 0; background: var(--surface); color: var(--fg); padding: 12px; min-height: 340px; resize: vertical; font: inherit; font-size: .92rem; line-height: 1.5; outline: none; }
+.mailbox textarea:focus, .mailbox input:focus { background: var(--surface-2); }
 .pempty { padding: 40px 22px; text-align: center; color: var(--muted); display: grid; gap: 8px; justify-items: center; }
 .pempty .di { width: 52px; height: 52px; border-radius: 50%; background: var(--surface-2); display: grid; place-items: center; }
 
@@ -286,10 +296,42 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
 </head>
 <body>
 
+<style>
+.st-nieuw, .st-in_beoordeling { background: var(--info-soft); color: var(--info); }
+.st-wacht_op_gegevens, .st-wacht_op_alv { background: var(--warn-soft); color: var(--warn); }
+.st-in_analyse, .st-offerte_klaar { background: var(--accent-soft); color: var(--accent); }
+.st-offerte_verstuurd, .st-intake_gepland, .st-intake_gehouden, .st-def_offerte_verstuurd, .st-ter_ondertekening { background: var(--violet-soft); color: var(--violet); }
+.st-akkoord, .st-getekend, .st-naar_opstart { background: var(--ok-soft); color: var(--ok); }
+.st-verloren { background: var(--crit-soft); color: var(--crit); }
+.blk { font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.opv { font-size: .8rem; font-weight: 700; white-space: nowrap; }
+.opv.nu { color: var(--warn); }
+.opv.bel { color: var(--crit); }
+.opv.later { color: var(--muted); font-weight: 500; }
+.schema { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.schema .field select { width: 100%; }
+.ladder { display: grid; gap: 10px; }
+.ladder .lr { display: grid; grid-template-columns: minmax(0, 1fr) 120px 56px; gap: 10px; align-items: center; font-size: .9rem; }
+.ladder .tr { height: 8px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+.ladder .fl { height: 100%; background: var(--lime); border-radius: 999px; }
+.mailkies { display: flex; flex-wrap: wrap; gap: 6px; }
+.mailkies button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 12px; font-weight: 700; font-size: .84rem; color: var(--muted); }
+.mailkies button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.mailkies .adv { font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; margin-left: 5px; color: var(--ok); }
+.mailbox { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: grid; }
+.mailbox .mrow { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 8px; align-items: center; padding: 7px 12px; border-bottom: 1px solid var(--line); font-size: .9rem; }
+.mailbox .mrow span { color: var(--muted); }
+.mailbox input { border: 0; background: transparent; padding: 2px 0; min-width: 0; outline: none; font-weight: 600; }
+.mailbox textarea { border: 0; background: var(--surface); color: var(--fg); padding: 12px; min-height: 340px; resize: vertical; font: inherit; font-size: .92rem; line-height: 1.5; outline: none; }
+.mailbox textarea:focus, .mailbox input:focus { background: var(--surface-2); }
+@media (max-width: 860px) { .schema { grid-template-columns: 1fr; } }
+</style>
+
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-pipe" viewBox="0 0 24 24"><path d="M3 5h18M6 12h12M10 19h4"/></symbol>
   <symbol id="i-board" viewBox="0 0 24 24"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="10" rx="1.5"/><rect x="17" y="4" width="4" height="13" rx="1.5"/></symbol>
   <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></symbol>
   <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/></symbol>
   <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></symbol>
@@ -299,11 +341,10 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
   <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></symbol>
   <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
   <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
-  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
   <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/></symbol>
   <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
   <symbol id="i-note" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M9 12h6M9 16h6"/></symbol>
-  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
@@ -311,11 +352,13 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
 
 <div class="app">
   <aside class="side">
-    <div class="logo">VVE<b>gemak</b><small>Sales</small></div>
+    <div class="logo">VVE<b>gemak</b><small>Sales-agent</small></div>
     <nav class="nav" aria-label="Weergave">
-      <button type="button" data-nav="lijst"><svg class="i"><use href="#i-pipe"/></svg>Offertepijplijn<span class="cnt" id="navCnt"></span></button>
+      <button type="button" data-nav="lijst"><svg class="i"><use href="#i-pipe"/></svg>Dossiers<span class="cnt" id="navCnt"></span></button>
       <button type="button" data-nav="bord"><svg class="i"><use href="#i-board"/></svg>Bord</button>
+      <button type="button" data-nav="bellijst"><svg class="i"><use href="#i-bell"/></svg>Opvolging<span class="cnt" id="navOpv"></span></button>
       <button type="button" data-nav="analyse"><svg class="i"><use href="#i-chart"/></svg>Analyse</button>
+      <button type="button" data-nav="schema"><svg class="i"><use href="#i-gear"/></svg>Opvolgschema</button>
     </nav>
     <div class="foot">
       <span class="k">Bron</span>
@@ -329,7 +372,7 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
     <div class="top">
       <div class="title">
         <div class="ico"><svg class="i"><use href="#i-inbox"/></svg></div>
-        <div><h1>Offertepijplijn</h1><p>Aanvragen van vvegemak.nl, van binnenkomst tot getekend contract</p></div>
+        <div><h1>Van aanvraag tot overdracht</h1><p>Aanvraag analyseren · Offertefase · Overeenkomstfase</p></div>
       </div>
       <div class="acts">
         <span class="chip" id="srcChip">Geen data geladen</span>
@@ -345,7 +388,7 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
     <div class="grid">
       <section class="card" id="lijstKaart">
         <div class="hd">
-          <h2 id="lijstTitel">Aanvragen</h2>
+          <h2 id="lijstTitel">Dossiers</h2>
           <div class="tools">
             <div class="seg" aria-label="Pakket">
               <button type="button" data-pakket="alle">Alle</button>
@@ -362,19 +405,30 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
         </div>
         <div class="board" id="bord" hidden></div>
       </section>
-
       <section class="card panel" id="panel" aria-label="Dossier"></section>
     </div>
+
+    <section class="card" id="schema">
+      <div class="hd"><h2>Opvolging bij geen reactie <small>geldt voor elke mail naar de aanvrager</small></h2></div>
+      <div class="abody" style="display:grid;gap:12px">
+        <p class="note">Mails gaan vanuit Farhaad, hij werkt ook de bellijst af. Dagen tellen vanaf verzenden, een reactie stopt de reeks. Pas hier aan en alle dossiers rekenen mee.</p>
+        <div class="schema">
+          <div class="field"><label for="s-h1">Herinnering 1</label><select id="s-h1"></select></div>
+          <div class="field"><label for="s-h2">Herinnering 2</label><select id="s-h2"></select></div>
+          <div class="field"><label for="s-bel">Bellijst</label><select id="s-bel"></select></div>
+        </div>
+      </div>
+    </section>
 
     <div class="analyse" id="analyse">
       <section class="card"><div class="hd"><h2>Aanvragen <small>per week</small></h2></div><div class="abody chart" id="chWeek"></div></section>
       <section class="card"><div class="hd"><h2>Herkomst <small>"Hoe bent u bij ons gekomen?"</small></h2></div><div class="abody" id="chHerkomst"></div></section>
-      <section class="card"><div class="hd"><h2>Reactietijd <small>eerste antwoord</small></h2></div><div class="abody" id="chReactie"></div></section>
+      <section class="card"><div class="hd"><h2>Vertrouwensladder <small>mails zonder aanpassing</small></h2></div><div class="abody" id="chLadder"></div></section>
     </div>
 
     <footer>
       <span>Prijs Basic = officiële staffel (Bassie): € 495 basis + per soort aantal × staffeltarief, betalingsverkeer separaat. Premium = maatwerk, bedrag vult Farhaad in.</span>
-      <span>Gewogen pijplijn = offertebedrag × slagingskans per status (aanname: geanalyseerd 20%, offerte uit 30%, onderhandeling 50%, gewonnen 90%). Statuswijzigingen bewaart alleen deze browser.</span>
+      <span>Concept-mails worden nooit automatisch verstuurd. Statuswijzigingen, het opvolgschema en de ladderteller bewaart alleen deze browser.</span>
     </footer>
   </main>
 </div>
@@ -385,13 +439,15 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
     <div><h2>Testaanvraag</h2><p class="note">Zelfde velden als het webformulier "Offerte aanvraag". De prijs rekent direct mee.</p></div>
     <div class="field"><label for="f-naam">Naam van VvE</label><input id="f-naam" required value="VvE Testpand 12-20"></div>
     <div class="grid2">
+      <div class="field"><label for="f-contact">Naam aanvrager</label><input id="f-contact" value="Test Aanvrager"></div>
       <div class="field"><label for="f-plaats">Vestigingsplaats</label><input id="f-plaats" required value="Amsterdam"></div>
       <div class="field"><label for="f-pakket">Productkeuze</label><select id="f-pakket"><option value="basic">Basic beheer</option><option value="premium">Premium beheer</option></select></div>
       <div class="field"><label for="f-ar">Aantal appartementsrechten</label><input id="f-ar" type="number" min="1" value="12" required></div>
       <div class="field"><label for="f-herkomst">Hoe bij VVEgemak?</label><select id="f-herkomst"><option>Website</option><option>Google Ads</option><option>Flyer</option><option>Social media</option><option>Overig</option></select></div>
+      <div class="field"><label for="f-taal">Taal aanvrager</label><select id="f-taal"><option value="nl">Nederlands</option><option value="en">Engels</option></select></div>
     </div>
     <div class="field"><label for="f-bijz">Bijzonderheden</label><input id="f-bijz" value="Willen per 1 januari overstappen."></div>
-    <label class="chk"><input type="checkbox" id="f-akte" checked> Splitsingsakte geüpload</label>
+    <label class="chk"><input type="checkbox" id="f-akte"> Splitsingsakte geüpload</label>
     <div class="inline" style="justify-content:flex-end"><button class="btn" type="button" id="dlgCancel">Annuleren</button><button class="btn primary" type="submit">Aanvraag toevoegen</button></div>
   </form>
 </dialog>
@@ -407,22 +463,35 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
     ga: ["amsterdam", "amstelveen", "diemen", "ouder-amstel", "duivendrecht", "zaandam", "zaanstad", "haarlemmermeer", "hoofddorp", "badhoevedorp", "landsmeer", "oostzaan", "weesp", "almere"]
   };
   const SOORT = { woning: "woningen", bedrijfsruimte: "bedrijfsruimten", parkeerplaats: "parkeerplaatsen", berging: "bergingen" };
-  const STATUS = {
-    nieuw: "Nieuw", wacht_op_klant: "Wacht op klant", gekwalificeerd: "Gekwalificeerd", geanalyseerd: "Geanalyseerd",
-    offerte_uit: "Offerte uit", in_onderhandeling: "In onderhandeling", gewonnen: "Gewonnen", contract_uit: "Contract uit",
-    getekend: "Getekend", verloren: "Verloren"
-  };
-  const KANS = { geanalyseerd: .2, offerte_uit: .3, in_onderhandeling: .5, gewonnen: .9, contract_uit: .95, getekend: 1 };
-  const AFGESLOTEN = new Set(["getekend", "verloren"]);
-  const AKKOORD = new Set(["gekwalificeerd", "geanalyseerd"]);
+  const SOORT_EN = { woning: "homes", bedrijfsruimte: "commercial units", parkeerplaats: "parking spaces", berging: "storage units" };
+
+  // ── CMS-statussen per blok (procesplaat "Van aanvraag tot overdracht") ──────────
+  const ST = [
+    ["nieuw", "Nieuw", 1, "1.2"], ["in_beoordeling", "In beoordeling", 1, "1.3"], ["wacht_op_gegevens", "Wacht op gegevens", 1, "1.4"],
+    ["in_analyse", "In analyse", 1, "1.5"], ["offerte_klaar", "Offerte klaar", 1, "1.6"], ["offerte_verstuurd", "Offerte verstuurd", 1, "1.8"],
+    ["intake_gepland", "Intake gepland", 2, "2.1"], ["intake_gehouden", "Intake gehouden", 2, "2.4"], ["def_offerte_verstuurd", "Definitieve offerte verstuurd", 2, "2.6"],
+    ["wacht_op_alv", "Wacht op ALV", 2, "2.7"], ["akkoord", "Akkoord", 2, "2.8"],
+    ["ter_ondertekening", "Ter ondertekening", 3, "3.2"], ["getekend", "Getekend", 3, "3.3"], ["naar_opstart", "Naar opstart", 3, "3.4"],
+    ["verloren", "Verloren", 0, "2.8"]
+  ];
+  const STATUS = Object.fromEntries(ST.map(s => [s[0], s[1]]));
+  const BLOK = Object.fromEntries(ST.map(s => [s[0], s[2]]));
+  const STAP = Object.fromEntries(ST.map(s => [s[0], s[3]]));
+  const BLOKNAAM = { 1: "Aanvraag analyseren", 2: "Offertefase", 3: "Overeenkomstfase" };
+  const AFGESLOTEN = new Set(["naar_opstart", "verloren"]);
+  // Statussen waarin we wachten op de aanvrager: hier loopt de opvolgreeks
+  const WACHT = new Set(["wacht_op_gegevens", "offerte_verstuurd", "def_offerte_verstuurd", "ter_ondertekening"]);
+  const REVIEW = new Set(["offerte_klaar"]); // 1.7 review door Farhaad
+  const KANS = { offerte_klaar: .15, offerte_verstuurd: .25, intake_gepland: .35, intake_gehouden: .45, def_offerte_verstuurd: .5, wacht_op_alv: .6, akkoord: .9, ter_ondertekening: .95, getekend: 1, naar_opstart: 1 };
   const VERLIESREDENEN = ["Prijs", "Wil Premium", "Geen overstap", "Geen reactie", "Concurrent"];
+  const DAGOPTIES = [3, 5, 7, 10, 14, 21, 28, 35];
   const TABS = [
     { k: "lopend", l: "Lopend", f: d => !AFGESLOTEN.has(d.status) },
-    { k: "nieuw", l: "Nieuw", f: d => d.status === "nieuw" },
-    { k: "wacht", l: "Wacht op klant", f: d => d.status === "wacht_op_klant" },
-    { k: "akkoord", l: "Wacht op akkoord", f: d => AKKOORD.has(d.status) },
-    { k: "offerte", l: "Offerte uit", f: d => ["offerte_uit", "in_onderhandeling"].includes(d.status) },
-    { k: "af", l: "Afgesloten", f: d => ["gewonnen", "contract_uit", "getekend", "verloren"].includes(d.status) }
+    { k: "b1", l: "Blok 1 · Aanvraag", f: d => BLOK[d.status] === 1 },
+    { k: "b2", l: "Blok 2 · Offerte", f: d => BLOK[d.status] === 2 },
+    { k: "b3", l: "Blok 3 · Overeenkomst", f: d => BLOK[d.status] === 3 && d.status !== "naar_opstart" },
+    { k: "opv", l: "Opvolging nu", f: d => ["nu", "bel"].includes(opvolging(d).soort) },
+    { k: "af", l: "Afgesloten", f: d => AFGESLOTEN.has(d.status) }
   ];
   const PER_PAGINA = 10;
 
@@ -430,11 +499,11 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
   const tier = n => { let i = 0; T.grenzen.forEach((g, k) => { if (n >= g) i = k; }); return i; };
   const totAR = d => Object.values(d.ar || {}).reduce((a, b) => a + (+b || 0), 0);
   function prijs(d) {
-    const out = { regels: [], signalen: [], bv: null, opstart: 0, advies: "basic" };
+    const out = { regels: [], signalen: [], bv: null, opstart: 0, advies: "basic", downsell: null, upgrade: false };
     const tot = totAR(d), ga = isGA(d.plaats), premOk = ga && tot >= T.premiumGrens;
     if (tot > T.maxPlausibel) out.signalen.push({ t: "crit", s: "crit", txt: `Opgegeven aantal (${tot}) is onwaarschijnlijk. Controleer het aantal in de akte voordat er een prijs uitgaat.` });
-    if (d.pakket === "premium" && !premOk) out.signalen.push({ t: "down", s: "warn", txt: `Downsell: Premium gevraagd, maar ${ga ? "onder " + T.premiumGrens + " appartementsrechten" : "buiten Groot-Amsterdam"}. Basic aanbieden met positieve uitleg.` });
-    if (d.pakket === "basic" && premOk && tot <= T.maxPlausibel) out.signalen.push({ t: "up", s: "ok", txt: "Upgrade-kans: Basic gevraagd, maar Premium-profiel (Groot-Amsterdam en omvang)." });
+    if (d.pakket === "premium" && !premOk) { out.downsell = ga ? "omvang" : "regio"; out.signalen.push({ t: "down", s: "warn", txt: `Downsell: Premium gevraagd, maar ${ga ? "onder " + T.premiumGrens + " appartementsrechten" : "buiten Groot-Amsterdam"}. Basic aanbieden met positieve uitleg.` }); }
+    if (d.pakket === "basic" && premOk && tot <= T.maxPlausibel) { out.upgrade = true; out.signalen.push({ t: "up", s: "ok", txt: "Upgrade-kans: Basic gevraagd, maar Premium-profiel (Groot-Amsterdam en omvang)." }); }
     if (d.pakket === "premium" && premOk) { out.advies = "premium"; out.opstart = T.opstart.premium; return out; }
     out.regels.push({ o: "Basisvergoeding", b: T.basis, src: "staffel" });
     for (const k of Object.keys(T.staffel)) {
@@ -456,12 +525,14 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
     return beheer(p) + (p.bv || 0);
   }
 
-  // ── State: basis = geladen bron; wijzigingen per dossier-id apart (alleen deze browser) ──
-  const LS = k => "offertepijplijn-v3-" + k;
+  // ── State ─────────────────────────────────────────────────────────────────────
+  const LS = k => "offertepijplijn-v4-" + k;
   const lees = (k, d) => { try { const v = JSON.parse(localStorage.getItem(LS(k))); return v ?? d; } catch (e) { return d; } };
   const schrijf = (k, v) => { try { localStorage.setItem(LS(k), JSON.stringify(v)); } catch (e) {} };
   let bron = { soort: "leeg", ververst: null }, basis = [], extra = lees("extra", []), wijz = lees("wijz", {});
+  let schema = lees("schema", { h1: 7, h2: 14, bel: 21 }), ladder = lees("ladder", {});
   let view = lees("view", "lijst"), pakket = lees("pakket", "alle"), tab = "lopend", pagina = 1, sortKey = "binnen", sortDir = -1, openId = null, ptab = "overzicht";
+  let mailKeuze = null, mailTaal = null;
 
   const data = () => [...extra, ...basis].map(b => { const w = wijz[b.id]; return w ? { ...b, ...w, tl: [...(b.tl || []), ...(w.tl || [])] } : b; });
   const vind = id => data().find(d => d.id === id);
@@ -475,39 +546,144 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
   function eur(x, dec = 0) { return x == null ? "—" : "€ " + Number(x).toLocaleString("nl-NL", { minimumFractionDigits: dec, maximumFractionDigits: dec }); }
   const dagen = iso => Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 864e5));
   const fmtD = iso => iso ? new Date(iso).toLocaleDateString("nl-NL", { day: "2-digit", month: "2-digit", year: "2-digit" }) : "—";
+  const fmtLang = (iso, taal) => new Date(iso).toLocaleDateString(taal === "en" ? "en-GB" : "nl-NL", { day: "numeric", month: "long" });
   const fmtDT = iso => iso ? new Date(iso).toLocaleString("nl-NL", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "—";
   function relatief(iso) {
     const d = new Date(iso), nu = new Date(), t = d.toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" });
     const dd = Math.round((new Date(nu.toDateString()) - new Date(d.toDateString())) / 864e5);
     return dd === 0 ? `Vandaag ${t}` : dd === 1 ? `Gisteren ${t}` : fmtD(iso);
   }
+  const plusDagen = (iso, n) => { const x = new Date(iso); x.setDate(x.getDate() + n); return x.toISOString(); };
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const ico = n => `<svg class="i"><use href="#i-${n}"/></svg>`;
-  const pakketVan = d => d.pakket === "premium" && prijs(d).advies !== "premium" && !["nieuw", "gekwalificeerd", "wacht_op_klant"].includes(d.status) ? "basic" : d.pakket;
-  const LIMIET = { nieuw: [1, 2], gekwalificeerd: [2, 4], wacht_op_klant: [5, 10], geanalyseerd: [1, 3], offerte_uit: [7, 14], in_onderhandeling: [14, 28], gewonnen: [7, 14], contract_uit: [7, 14] };
-  function ageClass(d) { if (AFGESLOTEN.has(d.status)) return ""; const n = dagen(d.sinds), l = LIMIET[d.status] || [7, 14]; return n >= l[1] ? "crit" : n >= l[0] ? "warn" : ""; }
+  const pakketVan = d => d.pakket === "premium" && prijs(d).advies !== "premium" && BLOK[d.status] !== 1 ? "basic" : d.pakket;
+  const naamVan = d => (d.contact || "").split(" · ")[0].trim();
+  const taalVan = d => d.taal || (/[a-z]/i.test(d.bijz || "") && /\b(the|we|our|please|would|building|management)\b/i.test(d.bijz || "") ? "en" : "nl");
+  const ontbreekt = d => {
+    const m = [];
+    if (!(d.docs || {}).akte) m.push("akte");
+    if (!totAR(d)) m.push("ar");
+    return m;
+  };
+
+  // ── Opvolgmotor: herinnering 1, herinnering 2, bellijst (dagen vanaf verzenden) ──
+  function opvolging(d) {
+    if (!WACHT.has(d.status) || !d.laatst_verstuurd) return { soort: "geen" };
+    if (d.laatste_reactie && d.laatste_reactie > d.laatst_verstuurd) return { soort: "geen" };
+    const n = dagen(d.laatst_verstuurd), h = d.herinneringen || 0;
+    if (n >= schema.bel) return { soort: "bel", txt: `Bellen · ${n} d stil`, n };
+    if (h < 2 && n >= schema.h2) return { soort: "nu", txt: "Herinnering 2", stap: "h2", n };
+    if (h < 1 && n >= schema.h1) return { soort: "nu", txt: "Herinnering 1", stap: "h1", n };
+    const volgende = h < 1 ? schema.h1 : h < 2 ? schema.h2 : schema.bel;
+    return { soort: "later", txt: `${h < 1 ? "Herinnering 1" : h < 2 ? "Herinnering 2" : "Bellen"} op ${fmtD(plusDagen(d.laatst_verstuurd, volgende))}`, n };
+  }
+  const opvHtml = d => { const o = opvolging(d); return o.soort === "geen" ? '<span class="leeg">—</span>' : `<span class="opv ${o.soort}">${esc(o.txt)}</span>`; };
+
   function tags(d) {
     if (AFGESLOTEN.has(d.status)) return "";
     const p = prijs(d); let h = "";
-    if (d.opzeg) { const n = Math.ceil((new Date(d.opzeg + "T23:59:00") - Date.now()) / 864e5); if (n < 0) h += `<span class="tag crit">Opzegdatum voorbij</span>`; else if (n <= 14) h += `<span class="tag dl">Opzeggen ≤ ${n} d</span>`; }
-    else if (d.deadline_signaal) h += `<span class="tag dl">Deadline genoemd</span>`;
+    if (d.deadline_signaal) h += `<span class="tag dl">Deadline genoemd</span>`;
     for (const s of p.signalen) h += s.t === "up" ? `<span class="tag up">Upgrade-kans</span>` : s.t === "crit" ? `<span class="tag crit">Aantal controleren</span>` : `<span class="tag down">Downsell</span>`;
-    if (d.bron === "formulier") h += `<span class="tag info">Indicatief</span>`;
+    if (d.bron === "formulier" && BLOK[d.status] === 1) h += `<span class="tag info">Indicatief</span>`;
     return h;
   }
   let tt; function toast(t) { const el = document.getElementById("toast"); el.textContent = t; el.hidden = false; clearTimeout(tt); tt = setTimeout(() => el.hidden = true, 2600); }
 
-  // ── Statusovergangen (zelfde regels voor knop, slepen en keuzelijst) ───────────
+  // ── Concept-mails (Mailschrijver VVEgemak-stijl; altijd concept, nooit automatisch verstuurd) ──
+  const ONDERTEKENING = { nl: "Met vriendelijke groet,\n\nFarhaad Madarun\nOperationeel & Commercieel Manager\nVVEgemak · 020 - 8202 273", en: "Kind regards,\n\nFarhaad Madarun\nOperations & Commercial Manager\nVVEgemak · +31 20 8202 273" };
+  const VRAGEN = {
+    nl: ["Uit hoeveel personen bestaat het bestuur van de VvE?", "Hoe is de financiële administratie bijgehouden en bij welke bank heeft de VvE een bankrekening?", "Wilt de VvE dat de beheerder facturen namens de VvE voldoet nadat deze zijn goedgekeurd door het bestuur van de VvE?", "Wordt er automatisch geïncasseerd bij de eigenaren?", "Zijn er op dit moment lopende problemen? Bijvoorbeeld eigenaren die niet betalen?", "Wanneer is de eerstvolgende ALV?", "Per wanneer zou de VvE willen overstappen?"],
+    en: ["How many people are on the board of the VvE?", "How has the financial administration been kept so far, and with which bank does the VvE hold its account?", "Would the VvE like the manager to pay invoices on its behalf once the board has approved them?", "Are owner contributions collected by direct debit?", "Are there any current issues, for example owners who are behind on payments?", "When is the next general meeting (ALV)?", "From what date would the VvE like to switch?"]
+  };
+  function mailSjablonen(d, taal) {
+    const en = taal === "en", p = prijs(d), naam = naamVan(d) || (en ? "Sir/Madam" : "heer/mevrouw"), vve = d.naam, b = bedrag(d);
+    const aanhef = en ? `Dear ${naam},` : `Beste ${naam},`;
+    const sig = ONDERTEKENING[taal];
+    const onderwerp = en ? `Re: Quote request ${vve}` : `Re: Offerte aanvraag vvegemak.nl – ${vve}`;
+    const pakketAlinea = () => {
+      if (p.downsell === "omvang") return en ? `At the moment our Premium package has no capacity for associations with fewer than ${T.premiumGrens} apartment rights. We would be happy to send you a quote for Basic management (financial and administrative VvE management).` : `Momenteel hebben wij voor het Premium beheerpakket geen ruimte in onze portefeuille voor VvE's onder de ${T.premiumGrens} appartementsrechten. Wél is het mogelijk om een offerte uit te brengen voor Basic Beheer (financieel en administratief VvE-beheer).`;
+      if (p.downsell === "regio") return en ? `Our Premium package is available in the Greater Amsterdam area. For ${d.plaats} we would be happy to send you a quote for Basic management (financial and administrative VvE management).` : `Ons Premium beheerpakket bieden wij aan in de regio Groot-Amsterdam. Voor ${d.plaats} brengen wij graag een offerte uit voor Basic Beheer (financieel en administratief VvE-beheer).`;
+      if (p.upgrade) return en ? `With ${totAR(d)} apartment rights in ${d.plaats}, your VvE also qualifies for Premium management: financial, administrative and technical management, including support for your meetings. We are happy to quote both packages so the board can compare.` : `Met ${totAR(d)} appartementsrechten in ${d.plaats} komt jullie VvE ook in aanmerking voor Premium Beheer: financieel, administratief én technisch beheer, inclusief begeleiding van de vergaderingen. Wij maken graag voor beide pakketten een offerte, zodat het bestuur kan vergelijken.`;
+      return "";
+    };
+    const laatst = d.laatst_verstuurd ? fmtLang(d.laatst_verstuurd, taal) : (en ? "recently" : "onlangs");
+    const prijsZin = b == null ? null : en ? `The indicative fee is ${eur(b)} per year excluding VAT (on average ${eur(b * (1 + T.btw) / Math.max(1, totAR(d)) / 12, 2)} per apartment per month including VAT).` : `De indicatieve beheervergoeding bedraagt ${eur(b)} per jaar excl. btw. Omgerekend is dat gemiddeld ${eur(b * (1 + T.btw) / Math.max(1, totAR(d)) / 12, 2)} incl. btw per appartement per maand.`;
+    const S = [];
+
+    // 1.4 Aanvullende gegevens vragen
+    const mist = ontbreekt(d);
+    S.push({ k: "1.4", titel: "1.4 Aanvullende gegevens", stap: "1.4", naStatus: "wacht_op_gegevens", reeks: true, onderwerp,
+      body: [aanhef, "", en ? `Thank you for your quote request for ${vve}.` : `Dank voor de offerteaanvraag voor ${vve}.`, pakketAlinea() && "\n" + pakketAlinea(), "",
+        en ? "Could you answer the questions below?" : "Zou je onderstaande vragen willen beantwoorden?",
+        ...VRAGEN[taal].map((v, i) => `${i + 1}. ${v}`),
+        mist.includes("akte") ? "\n" + (en ? "Could you also send us the deed of division (splitsingsakte)? We need it to prepare an accurate quote." : "Wil je ook de splitsingsakte meesturen? Die hebben wij nodig voor een passende offerte.") : null,
+        "", en ? "Once we have your answers, we will send you a non-binding quote very shortly." : "Nadat bovenstaande vragen zijn beantwoord zullen wij op zéér korte termijn een vrijblijvende offerte verstrekken.",
+        "", en ? "I look forward to hearing from you." : "Ik zie je reactie graag tegemoet.", "", sig].filter(x => x != null).join("\n").replace(/\n{3,}/g, "\n\n") });
+
+    // 1.8 Indicatieve offerte met uitnodiging intake
+    S.push({ k: "1.8", titel: "1.8 Indicatieve offerte", stap: "1.8", naStatus: "offerte_verstuurd", reeks: true,
+      onderwerp: en ? `Indicative quote VvE management – ${vve}` : `Indicatieve offerte VvE-beheer – ${vve}`,
+      body: [aanhef, "",
+        en ? `Thank you for the information. Attached you will find our indicative quote for ${p.advies === "premium" ? "Premium" : "Basic"} management of ${vve}.` : `Dank voor de informatie. Bijgaand ontvang je onze indicatieve offerte voor ${p.advies === "premium" ? "Premium" : "Basic"} Beheer van ${vve}.`,
+        prijsZin || null, pakketAlinea() || null, "",
+        en ? "The price is indicative and based on the information we have so far. In a short intake meeting we go through your situation and then confirm the final quote. You can pick a time that suits you here: [link intakeplanner]" : "De prijs is indicatief en gebaseerd op de gegevens die wij nu hebben. In een kort intakegesprek lopen we jullie situatie door en daarna maken we de offerte definitief. Je kiest zelf een moment dat past: [link intakeplanner]",
+        "", en ? "To prepare, it would help if you could send us:" : "Ter voorbereiding helpt het als je ons het volgende stuurt:",
+        ...(en ? ["- the minutes of the last two general meetings", "- the most recent annual accounts", "- the long-term maintenance plan (MJOP), if available", "- the current management agreement (for the notice period)"] : ["- de notulen van de laatste twee ALV's", "- de meest recente jaarrekening", "- het meerjarenonderhoudsplan (MJOP), als dat er is", "- de huidige beheerovereenkomst (voor de opzegtermijn)"]),
+        en ? "Missing documents won't hold anything up; we can also discuss them during the intake." : "Ontbreekt er iets, dan houdt dat niets tegen; we bespreken het dan in het gesprek.",
+        "", en ? "Do you have any questions about the deed of division or the quote? Just reply to this e-mail." : "Zijn er onduidelijkheden in de splitsingsakte of vragen over de offerte? Reageer gerust op deze mail.",
+        "", sig].filter(x => x != null).join("\n").replace(/\n{3,}/g, "\n\n") });
+
+    // 2.6 Definitieve offerte met besluitadvies
+    const klein = totAR(d) && totAR(d) <= 10;
+    S.push({ k: "2.6", titel: "2.6 Definitieve offerte", stap: "2.6", naStatus: "def_offerte_verstuurd", reeks: true,
+      onderwerp: en ? `Final quote VvE management – ${vve}` : `Definitieve offerte VvE-beheer – ${vve}`,
+      body: [aanhef, "",
+        en ? `Thank you for the pleasant conversation. Attached is the final quote for ${vve}, including the arrangements we discussed.` : `Dank voor het prettige gesprek. Bijgaand de definitieve offerte voor ${vve}, met de afspraken die we samen hebben gemaakt.`,
+        b != null ? (en ? `The management fee is ${eur(b)} per year excluding VAT.` : `De beheervergoeding bedraagt ${eur(b)} per jaar excl. btw.`) : null,
+        "", en ? "Our advice for the decision:" : "Ons advies voor het besluit:",
+        klein ? (en ? "For a small VvE like yours, a written decision by all owners is often possible, if your regulations allow it. That saves you a meeting." : "Bij een kleine VvE zoals de jouwe kan vaak een schriftelijk besluit van alle eigenaren, als het reglement dat toestaat. Dat scheelt een vergadering.")
+              : (en ? "Put the switch on the agenda of the next general meeting (ALV). We are happy to provide a short explanation for the owners." : "Zet de overstap op de agenda van de eerstvolgende ALV. Wij leveren graag een korte toelichting voor de eigenaren aan."),
+        en ? "Please also keep the notice period with your current manager in mind; we can help you with a draft notice letter." : "Let ook op de opzegtermijn bij de huidige beheerder; wij helpen graag met een concept-opzegbrief.",
+        "", en ? "When is the meeting planned? Then I'll get in touch the day after." : "Wanneer staat de vergadering gepland? Dan neem ik de dag erna contact op.",
+        "", sig].filter(x => x != null).join("\n").replace(/\n{3,}/g, "\n\n") });
+
+    // 3.2 Tekenverzoek
+    S.push({ k: "3.2", titel: "3.2 Tekenverzoek", stap: "3.2", naStatus: "ter_ondertekening", reeks: true,
+      onderwerp: en ? `Management agreement for signature – ${vve}` : `Beheerovereenkomst ter ondertekening – ${vve}`,
+      body: [aanhef, "",
+        en ? `Great news that ${vve} has chosen VVEgemak. Attached you will find the management agreement with the general terms and appendices for signature.` : `Mooi dat ${vve} voor VVEgemak heeft gekozen. Bijgaand de beheerovereenkomst met de algemene voorwaarden en bijlagen ter ondertekening.`,
+        en ? "Once we receive the signed agreement, we will start the onboarding and contact you about the handover from your current manager." : "Zodra wij de getekende overeenkomst terug hebben, starten wij de opstart en nemen we contact op over de overdracht vanuit de huidige beheerder.",
+        "", sig].join("\n") });
+
+    // Herinneringen (zelfde reeks, verwijzen naar de laatste mail)
+    const h = (nr) => ({ k: "h" + nr, titel: `Herinnering ${nr}`, stap: "h" + nr, herinnering: nr, onderwerp: (en ? "Reminder: " : "Herinnering: ") + onderwerp.replace(/^Re: /, ""),
+      body: [aanhef, "",
+        nr === 1 ? (en ? `On ${laatst} we sent you an e-mail about ${vve}. Did it reach you?` : `Op ${laatst} stuurden wij je een mail over ${vve}. Is die goed aangekomen?`)
+                 : (en ? `We haven't heard from you yet regarding ${vve}. Is the VvE still looking for a new manager?` : `We hebben nog niets van je gehoord over ${vve}. Is de VvE nog op zoek naar een nieuwe beheerder?`),
+        d.deadline_signaal ? (en ? "You mentioned a notice period with your current manager; we are happy to help you with the timing." : "Je gaf aan dat er een opzegtermijn speelt bij de huidige beheerder; we denken graag mee over de timing.") : null,
+        en ? "If it's easier, you can also call me on +31 20 8202 273." : "Bellen kan ook: 020 - 8202 273.",
+        "", sig].filter(x => x != null).join("\n") });
+    S.push(h(1), h(2));
+    return S;
+  }
+  function aanbevolenMail(d) {
+    const o = opvolging(d);
+    if (o.stap) return o.stap;
+    if (["nieuw", "in_beoordeling", "wacht_op_gegevens"].includes(d.status)) return "1.4";
+    if (["in_analyse", "offerte_klaar", "offerte_verstuurd"].includes(d.status)) return "1.8";
+    if (["intake_gepland", "intake_gehouden", "def_offerte_verstuurd", "wacht_op_alv"].includes(d.status)) return "2.6";
+    return "3.2";
+  }
+
+  // ── Statusovergangen ──────────────────────────────────────────────────────────
   function naarStatus(d, st) {
     if (!d || st === d.status) return;
     if (st === "verloren") { openId = d.id; ptab = "overzicht"; render(); toast("Kies een verliesreden om af te sluiten"); setTimeout(() => document.getElementById("reden")?.focus(), 60); return; }
-    if (st === "offerte_uit") {
-      if (prijs(d).advies === "premium" && !d.premiumBedrag) { openId = d.id; ptab = "prijs"; render(); toast("Vul eerst het Premium-bedrag in"); return; }
-      if (bedrag(d) == null) { openId = d.id; render(); toast("Controleer eerst het aantal appartementsrechten"); return; }
-      const txt = AKKOORD.has(d.status) ? `Akkoord Farhaad: offerte verstuurd (${eur(bedrag(d))})` : "Status: Offerte uit";
-      wijzig(d.id, { status: st, sinds: new Date().toISOString() }, txt); render(); toast(txt); return;
-    }
-    wijzig(d.id, { status: st, sinds: new Date().toISOString() }, `Status: ${STATUS[st]}`); render(); toast(`${d.naam} → ${STATUS[st]}`);
+    if (st === "offerte_verstuurd" && prijs(d).advies === "premium" && !d.premiumBedrag) { openId = d.id; ptab = "prijs"; render(); toast("Vul eerst het Premium-bedrag in"); return; }
+    if (st === "offerte_verstuurd" && bedrag(d) == null) { openId = d.id; render(); toast("Controleer eerst het aantal appartementsrechten"); return; }
+    const v = { status: st, sinds: new Date().toISOString() };
+    if (WACHT.has(st)) { v.laatst_verstuurd = v.sinds; v.herinneringen = 0; }
+    wijzig(d.id, v, `Status: ${STATUS[st]}`); render(); toast(`${d.naam} → ${STATUS[st]}`);
   }
 
   // ── Selectie ──────────────────────────────────────────────────────────────────
@@ -525,64 +701,66 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
     const notice = document.getElementById("notice");
     notice.hidden = !n;
     if (n) notice.textContent = "Echte aanvragen. De status is een voorstel uit de mailstroom van de servicebalie; wat Farhaad vanuit zijn eigen mailbox afhandelt, is hier niet zichtbaar. Deze pagina bevat persoonsgegevens: niet delen of publiceren.";
-    document.getElementById("navCnt").textContent = data().filter(d => !AFGESLOTEN.has(d.status)).length || "";
+    const all = data();
+    document.getElementById("navCnt").textContent = all.filter(d => !AFGESLOTEN.has(d.status)).length || "";
+    document.getElementById("navOpv").textContent = all.filter(d => ["nu", "bel"].includes(opvolging(d).soort)).length || "";
     document.querySelectorAll("[data-nav]").forEach(b => b.setAttribute("aria-current", String(b.dataset.nav === view)));
     document.querySelectorAll("[data-pakket]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.pakket === pakket)));
   }
 
   function renderKpis() {
     const all = inPakket(), lopend = all.filter(d => !AFGESLOTEN.has(d.status));
-    const nieuw = all.filter(d => d.status === "nieuw").length;
+    const nieuw = all.filter(d => d.status === "nieuw").length, review = all.filter(d => REVIEW.has(d.status)).length;
     const week = all.filter(d => dagen(d.binnen) < 7).length, vorige = all.filter(d => dagen(d.binnen) >= 7 && dagen(d.binnen) < 14).length;
     const r = all.map(d => d.eerste_reactie_uren).filter(x => x != null).sort((a, b) => a - b);
     const med = r.length ? r[Math.floor(r.length / 2)] : null;
-    const binnen24 = r.length ? Math.round(r.filter(x => x <= 24).length / r.length * 100) : null;
+    const opvNu = all.filter(d => opvolging(d).soort === "nu").length, bel = all.filter(d => opvolging(d).soort === "bel").length;
     let pijp = 0; for (const d of lopend) pijp += (bedrag(d) || 0) * (KANS[d.status] || 0);
-    const uit = all.filter(d => ["offerte_uit", "in_onderhandeling", "gewonnen", "contract_uit", "getekend", "verloren"].includes(d.status));
-    const won = all.filter(d => ["gewonnen", "contract_uit", "getekend"].includes(d.status));
     const delta = week - vorige;
     const k = (c, i, l, v, s) => `<div class="kpi"><div class="bub ${c}">${ico(i)}</div><div class="txt"><span class="lbl">${l}</span><span class="val num">${v}</span><span class="sub">${s}</span></div></div>`;
     document.getElementById("kpis").innerHTML =
       k("b-info", "inbox", "Aanvragen (deze week)", all.length ? week : "—", all.length ? `<span class="${delta >= 0 ? "up" : "dn"}">${delta >= 0 ? "↑" : "↓"} ${Math.abs(delta)}</span> vs vorige week` : "nog geen data") +
-      k("b-warn", "clock", "Eerste reactie (mediaan)", med == null ? "—" : med < 24 ? med.toFixed(0) + " u" : (med / 24).toFixed(1) + " d", binnen24 == null ? "nog geen data" : `${binnen24}% binnen 24 uur`) +
-      k("b-acc", "check", "Lopende aanvragen", all.length ? lopend.length : "—", nieuw ? `<span class="dn">${nieuw} nog niet beantwoord</span>` : "alles beantwoord") +
-      k("b-violet", "euro", "Gewogen pijplijn", all.length ? eur(pijp) : "—", "offertebedrag × slagingskans") +
-      k("b-ok", "trend", "Conversie", uit.length ? Math.round(won.length / uit.length * 100) + "%" : "—", `${won.length} gewonnen van ${uit.length} offertes`);
+      k("b-acc", "check", "Lopende dossiers", all.length ? lopend.length : "—", nieuw ? `<span class="dn">${nieuw} nog niet beantwoord</span>` : review ? `${review} wacht op review` : "alles beantwoord") +
+      k("b-warn", "bell", "Opvolging nu", all.length ? opvNu + bel : "—", bel ? `<span class="dn">${bel} op de bellijst</span>` : `${opvNu} herinneringen klaar`) +
+      k("b-violet", "clock", "Eerste reactie (mediaan)", med == null ? "—" : med < 24 ? med.toFixed(0) + " u" : (med / 24).toFixed(1) + " d", r.length ? `${Math.round(r.filter(x => x <= 24).length / r.length * 100)}% binnen 24 uur` : "nog geen data") +
+      k("b-ok", "euro", "Gewogen pijplijn", all.length ? eur(pijp) : "—", "offertebedrag × slagingskans");
   }
 
   // ── Render: lijst ─────────────────────────────────────────────────────────────
-  const COLS = [{ k: "naam", l: "VvE" }, { k: "ar", l: "Rechten", r: 1 }, { k: "status", l: "Status" }, { k: "bedrag", l: "Offertebedrag", r: 1 }, { k: "dagen", l: "In status", r: 1 }, { k: "sig", l: "Signalen" }, { k: "binnen", l: "Binnengekomen" }, { k: "act", l: "" }];
-  const sortVal = (d, k) => ({ naam: d.naam.toLowerCase(), ar: totAR(d), bedrag: bedrag(d) ?? -1, status: Object.keys(STATUS).indexOf(d.status), dagen: dagen(d.sinds), binnen: d.binnen }[k]);
-
+  const COLS = [{ k: "naam", l: "VvE" }, { k: "ar", l: "Rechten", r: 1 }, { k: "status", l: "Status" }, { k: "bedrag", l: "Prijs / jaar", r: 1 }, { k: "opv", l: "Opvolging" }, { k: "sig", l: "Signalen" }, { k: "binnen", l: "Binnengekomen" }, { k: "act", l: "" }];
+  const sortVal = (d, k) => ({ naam: d.naam.toLowerCase(), ar: totAR(d), bedrag: bedrag(d) ?? -1, status: ST.findIndex(s => s[0] === d.status), opv: opvolging(d).n ?? -1, binnen: d.binnen }[k]);
   function leegTekst() {
-    if (!basis.length && !extra.length) return `<div class="empty"><strong>Nog geen aanvragen geladen</strong><span>Start op de pc met Outlook: <code>uv run sales-dashboard</code>, of kies "Bestand laden" met een aanvragen.json.</span></div>`;
-    return `<div class="empty"><strong>Geen aanvragen in deze selectie</strong><span>Kies een andere tab of zet het pakketfilter op "Alle".</span></div>`;
+    if (!basis.length && !extra.length) return `<div class="empty"><strong>Nog geen aanvragen geladen</strong><span>Start op de pc met Outlook: <code>uv run sales-dashboard</code>, kies "Bestand laden", of maak een testaanvraag.</span></div>`;
+    return `<div class="empty"><strong>Geen dossiers in deze selectie</strong><span>Kies een andere tab of zet het pakketfilter op "Alle".</span></div>`;
   }
-
   function renderTabs() {
     const set = inPakket();
     document.getElementById("tabs").innerHTML = TABS.map(t => `<button type="button" role="tab" data-tab="${t.k}" aria-selected="${t.k === tab}">${t.l}<span class="n">${set.filter(t.f).length}</span></button>`).join("");
-    document.getElementById("tabs").hidden = view === "bord";
   }
-
+  function actieKnop(d) {
+    if (REVIEW.has(d.status)) return `<button class="btn sm primary" data-act="review" data-id="${esc(d.id)}" type="button">Review</button>`;
+    const o = opvolging(d);
+    if (o.soort === "nu" || ["nieuw", "in_beoordeling"].includes(d.status)) return `<button class="btn sm" data-act="mail" data-id="${esc(d.id)}" type="button">Mail</button>`;
+    if (o.soort === "bel") return `<button class="btn sm" data-act="bel" data-id="${esc(d.id)}" type="button">Bellen</button>`;
+    return "";
+  }
   function renderLijst() {
     const f = TABS.find(t => t.k === tab).f;
     const rows = inPakket().filter(f).sort((a, b) => { const x = sortVal(a, sortKey), y = sortVal(b, sortKey); return (x > y ? 1 : x < y ? -1 : 0) * sortDir; });
     const pages = Math.max(1, Math.ceil(rows.length / PER_PAGINA)); pagina = Math.min(pagina, pages);
     const deel = rows.slice((pagina - 1) * PER_PAGINA, pagina * PER_PAGINA);
     document.getElementById("thead").innerHTML = COLS.map(c => `<th class="${c.r ? "r" : ""}" ${["sig", "act"].includes(c.k) ? "" : `data-k="${c.k}" tabindex="0"`} ${sortKey === c.k ? `aria-sort="${sortDir > 0 ? "ascending" : "descending"}"` : ""}>${c.l}</th>`).join("");
-    const tb = document.getElementById("tbody");
-    tb.innerHTML = deel.length ? deel.map(d => {
+    document.getElementById("tbody").innerHTML = deel.length ? deel.map(d => {
       const b = bedrag(d), premOpen = prijs(d).advies === "premium" && !d.premiumBedrag;
       return `<tr data-id="${esc(d.id)}" tabindex="0" class="${d.id === openId ? "sel" : ""}">
         <td><div class="vcell"><span class="di">${ico("bld")}</span><div><div class="vve">${esc(d.naam)}</div><div class="sub2">${esc(d.plaats)} · ${d.pakket === "premium" ? "Premium" : "Basic"} gevraagd</div></div></div></td>
         <td class="r num">${totAR(d)}</td>
-        <td><span class="pill st-${d.status}">${STATUS[d.status]}</span>${d.status === "verloren" ? `<div class="sub2">${esc(d.reden)}</div>` : ""}</td>
+        <td><div class="blk">${BLOK[d.status] ? "Blok " + BLOK[d.status] + " · stap " + STAP[d.status] : "Afgesloten"}</div><span class="pill st-${d.status}">${STATUS[d.status]}</span>${d.status === "verloren" ? `<div class="sub2">${esc(d.reden)}</div>` : ""}</td>
         <td class="r num">${b == null ? `<span class="leeg">${premOpen ? "maatwerk" : "—"}</span>` : eur(b)}</td>
-        <td class="r"><span class="age ${ageClass(d)}">${dagen(d.sinds)} d</span></td>
+        <td>${opvHtml(d)}</td>
         <td>${tags(d) || '<span class="leeg">—</span>'}</td>
         <td class="sub2">${relatief(d.binnen)}</td>
-        <td class="r">${AKKOORD.has(d.status) ? `<button class="btn sm primary" data-akkoord="${esc(d.id)}" type="button">Akkoord</button>` : ""}</td>
+        <td class="r">${actieKnop(d)}</td>
       </tr>`;
     }).join("") : `<tr><td colspan="${COLS.length}">${leegTekst()}</td></tr>`;
     const pg = [];
@@ -591,19 +769,20 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
       <div class="pg"><button type="button" data-pg="${pagina - 1}" ${pagina === 1 ? "disabled" : ""} aria-label="Vorige">‹</button>${pg.map(p => p === "…" ? `<button type="button" disabled>…</button>` : `<button type="button" data-pg="${p}" aria-current="${p === pagina}">${p}</button>`).join("")}<button type="button" data-pg="${pagina + 1}" ${pagina === pages ? "disabled" : ""} aria-label="Volgende">›</button></div>` : "";
   }
 
-  // ── Render: bord ──────────────────────────────────────────────────────────────
-  const KOLOMMEN = ["nieuw", "wacht_op_klant", "gekwalificeerd", "geanalyseerd", "offerte_uit", "in_onderhandeling", "gewonnen", "contract_uit", "getekend", "verloren"];
+  // ── Render: bord (kolommen per status, beperkt tot het gekozen blok) ───────────
   function renderBord() {
-    const rows = inPakket(), el = document.getElementById("bord");
+    const f = TABS.find(t => t.k === tab).f, rows = inPakket().filter(d => tab === "lopend" || tab === "opv" ? true : f(d)), el = document.getElementById("bord");
     if (!rows.length) { el.innerHTML = leegTekst(); return; }
-    el.innerHTML = KOLOMMEN.map(st => {
+    const blok = { b1: 1, b2: 2, b3: 3 }[tab];
+    const kol = ST.filter(s => blok ? s[2] === blok : tab === "af" ? AFGESLOTEN.has(s[0]) : s[0] !== "naar_opstart").map(s => s[0]);
+    el.innerHTML = kol.map(st => {
       const ks = rows.filter(d => d.status === st).sort((a, b) => (b.binnen > a.binnen ? 1 : -1));
       return `<div class="col ${st === "verloren" ? "lost" : ""}" data-status="${st}">
         <div class="colh"><span>${STATUS[st]}</span><span class="n">${ks.length}</span></div>
         ${ks.map(d => { const b = bedrag(d); return `<div class="kaart ${d.id === openId ? "sel" : ""}" draggable="true" tabindex="0" data-id="${esc(d.id)}">
             <span class="nm">${esc(d.naam)}</span>
             <div class="mt"><span>${esc(d.plaats)} · ${totAR(d)}</span><span>${b == null ? "" : eur(b)}</span></div>
-            <div class="mt"><span>${tags(d)}</span><span class="age ${ageClass(d)}">${dagen(d.sinds)} d</span></div>
+            <div class="mt"><span>${tags(d)}</span>${opvHtml(d)}</div>
           </div>`; }).join("") || `<div class="dropnote">${st === "verloren" ? "Sleep hierheen om af te sluiten (met reden)" : "Leeg"}</div>`}
       </div>`;
     }).join("");
@@ -612,11 +791,13 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
   // ── Render: dossierpaneel ─────────────────────────────────────────────────────
   function renderPanel() {
     const el = document.getElementById("panel"), d = openId && vind(openId);
-    if (!d) { el.innerHTML = `<div class="pempty"><span class="di">${ico("note")}</span><strong>Geen aanvraag gekozen</strong><span>Klik op een regel of kaart om het dossier, de prijs en het logboek te zien.</span></div>`; return; }
-    const p = prijs(d), closed = AFGESLOTEN.has(d.status);
+    if (!d) { el.innerHTML = `<div class="pempty"><span class="di">${ico("note")}</span><strong>Geen dossier gekozen</strong><span>Klik op een regel of kaart om het dossier, de prijs, de concept-mails en het logboek te zien.</span></div>`; return; }
+    const p = prijs(d), closed = AFGESLOTEN.has(d.status), o = opvolging(d);
     const sigs = [...p.signalen];
+    if (o.soort === "bel") sigs.unshift({ s: "crit", txt: `Op de bellijst: ${o.n} dagen geen reactie op de laatste mail. Bel de aanvrager.` });
+    else if (o.soort === "nu") sigs.unshift({ s: "warn", txt: `${o.txt} is aan de beurt (${o.n} dagen sinds de laatste mail). Zie tab Mail.` });
     if (d.deadline_signaal && !closed) sigs.unshift({ s: "warn", txt: "De aanvrager noemt een deadline of opzegging in de bijzonderheden. Lees mee en neem tijdig contact op." });
-    if (d.bron === "formulier") sigs.push({ s: "", txt: "Indicatief: aantal van het formulier, alles gerekend als woning. De akte bepaalt de definitieve prijs." });
+    if (d.bron === "formulier" && BLOK[d.status] === 1) sigs.push({ s: "", txt: "Indicatief: aantal van het formulier, alles gerekend als woning. De akte bepaalt de definitieve prijs." });
     const rw = (i, k, v) => `<div class="rw">${ico(i)}<span class="k">${k}</span><span class="v">${v}</span></div>`;
     const kop = (t, l) => `<button type="button" role="tab" data-ptab="${t}" aria-selected="${ptab === t}">${l}</button>`;
     let inhoud = "";
@@ -627,18 +808,20 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
           ${d.telefoon ? rw("phone", "Telefoon", `<span class="num">${esc(d.telefoon)}</span><button class="copy" data-copy="${esc(d.telefoon)}" type="button">kopieer</button>`) : ""}
           ${d.email ? rw("mail", "E-mail", `${esc(d.email)}<button class="copy" data-copy="${esc(d.email)}" type="button">kopieer</button>`) : ""}
           ${rw("box", "Rechten", `${Object.entries(d.ar || {}).filter(([, n]) => n).map(([k, n]) => `${n} ${SOORT[k]}`).join(", ") || "—"} <span class="sub2">(${d.bron === "akte" ? "akte" : "formulier"})</span>`)}
-          ${rw("euro", "Offertebedrag", bedrag(d) == null ? (p.advies === "premium" ? "maatwerk, nog in te vullen" : "—") : `${eur(bedrag(d))} per jaar excl. btw`)}
+          ${rw("euro", "Prijs", bedrag(d) == null ? (p.advies === "premium" ? "maatwerk, nog in te vullen" : "—") : `${eur(bedrag(d))} per jaar excl. btw`)}
+          ${rw("bell", "Opvolging", o.soort === "geen" ? (WACHT.has(d.status) ? "reactie ontvangen" : "geen reeks actief") : esc(o.txt))}
           ${rw("flag", "Herkomst", esc(d.herkomst) || "—")}
           ${rw("clock", "Eerste reactie", d.eerste_reactie_uren != null ? `na ${d.eerste_reactie_uren} uur` : "nog niet beantwoord")}
           ${rw("note", "Bijzonderheden", esc(d.bijz) || "—")}
         </div>
         ${closed ? "" : `<div class="docs">
           <div class="inline">
-            ${AKKOORD.has(d.status) ? `<button class="btn primary" id="dAkkoord" type="button">Akkoord: offerte versturen</button>` : ""}
-            <div class="field"><label for="stSel">Status</label><select id="stSel">${Object.entries(STATUS).filter(([k]) => k !== "verloren").map(([k, l]) => `<option value="${k}" ${k === d.status ? "selected" : ""}>${l}</option>`).join("")}</select></div>
+            ${REVIEW.has(d.status) ? `<button class="btn primary" id="dReview" type="button">Review: offerte versturen</button>` : ""}
+            ${WACHT.has(d.status) ? `<button class="btn" id="dReactie" type="button">Reactie ontvangen</button>` : ""}
+            <div class="field"><label for="stSel">Status</label><select id="stSel">${ST.filter(s => s[0] !== "verloren").map(s => `<option value="${s[0]}" ${s[0] === d.status ? "selected" : ""}>Blok ${s[2]} · ${s[1]}</option>`).join("")}</select></div>
           </div>
           <div class="inline"><div class="field"><label for="reden">Verliesreden</label><select id="reden"><option value="">Kies een reden</option>${VERLIESREDENEN.map(r => `<option>${r}</option>`).join("")}</select></div><button class="btn danger" id="dLost" type="button" disabled>Zet op verloren</button></div>
-          <p class="note">Akkoord zet de offerte klaar in Outlook namens Farhaad (nu alleen een statuswissel). "Geen overstap" plant heractivering over 12 maanden.</p>
+          <p class="note">"Geen overstap" plant heractivering over 12 maanden, zodat de VvE in het volgende opzegseizoen opnieuw benaderd wordt.</p>
         </div>`}`;
     } else if (ptab === "prijs") {
       if (totAR(d) > T.maxPlausibel) inhoud = `<p class="note">Geen prijs: het opgegeven aantal is onwaarschijnlijk.</p>`;
@@ -656,6 +839,23 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
         </div>
         <label class="chk"><input type="checkbox" id="bvChk" ${d.betalingsverkeer ? "checked" : ""}> Betalingsverkeer meenemen</label>`;
       }
+    } else if (ptab === "mail") {
+      const taal = mailTaal || taalVan(d), lijst = mailSjablonen(d, taal), adv = aanbevolenMail(d);
+      const keuze = lijst.find(m => m.k === (mailKeuze || adv)) || lijst[0];
+      inhoud = `<div class="mailkies">${lijst.map(m => `<button type="button" data-mk="${m.k}" aria-pressed="${m.k === keuze.k}">${m.titel}${m.k === adv ? '<span class="adv">nu</span>' : ""}</button>`).join("")}</div>
+        <div class="inline"><div class="seg" aria-label="Taal"><button type="button" data-taal="nl" aria-pressed="${taal === "nl"}">NL</button><button type="button" data-taal="en" aria-pressed="${taal === "en"}">EN</button></div>
+          <span class="note">Concept namens Farhaad. Pas gerust aan; een ongewijzigde mail telt als "goed" op de vertrouwensladder.</span></div>
+        <div class="mailbox">
+          <div class="mrow"><span>Aan</span><input id="mAan" value="${esc(d.email || "")}" aria-label="Aan"></div>
+          <div class="mrow"><span>Onderwerp</span><input id="mOnd" value="${esc(keuze.onderwerp)}" aria-label="Onderwerp"></div>
+          <textarea id="mBody" aria-label="Mailtekst">${esc(keuze.body)}</textarea>
+        </div>
+        <div class="inline">
+          <button class="btn" id="mCopy" type="button">Kopieer tekst</button>
+          <a class="btn" id="mOpen" href="#">Open in mailprogramma</a>
+          <button class="btn primary" id="mSent" type="button">Markeer als verstuurd</button>
+        </div>
+        <p class="note">${keuze.naStatus ? `"Markeer als verstuurd" zet de status op ${STATUS[keuze.naStatus]} en start de opvolgreeks (herinnering 1 na ${schema.h1} dagen).` : "Een herinnering telt mee in de reeks; de dagen blijven tellen vanaf de oorspronkelijke mail."} Bijlagen (offerte, overeenkomst) voeg je zelf toe in Outlook.</p>`;
     } else if (ptab === "docs") {
       const docs = [["akte", "Splitsingsakte"], ["jaarrekening", "Jaarrekening"], ["notulen", "Notulen"], ["mjop", "MJOP"], ["beheerovereenkomst", "Lopende beheerovereenkomst"]];
       inhoud = `<div class="docs">${docs.map(([k, l]) => `<div class="doc"><span class="mk ${(d.docs || {})[k] ? "y" : "n"}">${(d.docs || {})[k] ? "✓" : "–"}</span>${l}</div>`).join("")}</div>
@@ -666,10 +866,10 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
     el.innerHTML = `
       <div class="ph"><span class="di">${ico("bld")}</span>
         <div style="min-width:0"><h3>${esc(d.naam)} <span class="pill st-${d.status}">${STATUS[d.status]}</span></h3>
-        <div class="meta">${esc(d.plaats)} · ${esc(d.id)} · binnen ${fmtDT(d.binnen)}</div>
-        <div class="meta"><span class="age ${ageClass(d)}">${dagen(d.sinds)} dagen in deze status</span></div></div>
+        <div class="meta">${BLOK[d.status] ? `Blok ${BLOK[d.status]} · ${BLOKNAAM[BLOK[d.status]]} · stap ${STAP[d.status]}` : "Afgesloten"}</div>
+        <div class="meta">${esc(d.plaats)} · ${esc(d.id)} · binnen ${fmtDT(d.binnen)}</div></div>
         <button class="x" id="pClose" type="button" aria-label="Dossier sluiten">✕</button></div>
-      <div class="tabs" role="tablist">${kop("overzicht", "Overzicht")}${kop("prijs", "Prijs")}${kop("docs", "Documenten")}${kop("log", "Logboek")}</div>
+      <div class="tabs" role="tablist">${kop("overzicht", "Overzicht")}${kop("mail", "Mail")}${kop("prijs", "Prijs")}${kop("docs", "Documenten")}${kop("log", "Logboek")}</div>
       <div class="pbody">${inhoud}</div>`;
 
     el.querySelector("#pClose").onclick = () => { openId = null; render(); };
@@ -677,7 +877,8 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
     el.querySelectorAll("[data-copy]").forEach(b => b.onclick = () => navigator.clipboard?.writeText(b.dataset.copy).then(() => toast("Gekopieerd"), () => toast("Kopiëren lukt hier niet; selecteer de tekst")));
     const pb = el.querySelector("#pbSave"); if (pb) pb.onclick = () => { const v = Number(el.querySelector("#pb").value); if (!v) return toast("Vul een jaarbedrag in"); wijzig(d.id, { premiumBedrag: v }, `Premium-bedrag vastgelegd: ${eur(v)}`); render(); toast("Bedrag vastgelegd"); };
     const bvc = el.querySelector("#bvChk"); if (bvc) bvc.onchange = () => { wijzig(d.id, { betalingsverkeer: bvc.checked }, bvc.checked ? "Betalingsverkeer meegenomen" : "Betalingsverkeer eruit"); render(); };
-    const ak = el.querySelector("#dAkkoord"); if (ak) ak.onclick = () => naarStatus(d, "offerte_uit");
+    const rv = el.querySelector("#dReview"); if (rv) rv.onclick = () => { ptab = "mail"; mailKeuze = "1.8"; renderPanel(); };
+    const rc = el.querySelector("#dReactie"); if (rc) rc.onclick = () => { wijzig(d.id, { laatste_reactie: new Date().toISOString() }, "Reactie aanvrager ontvangen: opvolgreeks gestopt"); render(); toast("Reeks gestopt"); };
     const ss = el.querySelector("#stSel"); if (ss) ss.onchange = () => naarStatus(d, ss.value);
     const rs = el.querySelector("#reden"), lost = el.querySelector("#dLost");
     if (rs) { rs.onchange = () => { lost.disabled = !rs.value; }; lost.onclick = () => {
@@ -685,6 +886,33 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
       if (rs.value === "Geen overstap") { const h = new Date(); h.setFullYear(h.getFullYear() + 1); v.heractiveren = h.toISOString().slice(0, 10); }
       wijzig(d.id, v, `Verloren: ${rs.value}${v.heractiveren ? ", heractiveren " + fmtD(v.heractiveren) : ""}`); render(); toast(`Verloren: ${rs.value}`);
     }; }
+
+    // Mail-tab
+    el.querySelectorAll("[data-mk]").forEach(b => b.onclick = () => { mailKeuze = b.dataset.mk; renderPanel(); });
+    el.querySelectorAll("[data-taal]").forEach(b => b.onclick = () => { mailTaal = b.dataset.taal; renderPanel(); });
+    const body = el.querySelector("#mBody");
+    if (body) {
+      const taal = mailTaal || taalVan(d), lijst = mailSjablonen(d, taal), keuze = lijst.find(m => m.k === (mailKeuze || aanbevolenMail(d))) || lijst[0];
+      const mailto = () => `mailto:${encodeURIComponent(el.querySelector("#mAan").value)}?subject=${encodeURIComponent(el.querySelector("#mOnd").value)}&body=${encodeURIComponent(body.value)}`;
+      const open = el.querySelector("#mOpen");
+      const zet = () => { open.href = mailto(); };
+      zet(); body.oninput = zet; el.querySelector("#mOnd").oninput = zet; el.querySelector("#mAan").oninput = zet;
+      el.querySelector("#mCopy").onclick = () => {
+        const tekst = `Onderwerp: ${el.querySelector("#mOnd").value}\n\n${body.value}`;
+        navigator.clipboard?.writeText(tekst).then(() => toast("Mail gekopieerd"), () => { body.select(); toast("Kopiëren lukt hier niet; tekst is geselecteerd"); });
+      };
+      el.querySelector("#mSent").onclick = () => {
+        const ongewijzigd = body.value === keuze.body && el.querySelector("#mOnd").value === keuze.onderwerp;
+        const l = ladder[keuze.stap] || { goed: 0, aangepast: 0 };
+        if (ongewijzigd) l.goed++; else l.aangepast++;
+        ladder[keuze.stap] = l; schrijf("ladder", ladder);
+        const nu = new Date().toISOString(), v = {};
+        if (keuze.herinnering) v.herinneringen = Math.max(d.herinneringen || 0, keuze.herinnering);
+        else { if (keuze.naStatus) { v.status = keuze.naStatus; v.sinds = nu; } v.laatst_verstuurd = nu; v.herinneringen = 0; }
+        wijzig(d.id, v, `Verstuurd: ${keuze.titel}${ongewijzigd ? "" : " (aangepast)"}`);
+        mailKeuze = null; render(); toast(`${keuze.titel} gemarkeerd als verstuurd`);
+      };
+    }
   }
 
   // ── Render: analyse ───────────────────────────────────────────────────────────
@@ -698,8 +926,7 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
     const w = 340, h = 170, l = 28, rm = 8, t = 10, bo = 24, iw = w - l - rm, ih = h - t - bo;
     const x = i => l + i * iw / (W - 1), y = v => t + ih - v / top * ih;
     const pts = telling.map((c, i) => `${x(i).toFixed(1)},${y(c.n).toFixed(1)}`);
-    const totaalW = telling.reduce((s, c) => s + c.n, 0);
-    document.getElementById("chWeek").innerHTML = `<div class="bigr"><span class="sub2">Laatste ${W} weken</span><span class="bn num">${totaalW}</span></div>
+    document.getElementById("chWeek").innerHTML = `<div class="bigr"><span class="sub2">Laatste ${W} weken</span><span class="bn num">${telling.reduce((s, c) => s + c.n, 0)}</span></div>
       <svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Aanvragen per week">
         ${[0, 1, 2, 3, 4].map(k => `<line class="gl" x1="${l}" x2="${w - rm}" y1="${y(k * stap)}" y2="${y(k * stap)}"/><text class="ax" x="${l - 6}" y="${y(k * stap) + 4}" text-anchor="end">${k * stap}</text>`).join("")}
         <polygon class="ar" points="${x(0)},${y(0)} ${pts.join(" ")} ${x(W - 1)},${y(0)}"/>
@@ -707,37 +934,27 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
         ${telling.map((c, i) => `<circle class="pt" cx="${x(i)}" cy="${y(c.n)}" r="${i === W - 1 ? 4 : 2.6}"/>`).join("")}
         ${telling.map((c, i) => i % 3 === 0 || i === W - 1 ? `<text class="ax" x="${x(i)}" y="${h - 6}" text-anchor="middle">${c.s.getDate()}-${c.s.getMonth() + 1}</text>` : "").join("")}
       </svg>`;
-
     const her = {}; for (const d of all) { const k = d.herkomst || "Onbekend"; her[k] = (her[k] || 0) + 1; }
     const lijst = Object.entries(her).sort((a, b) => b[1] - a[1]);
     document.getElementById("chHerkomst").innerHTML = lijst.length ? `<div class="bars">${lijst.map(([k, n]) => `<div class="bar"><span>${esc(k)}</span><span class="tr"><span class="fl" style="width:${(n / all.length * 100).toFixed(0)}%"></span></span><span class="pc">${n} · ${Math.round(n / all.length * 100)}%</span></div>`).join("")}</div>
-      <p class="note" style="margin-top:12px">${lijst.find(([k]) => /overig|onbekend/i.test(k)) ? "Een groot deel valt onder Overig: het herkomstveld op het formulier is te grof (zie werkomschrijving)." : ""}</p>` : `<p class="note">Nog geen data.</p>`;
+      ${lijst.find(([k]) => /overig|onbekend/i.test(k)) ? `<p class="note" style="margin-top:12px">Een groot deel valt onder Overig: het herkomstveld op het formulier is te grof (zie werkomschrijving).</p>` : ""}` : `<p class="note">Nog geen data.</p>`;
+    const stappen = [["1.4", "1.4 Aanvullende gegevens"], ["1.8", "1.8 Indicatieve offerte"], ["2.6", "2.6 Definitieve offerte"], ["3.2", "3.2 Tekenverzoek"], ["h1", "Herinnering 1"], ["h2", "Herinnering 2"]];
+    document.getElementById("chLadder").innerHTML = `<div class="ladder">${stappen.map(([k, lbl]) => { const v = ladder[k] || { goed: 0, aangepast: 0 }; return `<div class="lr"><span>${lbl}</span><span class="tr"><span class="fl" style="width:${Math.min(100, v.goed / 40 * 100)}%"></span></span><span class="pc num">${v.goed}/40</span></div>`; }).join("")}</div>
+      <p class="note" style="margin-top:12px">40 keer ongewijzigd verstuurd = zonder review. Aangepaste mails tellen niet mee.</p>`;
+  }
 
-    const r = all.map(d => d.eerste_reactie_uren).filter(v => v != null);
-    const open = all.filter(d => d.eerste_reactie_uren == null && !AFGESLOTEN.has(d.status)).length;
-    const a = r.filter(v => v <= 24).length, b = r.filter(v => v > 24 && v <= 72).length, c = r.filter(v => v > 72).length, tot = a + b + c + open;
-    const med = r.length ? [...r].sort((p, q) => p - q)[Math.floor(r.length / 2)] : null;
-    const R = 56, C = 2 * Math.PI * R; let off = 0;
-    const seg = (n, kleur) => { if (!n || !tot) return ""; const len = n / tot * C; const s = `<circle cx="75" cy="75" r="${R}" fill="none" stroke="${kleur}" stroke-width="16" stroke-dasharray="${len} ${C - len}" stroke-dashoffset="${-off}" transform="rotate(-90 75 75)"/>`; off += len; return s; };
-    document.getElementById("chReactie").innerHTML = tot ? `<div class="donut">
-        <svg viewBox="0 0 150 150" role="img" aria-label="Verdeling reactietijd"><circle cx="75" cy="75" r="${R}" fill="none" stroke="var(--surface-2)" stroke-width="16"/>
-          ${seg(a, "var(--ok)")}${seg(b, "var(--accent)")}${seg(c, "var(--orange)")}${seg(open, "var(--crit)")}
-          <text x="75" y="74" text-anchor="middle" style="font: 800 20px var(--font-ui); fill: var(--fg)">${med == null ? "—" : med < 24 ? med.toFixed(0) + " u" : (med / 24).toFixed(1) + " d"}</text>
-          <text x="75" y="93" text-anchor="middle" style="font: 500 11px var(--font-ui); fill: var(--muted)">mediaan</text></svg>
-        <div class="lg">
-          <div><span><span class="sw" style="background:var(--ok)"></span>Binnen 24 uur</span><span class="num">${a}</span></div>
-          <div><span><span class="sw" style="background:var(--accent)"></span>1 tot 3 dagen</span><span class="num">${b}</span></div>
-          <div><span><span class="sw" style="background:var(--orange)"></span>Langer dan 3 dagen</span><span class="num">${c}</span></div>
-          <div><span><span class="sw" style="background:var(--crit)"></span>Nog geen antwoord</span><span class="num">${open}</span></div>
-          ${r.length ? `<span class="badge">${Math.round(a / r.length * 100)}% binnen 24 uur beantwoord</span>` : ""}
-        </div></div>` : `<p class="note">Nog geen data.</p>`;
+  function renderSchema() {
+    for (const [id, k] of [["s-h1", "h1"], ["s-h2", "h2"], ["s-bel", "bel"]]) {
+      const s = document.getElementById(id);
+      s.innerHTML = DAGOPTIES.map(n => `<option value="${n}" ${schema[k] === n ? "selected" : ""}>${n} dagen</option>`).join("");
+    }
   }
 
   function render() {
     renderKop(); renderKpis(); renderTabs();
     document.getElementById("lijst").hidden = view === "bord";
     document.getElementById("bord").hidden = view !== "bord";
-    document.getElementById("lijstTitel").textContent = view === "bord" ? "Bord" : "Aanvragen";
+    document.getElementById("lijstTitel").textContent = view === "bord" ? "Bord" : "Dossiers";
     if (view === "bord") renderBord(); else renderLijst();
     renderPanel(); renderAnalyse();
   }
@@ -748,32 +965,44 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
     bron = { soort, ververst: json.ververst || null }; basis = json.dossiers; openId = null; pagina = 1; render();
   }
   async function start() {
-    render();
+    renderSchema(); render();
     try { const r = await fetch("data/aanvragen.json", { cache: "no-store" }); if (r.ok) gebruik(await r.json(), "servicebalie"); } catch (e) { /* geen lokaal bestand: leeg blijven */ }
   }
 
   // ── Events ────────────────────────────────────────────────────────────────────
   document.querySelectorAll("[data-nav]").forEach(b => b.onclick = () => {
-    if (b.dataset.nav === "analyse") { document.getElementById("analyse").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
-    view = b.dataset.nav; schrijf("view", view); render();
+    const n = b.dataset.nav;
+    if (n === "analyse" || n === "schema") { document.getElementById(n).scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+    if (n === "bellijst") { view = "lijst"; tab = "opv"; pagina = 1; render(); return; }
+    view = n; schrijf("view", view); render();
   });
   document.querySelectorAll("[data-pakket]").forEach(b => b.onclick = () => { pakket = b.dataset.pakket; schrijf("pakket", pakket); pagina = 1; render(); });
   document.getElementById("tabs").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if (!b) return; tab = b.dataset.tab; pagina = 1; render(); });
   document.getElementById("thead").addEventListener("click", e => { const th = e.target.closest("th[data-k]"); if (!th) return; const k = th.dataset.k; sortDir = sortKey === k ? -sortDir : (k === "naam" ? 1 : -1); sortKey = k; render(); });
   document.getElementById("thead").addEventListener("keydown", e => { if (e.key === "Enter") e.target.click(); });
   document.getElementById("pager").addEventListener("click", e => { const b = e.target.closest("[data-pg]"); if (!b || b.disabled) return; pagina = +b.dataset.pg; render(); });
+  const open = (id, pt) => { openId = id; ptab = pt; mailKeuze = null; mailTaal = null; render(); };
   const tb = document.getElementById("tbody");
-  tb.addEventListener("click", e => { const a = e.target.closest("[data-akkoord]"); if (a) { e.stopPropagation(); naarStatus(vind(a.dataset.akkoord), "offerte_uit"); return; } const tr = e.target.closest("tr[data-id]"); if (tr) { openId = tr.dataset.id; ptab = "overzicht"; render(); } });
-  tb.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("tr[data-id]")) { openId = e.target.dataset.id; render(); } });
+  tb.addEventListener("click", e => {
+    const a = e.target.closest("[data-act]");
+    if (a) { e.stopPropagation(); const d = vind(a.dataset.id); if (a.dataset.act === "review") { open(d.id, "mail"); mailKeuze = "1.8"; renderPanel(); } else open(d.id, a.dataset.act === "mail" ? "mail" : "overzicht"); return; }
+    const tr = e.target.closest("tr[data-id]"); if (tr) open(tr.dataset.id, "overzicht");
+  });
+  tb.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("tr[data-id]")) open(e.target.dataset.id, "overzicht"); });
   const bord = document.getElementById("bord"); let sleep = null;
-  bord.addEventListener("click", e => { const c = e.target.closest(".kaart"); if (c) { openId = c.dataset.id; ptab = "overzicht"; render(); } });
-  bord.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches(".kaart")) { openId = e.target.dataset.id; render(); } });
+  bord.addEventListener("click", e => { const c = e.target.closest(".kaart"); if (c) open(c.dataset.id, "overzicht"); });
+  bord.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches(".kaart")) open(e.target.dataset.id, "overzicht"); });
   bord.addEventListener("dragstart", e => { const c = e.target.closest(".kaart"); if (!c) return; sleep = c.dataset.id; c.classList.add("dragging"); e.dataTransfer.effectAllowed = "move"; try { e.dataTransfer.setData("text/plain", sleep); } catch (x) {} });
   bord.addEventListener("dragend", e => { e.target.closest(".kaart")?.classList.remove("dragging"); bord.querySelectorAll(".over").forEach(x => x.classList.remove("over")); });
   bord.addEventListener("dragover", e => { const col = e.target.closest(".col"); if (!col || !sleep) return; e.preventDefault(); bord.querySelectorAll(".over").forEach(x => x !== col && x.classList.remove("over")); col.classList.add("over"); });
   bord.addEventListener("drop", e => { const col = e.target.closest(".col"); if (!col || !sleep) return; e.preventDefault(); const d = vind(sleep); sleep = null; col.classList.remove("over"); naarStatus(d, col.dataset.status); });
-  document.addEventListener("keydown", e => { if (e.key === "Escape" && openId && !document.getElementById("dlg").open) { openId = null; render(); } });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && openId && !document.getElementById("dlg").open && document.activeElement?.id !== "mBody") { openId = null; render(); } });
   document.getElementById("zoek").oninput = () => { pagina = 1; render(); };
+  for (const [id, k] of [["s-h1", "h1"], ["s-h2", "h2"], ["s-bel", "bel"]]) document.getElementById(id).onchange = e => {
+    const v = +e.target.value, nieuw = { ...schema, [k]: v };
+    if (!(nieuw.h1 < nieuw.h2 && nieuw.h2 < nieuw.bel)) { toast("Volgorde moet oplopen: herinnering 1 < herinnering 2 < bellijst"); renderSchema(); return; }
+    schema = nieuw; schrijf("schema", schema); render(); toast("Opvolgschema aangepast; alle dossiers rekenen mee");
+  };
   const fileIn = document.getElementById("fileIn");
   document.getElementById("btnLaad").onclick = () => fileIn.click();
   fileIn.onchange = () => {
@@ -791,9 +1020,10 @@ dialog h2 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 800; }
     const bijz = document.getElementById("f-bijz").value;
     const d = { id: "T-" + (101 + extra.length), naam: document.getElementById("f-naam").value.trim() || "VvE Testpand", plaats: document.getElementById("f-plaats").value.trim(),
       pakket: document.getElementById("f-pakket").value, ar: { woning: n, bedrijfsruimte: 0, parkeerplaats: 0, berging: 0 }, herkomst: document.getElementById("f-herkomst").value, bron: "formulier",
-      status: akte ? "gekwalificeerd" : "wacht_op_klant", sinds: nu, binnen: nu, contact: "Testaanvrager", bijz, deadline_signaal: /opzeg|deadline|zsm|spoed/i.test(bijz), docs: { akte },
-      tl: [[nu, "Testaanvraag via formulier"], [nu, akte ? "Compleet, gekwalificeerd" : "Incompleet: vragenlijst en akte opgevraagd"]] };
-    extra.unshift(d); schrijf("extra", extra); openId = d.id; tab = "lopend"; dlg.close(); render(); toast("Testaanvraag toegevoegd");
+      status: "nieuw", sinds: nu, binnen: nu, contact: (document.getElementById("f-contact").value.trim() || "Testaanvrager") + " · Bestuurder", taal: document.getElementById("f-taal").value,
+      email: "", bijz, deadline_signaal: /opzeg|deadline|zsm|spoed/i.test(bijz), docs: { akte },
+      tl: [[nu, "Testaanvraag via formulier"]] };
+    extra.unshift(d); schrijf("extra", extra); dlg.close(); tab = "lopend"; open(d.id, "mail"); toast("Testaanvraag toegevoegd");
   });
 
   start();
